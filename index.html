@@ -111,7 +111,7 @@
 
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -133,14 +133,11 @@
         const btnSup = document.getElementById("btnSup");
         const list = document.getElementById("list");
         // 2. Écouter le clic sur Ajouter
-        btnAdd.addEventListener("click", () => {
+        btnAdd.addEventListener("click", function () {
             // On récupère la valeur actuelle de l'input
             const produit = input.value.trim();
             // Vérifier si le champ est vide
-            if (produit === "") {
-                alert("Aucun produit saisi");
-                return;
-            }
+            if (produit === "") { alert("Aucun produit saisi"); return; }
             // 3. Vérifier si le produit existe déjà
             const panier = list.children;
             for (let i = 0; i < panier.length; i++) {
@@ -163,5 +160,343 @@
             list.innerHTML = "";
         });
     </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des produits</title>
+</head>
+<body>
+
+    <h1>Gestion des produits</h1>
+
+    <input type="text" id="recherche" placeholder="Rechercher un produit">
+
+    <button id="btnRecherche">Rechercher</button>
+    <button id="btnTous">Afficher tous</button>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOM</th>
+                <th>CATEGORIE</th>
+                <th>PRIX</th>
+                <th>STOCK</th>
+                <th>DISPONIBLE</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+
+    <script>
+
+        // ==================================================
+        // 1. TABLEAU D'OBJETS
+        // ==================================================
+
+        // Un tableau contient plusieurs objets.
+        // Chaque objet représente un produit.
+
+        const produits = [
+            {
+                id: 1,
+                nom: "Riz",
+                categorie: "Alimentaire",
+                prix: 15000,
+                stock: 10,
+                disponible: true
+            },
+            {
+                id: 2,
+                nom: "Savon",
+                categorie: "Hygiène",
+                prix: 500,
+                stock: 0,
+                disponible: false
+            }
+        ];
+
+
+        // ==================================================
+        // 2. SÉLECTION DU DOM
+        // ==================================================
+
+        // Fonction personnalisée pour simplifier querySelector.
+
+        function $(element) { return document.querySelector(element); }
+
+        const input = $("#recherche");
+        const tbody = $("#tbody");
+
+
+        // ==================================================
+        // 3. AFFICHER LES PRODUITS : forEach()
+        // ==================================================
+        function afficherProduits(liste) {
+            // Vider le tableau HTML avant de le remplir.
+            tbody.innerHTML = "";
+            // Parcourir chaque produit de la liste.
+            liste.forEach(function(produit) {
+                // Créer une nouvelle ligne HTML.
+                const ligne = document.createElement("tr");
+
+                // Ajouter les cellules dans la ligne.
+                ligne.innerHTML = `
+                    <td>${produit.id}</td>
+                    <td>${produit.nom}</td>
+                    <td>${produit.categorie}</td>
+                    <td>${produit.prix}</td>
+                    <td>${produit.stock}</td>
+                    <td>${produit.disponible}</td>
+                `;
+                // Insérer la ligne dans le tableau HTML.
+                tbody.appendChild(ligne);
+            });
+        }
+
+        // Affichage initial.
+        afficherProduits(produits);
+
+        // ==================================================
+        // 4. FIND : CHERCHER UN PRODUIT
+        // ==================================================
+        $("#btnRecherche").addEventListener("click", function() {
+            const nom = input.value.trim();
+            // find() retourne le premier objet correspondant.
+            // Retourne undefined si aucun produit n'est trouvé.
+            // const produit = produits.find(function(p) {
+            //     return p.nom.toLowerCase() === nom.toLowerCase();
+            // });
+            const produit = produits.find((p) => p.nom.toLowerCase() === nom.toLowerCase());
+            // Afficher le produit trouvé ou une liste vide.
+            if (produit) {
+                afficherProduits([produit]);
+            } else {
+                afficherProduits([]);
+            }
+        });
+        // ==================================================
+        // 5. AFFICHER TOUS LES PRODUITS
+        // ==================================================
+        $("#btnTous").addEventListener("click", function() {
+            afficherProduits(produits);
+        });
+
+
+        // ==================================================
+        // 6. MAP : TRANSFORMER UN TABLEAU
+        // ==================================================
+        // Extraire uniquement les noms des produits.
+        // map() retourne un nouveau tableau.
+        const noms = produits.map(function(produit) { return produit.nom; });
+        console.log("Noms :", noms);
+
+
+        // ==================================================
+        // 7. FILTER : FILTRER UN TABLEAU
+        // ==================================================
+        // Récupérer uniquement les produits disponibles.
+        const disponibles = produits.filter((produit) => {
+            return produit.disponible === true;
+        });
+
+        console.log("Disponibles :", disponibles);
+
+
+        // ==================================================
+        // 8. FINDINDEX : TROUVER UN INDEX
+        // ==================================================
+        // Retourne la position du produit recherché.
+        // Retourne -1 si le produit n'existe pas.
+        const indexSavon = produits.findIndex((produit) => produit.nom === "Savon");
+        console.log("Index du savon :", indexSavon);
+
+
+        // ==================================================
+        // 9. PUSH : AJOUTER UN ÉLÉMENT
+        // ==================================================
+        // Ajouter un nouveau produit à la fin du tableau.
+        produits.push({
+            id: 3,
+            nom: "Lait",
+            categorie: "Alimentaire",
+            prix: 1000,
+            stock: 5,
+            disponible: true
+        });
+        console.log("Après push :", produits);
+
+
+        // ==================================================
+        // 10. SPLICE : SUPPRIMER UN ÉLÉMENT
+        // ==================================================
+        // splice(index, nombre à supprimer)
+        // Supprimer le savon à sa position initiale.
+        if (indexSavon !== -1) produits.splice(indexSavon, 1);
+        console.log("Après splice :", produits);
+
+
+        // ==================================================
+        // 11. SOME : AU MOINS UN ÉLÉMENT ?
+        // ==================================================
+        // Vérifier si au moins un produit coûte plus de 10000.
+        const traitement = function(produit) {
+            return produit.prix > 10000;
+        }
+        const produitCher = produits.some(traitement);
+        console.log("Un produit coûte plus de 10000 ?", produitCher);
+
+
+        // ==================================================
+        // 12. EVERY : TOUS LES ÉLÉMENTS ?
+        // ==================================================
+        // Vérifier si tous les produits sont disponibles.
+        function tous(produit) {
+            return produit.disponible === true;
+        }
+        const tousDisponibles = produits.every(() => {
+            return tous(produit)
+        });
+        console.log("Tous disponibles ?", tousDisponibles);
+
+
+        // ==================================================
+        // 13. SORT : TRIER UN TABLEAU
+        // ==================================================
+        // [...produits] crée une copie du tableau.
+        // Cela évite de modifier le tableau original.
+        const produitsTries = [...produits];
+        // Trier les produits par prix croissant.
+        produitsTries.sort(function(a, b) {
+            return a.prix - b.prix;
+        });
+        console.log("Produits triés :", produitsTries);
+
+
+        // ==================================================
+        // 14. REDUCE : CALCULER UN TOTAL
+        // ==================================================
+        // Calculer la valeur totale du stock.
+        // total représente l'accumulateur.
+        // 0 représente sa valeur initiale.
+        const valeurStock = produits.reduce(function(total, produit) {
+            return total + (produit.prix * produit.stock);
+        }, 0);
+        console.log("Valeur totale du stock :", valeurStock, "FCFA");
+
+
+        // ==================================================
+        // 15. AUTRES MÉTHODES DE TABLEAUX
+        // ==================================================
+        const nombres = [10, 20, 30];
+        // length : nombre d'éléments.
+        console.log("Taille :", nombres.length);
+        // includes : vérifier si une valeur existe.
+        console.log("Contient 20 :", nombres.includes(20));
+        // indexOf : récupérer la position d'une valeur.
+        console.log("Position de 30 :", nombres.indexOf(30));
+        // concat : fusionner deux tableaux.
+        console.log("Fusion :", nombres.concat([40, 50]));
+        // reverse : inverser l'ordre du tableau.
+        console.log("Inversé :", [...nombres].reverse());
+        // pop : supprimer le dernier élément.
+        console.log("Supprimé :", nombres.pop());
+        // unshift : ajouter au début.
+        nombres.unshift(5);
+        // shift : supprimer le premier élément.
+        nombres.shift();
+        console.log("Tableau final :", nombres);
+
+
+        // ==================================================
+        // 16. PARCOURIR UN TABLEAU ET UN OBJET
+        // ==================================================
+        const utilisateur = {
+            nom: "Ali",
+            age: 25
+        };
+        // for...of : parcourir les valeurs d'un tableau.
+        for (const nombre of nombres) {
+            console.log("Valeur :", nombre);
+        }
+        // for...in : parcourir les clés d'un objet.
+        for (const cle in utilisateur) {
+            console.log(cle, utilisateur[cle]);
+        }
+        // Object.keys : récupérer les clés.
+        console.log(Object.keys(utilisateur));
+        // Object.values : récupérer les valeurs.
+        console.log(Object.values(utilisateur));
+        // Object.entries : récupérer les paires clé/valeur.
+        console.log(Object.entries(utilisateur));
+
+
+        // ==================================================
+        // 17. STRUCTURES IMBRIQUÉES
+        // ==================================================
+        // Un objet peut contenir un tableau d'objets.
+        // Chaque objet peut lui-même contenir un tableau.
+        const entreprise = {
+            equipes: [
+                {
+                    nom: "Frontend",
+                    membres: [
+                        {
+                            nom: "Alice",
+                            competences: ["HTML", "JS"]
+                        }
+                    ]
+                }
+            ]
+        };
+        // Parcourir les équipes.
+        for (const equipe of entreprise.equipes) {
+            console.log("Équipe :", equipe.nom);
+            // Parcourir les membres de chaque équipe.
+            for (const membre of equipe.membres) {
+                console.log("Membre :", membre.nom);
+                // Parcourir les compétences de chaque membre.
+                for (const competence of membre.competences) {
+                    console.log("Compétence :", competence);
+                }
+            }
+        }
+
+
+        // ==================================================
+        // 18. MAP ET SET : STRUCTURES DE DONNÉES
+        // ==================================================
+        // Map : stocker des paires clé/valeur.
+        const map = new Map();
+        map.set("nom", "Alice");
+        map.set("age", 25);
+        console.log("Map :", map);
+        console.log("Nom :", map.get("nom"));
+        // Set : stocker des valeurs uniques.
+        const set = new Set();
+        set.add("Alice");
+        set.add("Bob");
+        set.add("Alice"); // Ignoré : valeur déjà présente.
+        console.log("Set :", set);
+
+    </script>
+
 </body>
 </html>
