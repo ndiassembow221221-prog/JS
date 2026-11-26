@@ -660,7 +660,7 @@
 
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -821,14 +821,12 @@
 
 <div class="container">
     <h1>Gestion des produits</h1>
-    <!-- RECHERCHE ET FILTRES -->
     <div class="inputs">
         <input type="text" id="search" placeholder="Rechercher un produit...">
         <input type="number" id="mini" placeholder="Prix minimum" min="0">
         <input type="number" id="maxi" placeholder="Prix maximum" min="0">
     </div>
     <small id="resultat"></small>
-    <!-- TABLEAU -->
     <table>
         <thead>
             <tr>
@@ -844,7 +842,6 @@
         </thead>
         <tbody></tbody>
     </table>
-    <!-- TOTAUX -->
     <div class="summary">
         <div class="totalStock"></div>
         <div class="montantTotal"></div>
@@ -1271,6 +1268,773 @@ tbody.addEventListener("click", (event) => {
 // 11. AFFICHAGE INITIAL
 // ==================================================
 actualiser(produits);
+</script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pixel</title>
+    <style>
+        *{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000;
+
+}
+
+.container{
+    width: 500px;
+    height: 500px;
+    background-color: rgb(41, 40, 40);
+    display: flex;
+    flex-direction: column; 
+    border: solid whitesmoke 1px;
+    border-radius: 10px;
+    box-shadow: 3 3 55px rgb(245, 29, 29);   
+}
+.bnt{
+    border-radius: 10px;
+    flex: 1;
+    padding: 10px;
+    background: red;
+    display: flex;
+    gap: 2px;
+}
+.bnt1, .bnt2, .bnt3, .bnt4, .bnt5{
+    padding: 10px;
+    flex: 1;
+}
+.pxel{
+    border-radius: 10px;
+    flex: 30;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pixel{
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+    border: 1px solid;
+}
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="bnt">
+            <button class="bnt1" >Gomme</button>
+            <button class="bnt2" >Rouge</button>
+            <button class="bnt5" >Blanc</button>
+            <button class="bnt3" >Vert</button>
+            <button class="bnt4" >Multi-color</button>
+        </div>
+        <div class="pxel">
+                    <div class="pixel"></div>
+
+        </div>
+    </div>
+
+    <script>
+        let oneDiv = document.querySelector(".pxel");
+        oneDiv.firstElementChild.style.backgroundColor="black";
+        
+        let divC = document.querySelector(".pxel");
+        for(let i = 0 ; i < 9499 ; i++){
+            let newD = document.createElement("div");
+            newD.className = "pixel";
+            divC.append(newD);
+            newD.style.backgroundColor = "black";
+            // setInterval(function(){
+            //     let r = Math.floor(Math.random() * 256);
+            //     let g = Math.floor(Math.random() * 256);
+            //     let b = Math.floor(Math.random() * 256);
+            //     newD.style.backgroundColor =   `rgb(${r}, ${g}, ${b})`;
+            // },1000)
+
+        let press = false;
+        document.addEventListener("mousedown", function(){
+            press = true;
+        })
+            document.addEventListener("mouseup", function(){
+            press = false;
+        })
+
+        newD.addEventListener("mouseover", function(){
+                if(press) {
+        newD.style.backgroundColor = "white";
+                }    
+
+        })
+          let gomme = document.querySelector(".bnt1")
+        gomme.addEventListener("click", function(){
+            // console.log("bonjour");
+            newD.style.backgroundColor = "black";
+        }) 
+
+        let goss = false;
+        document.addEventListener("mousedown", function(){
+            goss = true;
+        })
+            document.addEventListener("mouseup", function(){
+            goss = false;
+        })
+           let colorRed = document.querySelector(".bnt2")
+        colorRed.addEventListener("click", function(){
+            newD.addEventListener("mouseover", function(){
+                if(goss) {
+        newD.style.backgroundColor = "red";
+                }    
+
+        })
+        }) 
+
+         let pressB = false;
+        document.addEventListener("mousedown", function(){
+            pressB = true;
+        })
+            document.addEventListener("mouseup", function(){
+            pressB = false;
+        })
+           let colorGreen = document.querySelector(".bnt3")
+        colorGreen.addEventListener("click", function(){
+            newD.addEventListener("mouseover", function(){
+                if(pressB) {
+        newD.style.backgroundColor = "green";
+                }    
+
+        })
+        })
+
+        let btnBlanc = false;
+        document.addEventListener("mousedown", function(){
+            btnBlanc = true;
+        })
+            document.addEventListener("mouseup", function(){
+            btnBlanc = false;
+        })
+           let colorWhite = document.querySelector(".bnt5")
+        colorWhite.addEventListener("click", function(){
+            newD.addEventListener("mouseover", function(){
+                if(btnBlanc) {
+        newD.style.backgroundColor = "white";
+                }    
+
+        })
+        })
+        
+         let multi = false;
+        document.addEventListener("mousedown", function(){
+            multi = true;
+        })
+            document.addEventListener("mouseup", function(){
+            multi = false;
+        })
+           let colorMulti = document.querySelector(".bnt4")
+        colorMulti.addEventListener("click", function(){
+            newD.addEventListener("mouseover", function(){
+                if(multi) {
+                let r = Math.floor(Math.random() * 256);
+                let g = Math.floor(Math.random() * 256);
+                let b = Math.floor(Math.random() * 256);
+                newD.style.backgroundColor =   `rgb(${r}, ${g}, ${b})`;
+                }    
+
+        })
+        }) 
+             
+        }        
+    
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript TP DOM</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .jeu {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            background: #222;
+            color: white;
+            border-radius: 12px;
+        }
+
+        .titre {
+            text-align: center;
+            text-decoration: underline;
+            font-family: Algerian, serif;
+            color: antiquewhite;
+        }
+
+        .niveau {
+            display: inline-block;
+            padding: 10px 20px;
+            background: darkred;
+            border-radius: 8px;
+        }
+
+        .image table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        .image img {
+            width: 150px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        .divLettre,
+        #btnLettre {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px auto;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .lettre,
+        .btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid white;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .lettre {
+            background: black;
+            color: white;
+        }
+
+        .btn {
+            background: antiquewhite;
+            color: black;
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btnRset,
+        .btnSuiv {
+            display: inline-block;
+            margin: 15px 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 35%;
+            background: darkred;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btnRset {
+            opacity: 0.8;
+        }
+
+        .btnSuiv {
+            border-radius: 6px;
+        }
+
+        #btnSuiv {
+            display: none;
+        }
+
+        .exam2 {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+        }
+
+        #lastDiv {
+            min-height: 500px;
+            background: #393939;
+            color: white;
+        }
+
+        #lastDiv p {
+            padding: 2%;
+            font-family: Verdana, sans-serif;
+            font-size: 200%;
+            text-align: center;
+        }
+
+        .succes {
+            background: lime !important;
+            color: black !important;
+        }
+
+        .erreur {
+            background: red !important;
+        }
+
+        @media (max-width: 450px) {
+            .image img {
+                width: 125px;
+                height: 110px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="jeu">
+        <h2 class="titre" id="titreJeu">
+            Quatre Images Un Mot
+        </h2>
+        <div class="divNiveau">
+            Niveau <span class="niveau">1</span>
+        </div>
+        <div class="image">
+            <table border="0">
+                <tr>
+                    <td><img id="img1" class="img" alt="Image 1"></td>
+                    <td><img id="img2" class="img" alt="Image 2"></td>
+                </tr>
+                <tr>
+                    <td><img id="img3" class="img" alt="Image 3"></td>
+                    <td><img id="img4" class="img" alt="Image 4"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="divLettre" id="reponse"></div>
+        <div id="btnLettre"></div>
+        <div id="btnSuiv">
+            <button type="button" class="btnSuiv">
+                Niveau suivant >>
+            </button>
+        </div>
+        <a href="#" class="btnRset">Effacer</a>
+    </div>
+    <hr color="darkred" size="5">
+    <div class="exam2">
+        <h1>Instructions du TP</h1>
+        <ol>
+            <li>Copier le dossier TP DOM dans votre dossier JS.</li>
+            <li>
+                Renommer le dossier avec votre nom et prénom.
+                Exemple : <span style="color:darkred">DIASSÉ Robert</span>
+            </li>
+        </ol>
+        <h2>Recommandations</h2>
+        <ul>
+            <li>Vous ne devez modifier que le fichier dom.js.</li>
+        </ul>
+    </div>
+    <div class="exam" id="lastDiv">
+        <p>Ceci est un examen de JavaScript sur le DOM.</p>
+        <hr>
+        <p>Document Object Model</p>
+    </div>
+</div>
+
+<script>
+/* =====================================================
+   1. MANIPULATIONS DOM DE L'EXERCICE
+===================================================== */
+// Modifier le titre de la page
+document.title = "JavaScript TP DOM";
+// Sélectionner le titre du jeu
+const titre = document.getElementById("titreJeu");
+// Modifier son apparence
+titre.style.textAlign = "center";
+titre.style.textDecoration = "underline";
+titre.style.fontFamily = "Algerian";
+titre.style.color = "antiquewhite";
+// Modifier le type des listes
+document.querySelector("ol").type = "i";
+document.querySelector("ul").type = "circle";
+// Ajouter un élément à la liste
+const nouvelleListe = document.createElement("li");
+nouvelleListe.textContent =
+    "SVP !!! Sortez dès qu'on vous le demande.";
+nouvelleListe.style.color = "darkred";
+document.querySelector("ul").appendChild(nouvelleListe);
+// Modifier les paragraphes de lastDiv
+document.querySelectorAll("#lastDiv p").forEach(function(p) {
+    p.style.padding = "2%";
+    p.style.fontFamily = "Verdana";
+    p.style.fontSize = "200%";
+    p.style.textAlign = "center";
+});
+// Ajouter un HR dans container
+const container = document.querySelector(".container");
+const hr = document.createElement("hr");
+hr.size = "5";
+hr.color = "darkred";
+// Insérer le HR avant la partie des instructions
+container.insertBefore(hr, document.querySelector(".exam2"));
+// Modifier le lien reset
+const btnReset = document.querySelector(".btnRset");
+btnReset.textContent = "Effacer";
+btnReset.style.paddingLeft = "15px";
+btnReset.style.paddingRight = "15px";
+btnReset.style.borderRadius = "35%";
+btnReset.style.opacity = "0.8";
+
+
+/* =====================================================
+   2. DONNÉES DU JEU
+===================================================== */
+const niveaux = [
+    {
+        niveau: 1,
+        mot: "CHALEUR",
+
+        images: [
+            "https://images.pexels.com/photos/15925664/pexels-photo-15925664.jpeg",
+            "https://images.pexels.com/photos/22763589/pexels-photo-22763589.jpeg",
+            "https://images.pexels.com/photos/34759180/pexels-photo-34759180.jpeg",
+            "https://images.pexels.com/photos/30612707/pexels-photo-30612707.jpeg"
+        ],
+
+        clavier: [
+            "H", "A", "U", "E", "L", "X",
+            "C", "F", "R", "J", "P", "O"
+        ]
+    },
+
+    {
+        niveau: 2,
+        mot: "SOLEIL",
+
+        images: [
+            "https://images.pexels.com/photos/13800992/pexels-photo-13800992.jpeg",
+            "https://images.pexels.com/photos/38964976/pexels-photo-38964976.jpeg",
+            "https://images.pexels.com/photos/32135197/pexels-photo-32135197.jpeg",
+            "https://images.pexels.com/photos/33762717/pexels-photo-33762717.jpeg"
+        ],
+
+        clavier: [
+            "S", "O", "Z", "I", "L", "B",
+            "E", "T", "N", "L", "K", "W"
+        ]
+    }
+];
+
+
+/* =====================================================
+   3. RÉFÉRENCES DOM ET ÉTAT DU JEU
+===================================================== */
+const spanNiveau = document.querySelector(".niveau");
+const images = document.querySelectorAll(".image img");
+const casesReponse = document.getElementById("reponse");
+const clavier = document.getElementById("btnLettre");
+const zoneSuivante = document.getElementById("btnSuiv");
+const btnSuivant = document.querySelector(".btnSuiv");
+let niveauCourant = 0;
+// Mémorise les lettres choisies et leurs boutons
+let reponseJoueur = [];
+// Empêche les clics pendant la vérification
+let verificationEnCours = false;
+/* =====================================================
+   4. CHARGER UN NIVEAU
+===================================================== */
+function chargerNiveau(index) {
+    const data = niveaux[index];
+    niveauCourant = index;
+    reponseJoueur = [];
+    verificationEnCours = false;
+    // Afficher le numéro du niveau
+    spanNiveau.textContent = data.niveau;
+    // Charger les quatre images
+    images.forEach(function(img, indexImage) {
+        img.src = data.images[indexImage];
+    });
+    // Créer les cases de réponse
+    casesReponse.innerHTML = "";
+    for (let i = 0; i < data.mot.length; i++) {
+        const bouton = document.createElement("button");
+        bouton.type = "button";
+        bouton.className = "lettre";
+        bouton.textContent = "_";
+        bouton.dataset.index = i;
+        casesReponse.appendChild(bouton);
+    }
+    // Créer les boutons du clavier
+    clavier.innerHTML = "";
+    data.clavier.forEach(function(lettre, indexLettre) {
+        const bouton = document.createElement("button");
+        bouton.type = "button";
+        bouton.className = "btn";
+        bouton.textContent = lettre;
+        bouton.dataset.index = indexLettre;
+        clavier.appendChild(bouton);
+    });
+    // Cacher le bouton suivant
+    zoneSuivante.style.display = "none";
+}
+
+
+/* =====================================================
+   5. TROUVER LA PREMIÈRE CASE VIDE
+===================================================== */
+function premiereCaseVide() {
+    const cases = document.querySelectorAll(".lettre");
+    for (let i = 0; i < cases.length; i++) {
+        if (cases[i].textContent === "_") {
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+/* =====================================================
+   6. AFFICHER UNE LETTRE
+===================================================== */
+
+function choisirLettre(bouton) {
+    if (verificationEnCours || bouton.disabled) {
+        return;
+    }
+    const indexCase = premiereCaseVide();
+    // Toutes les cases sont remplies
+    if (indexCase === -1) {
+        return;
+    }
+    const lettre = bouton.textContent;
+    const cases = document.querySelectorAll(".lettre");
+    // Placer la lettre dans la première case vide
+    cases[indexCase].textContent = lettre;
+    cases[indexCase].style.backgroundColor = "#333";
+    cases[indexCase].style.color = "white";
+    // Mémoriser la lettre et le bouton utilisé
+    reponseJoueur.push({
+        lettre: lettre,
+        bouton: bouton
+    });
+    // Désactiver le bouton utilisé
+    bouton.disabled = true;
+    // Vérifier la réponse
+    verifierMot();
+}
+
+
+/* =====================================================
+   7. VÉRIFIER LE MOT
+===================================================== */
+function verifierMot() {
+    const data = niveaux[niveauCourant];
+    const motJoueur = reponseJoueur
+        .map(function(item) {
+            return item.lettre;
+        })
+        .join("");
+    // Attendre que toutes les lettres soient choisies
+    if (motJoueur.length !== data.mot.length) {
+        return;
+    }
+    const cases = document.querySelectorAll(".lettre");
+    if (motJoueur === data.mot) {
+        verificationEnCours = true;
+        // Bonne réponse : afficher en vert
+        cases.forEach(function(caseLettre) {
+            caseLettre.classList.add("succes");
+        });
+        // Désactiver tout le clavier
+        document.querySelectorAll(".btn").forEach(function(btn) {
+            btn.disabled = true;
+        });
+        // Afficher le bouton suivant
+        if (niveauCourant < niveaux.length - 1) {
+            zoneSuivante.style.display = "block";
+        } else {
+            alert("Bravo ! Vous avez terminé tous les niveaux !");
+        }
+    } else {
+        verificationEnCours = true;
+        // Mauvaise réponse : afficher en rouge
+        cases.forEach(function(caseLettre) {
+            caseLettre.classList.add("erreur");
+        });
+        // Vider les cases après un court délai
+        setTimeout(function() {
+            viderCases();
+        }, 600);
+    }
+}
+
+
+/* =====================================================
+   8. RETIRER UNE LETTRE D'UNE CASE
+===================================================== */
+function retirerLettre(indexCase) {
+    if (verificationEnCours) {
+        return;
+    }
+    const cases = document.querySelectorAll(".lettre");
+    // Récupérer la lettre choisie à cette position
+    const indexChoix = reponseJoueur.findIndex(function(item, index) {
+        return index === indexCase;
+    });
+    if (indexChoix === -1) {
+        return;
+    }
+    // Réactiver le bouton du clavier correspondant
+    const choix = reponseJoueur[indexChoix];
+    choix.bouton.disabled = false;
+    // Retirer le choix et reconstruire les cases
+    reponseJoueur.splice(indexChoix, 1);
+    cases.forEach(function(caseLettre, index) {
+        caseLettre.textContent =
+            reponseJoueur[index]
+                ? reponseJoueur[index].lettre
+                : "_";
+        caseLettre.classList.remove("erreur", "succes");
+
+        caseLettre.style.backgroundColor =
+            reponseJoueur[index] ? "#333" : "black";
+        caseLettre.style.color = "white";
+    });
+}
+
+
+/* =====================================================
+   9. VIDER TOUTES LES CASES
+===================================================== */
+function viderCases() {
+    reponseJoueur.forEach(function(item) {
+        item.bouton.disabled = false;
+    });
+    const cases = document.querySelectorAll(".lettre");
+    cases.forEach(function(caseLettre) {
+        caseLettre.textContent = "_";
+        caseLettre.style.backgroundColor = "black";
+        caseLettre.style.color = "white";
+        caseLettre.classList.remove("erreur", "succes");
+    });
+    reponseJoueur = [];
+    verificationEnCours = false;
+}
+
+
+/* =====================================================
+   10. ÉVÉNEMENTS DU CLAVIER ET DES CASES
+===================================================== */
+// Délégation d'événement sur le clavier
+clavier.addEventListener("click", function(event) {
+    const bouton = event.target.closest(".btn");
+    if (!bouton) {
+        return;
+    }
+    choisirLettre(bouton);
+});
+// Délégation d'événement sur les cases
+casesReponse.addEventListener("click", function(event) {
+    const bouton = event.target.closest(".lettre");
+    if (!bouton) {
+        return;
+    }
+    retirerLettre(Number(bouton.dataset.index));
+});
+
+
+/* =====================================================
+   11. BOUTON EFFACER
+===================================================== */
+btnReset.addEventListener("click", function(event) {
+    event.preventDefault();
+    chargerNiveau(niveauCourant);
+});
+
+
+/* =====================================================
+   12. NIVEAU SUIVANT
+===================================================== */
+btnSuivant.addEventListener("click", function() {
+    if (niveauCourant < niveaux.length - 1) {
+        chargerNiveau(niveauCourant + 1);
+    }
+});
+
+
+/* =====================================================
+   13. DÉMARRER LE JEU
+===================================================== */
+chargerNiveau(0);
+
 </script>
 
 </body>
