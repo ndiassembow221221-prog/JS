@@ -1,64 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html>
+<html lang="wo-SN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-
-<p style="font-size: 40px;">cliquer sur le boutton commander</p>
-<p id="p1"></p>
-
-<button>Commander</button>
+    <p style="font-size: 40px;">cliquer sur le boutton commander</p>
+    <p id="p1"></p>
+    <button>Commander</button> 
 
 <script>
-const p = document.querySelector("p");
-const p1 = document.querySelector("#p1");
-const btn = document.querySelector("button");
 
-function pause(ms){
-    return new Promise(resolve => setTimeout(resolve,ms));
-}
+    // // Function Declaration
+    // const button = document.querySelector("button");
+    // function add(a, b) { return a + b; }
+    // function afficherResultat() { alert(add(3, 4)); }
+    // button.addEventListener("click", afficherResultat);
 
-async function etape() {
-    p.innerHTML = "Machine activée";
-    setInterval(()=>{
+    // // Function Expression
+    // const button = document.querySelector("button");
+    // const add = function(a, b) { return a + b };
+    // const afficherResultat = function() { alert(add(3, 4)); }
+    // button.addEventListener("click", afficherResultat);
 
-    },1000)
-    await pause(4000);
-    p.innerHTML = "Merci de patienté un court instant"  
-    await pause(2000);
-    p.innerHTML = "Commande terminer passer a la caise"
-}
+    // // Fonction anonyme directement dans le callback
+    // const button = document.querySelector("button");
+    // button.addEventListener("click", function(a, b) { alert(3 + 5); });
 
-btn.addEventListener("click",()=>{
-    etape();
-})
+    // // Arrow Function
+    // const addition1 = (a, b) => { return a + b; }
+    // const addition2 = (a, b) => a + b;
+
+    const p = document.querySelector("p")
+    const btn = document.querySelector("button")
+
+    function pause(ms) {
+        // return new Promise(resolve => setTimeout(resolve, ms))
+        return new Promise((resolve) => setTimeout(resolve, ms))
+    }
+
+    // setTimeout(() => {
+    //     console.log("Bonjour")
+    // }, 2000)
+
+    async function etape() {
+        p.innerHTML = "Machine Activée"
+        setInterval(() => { }, 1000)
+        // setInterval(() => {
+        //     console.log("Bonjour")
+        // }, 2000)
+        await pause(4000)
+        p.innerHTML = "Merci de patienté un court instant"  
+        await pause(2000);
+        p.innerHTML = "Commande terminer passer a la caise"
+    }
+
+    // this courant
+    btn.addEventListener("click", () => {
+        etape()
+    })
+    // // this exterieur
+    // btn.addEventListener("click", function() {
+    //     etape()
+    // })
+
+
+    // const operation = new Promise((resolve, reject) => {
+    //     const reussi = true
+    //     if (reussi) {
+    //         resolve("Succès")
+    //     } else {
+    //         reject("Échec")
+    //     }
+    // })
+
+
+    const interval = setInterval(() => {
+        console.log("Bonjour")
+    }, 2000)
+    // Arrêter après 10 secondes
+    setTimeout(() => {
+        clearInterval(interval)
+    }, 10000)
+    
+    
 
 </script>
 
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier d'achat</title>
+</head>
+<body>
+    <h1>ACHAT</h1>
+    <input type="text" id="input" placeholder="Écris un produit">
+    <div class="boul">
+        <button id="btnAdd">Ajouter</button>
+        <button id="btnSup">Supprimer tout</button>
+    </div>
+    <ul id="list"></ul>
+    <script>
+        // 1. Récupération des éléments HTML
+        const input = document.getElementById("input");
+        const btnAdd = document.getElementById("btnAdd");
+        const btnSup = document.getElementById("btnSup");
+        const list = document.getElementById("list");
+        // 2. Écouter le clic sur Ajouter
+        btnAdd.addEventListener("click", () => {
+            // On récupère la valeur actuelle de l'input
+            const produit = input.value.trim();
+            // Vérifier si le champ est vide
+            if (produit === "") {
+                alert("Aucun produit saisi");
+                return;
+            }
+            // 3. Vérifier si le produit existe déjà
+            const panier = list.children;
+            for (let i = 0; i < panier.length; i++) {
+                if (panier[i].textContent.toLowerCase() === produit.toLowerCase()) {
+                    alert("Produit déjà ajouté");
+                    return;
+                }
+            }
+            // 4. Créer un nouvel élément HTML
+            const li = document.createElement("li");
+            // Ajouter le nom du produit dans le li
+            li.textContent = produit;
+            // Ajouter le li dans la liste ul
+            list.appendChild(li);
+            // Vider le champ après l'ajout
+            input.value = "";
+        });
+        // 5. Supprimer tous les produits
+        btnSup.addEventListener("click", () => {
+            list.innerHTML = "";
+        });
+    </script>
 </body>
 </html>
-
-<!-- 
-const btn = document.querySelector("button");
-
-function pause(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function test() {
-    document.getElementById("text").textContent = "Chargement...";
-
-    await pause(2000);
-
-    document.getElementById("text").textContent = "Étape 2...";
-
-    await pause(2000);
-
-    document.getElementById("text").textContent = "Terminé ✔";
-}
-
-btn.addEventListener("click",()=>{
-    test();
-}) -->
