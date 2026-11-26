@@ -174,7 +174,7 @@
 
 
 
-
+<!-- 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -495,6 +495,152 @@
         set.add("Bob");
         set.add("Alice"); // Ignoré : valeur déjà présente.
         console.log("Set :", set);
+
+    </script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation SPA</title>
+</head>
+<body>
+
+    <button id="acceuil">Accueil</button>
+    <button id="login">Login</button>
+    <button id="sign">Inscription</button>
+
+    <div class="app"></div>
+
+    <script>
+        // ==================================================
+        // 1. SELECTION DES ELEMENTS HTML
+        // ==================================================
+        const app = document.querySelector(".app");
+        const acc = document.querySelector("#acceuil");
+        const login = document.querySelector("#login");
+        const sign = document.querySelector("#sign");
+
+
+        // ==================================================
+        // 2. LES VUES
+        // ==================================================
+        // Page d'accueil
+        const connexion = () => {
+            app.innerHTML = `
+                <h1>Bienvenue à tous</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            `;
+        };
+        // Page de connexion
+        const dashboard = () => {
+            app.innerHTML = `
+                <h1>Veuillez vous connecter</h1>
+                <p>Connectez-vous pour accéder à votre espace.</p>
+            `;
+        };
+        // Page d'inscription
+        const appropos = () => {
+            app.innerHTML = `
+                <h1>Voulez-vous vous inscrire dans DASHBOARD ?</h1>
+                <p>Créez votre compte pour continuer.</p>
+            `;
+        };
+        // Page 404
+        const notFound = () => {
+            app.innerHTML = `
+                <h1>404</h1>
+                <p>Cette page n'existe pas.</p>
+            `;
+        };
+
+
+        // ==================================================
+        // 3. CONFIGURATION DES ROUTES
+        // ==================================================
+        const routes = {
+            "/": connexion,
+            "/dashboard": dashboard,
+            "/appropos": appropos
+        };
+
+
+        // ==================================================
+        // 4. AFFICHER LA VUE SELON L'URL
+        // ==================================================
+        function view() {
+            // Récupérer le chemin actuel dans l'URL.
+            const path = window.location.pathname;
+            // Chercher la fonction correspondant à la route.
+            const route = routes[path];
+            // Si la route existe, afficher sa vue.
+            if (route) {
+                route();
+            } else {
+                notFound();
+            }
+        }
+
+
+        // ==================================================
+        // 5. NAVIGATION ENTRE LES ROUTES
+        // ==================================================
+        function navigate(path) {
+            // Modifier l'URL sans recharger la page.
+            history.pushState({}, "", path);
+            // Afficher la nouvelle vue.
+            view();
+        }
+
+
+        // ==================================================
+        // 6. EVENEMENTS DES BOUTONS
+        // ==================================================
+        // Aller à la page Dashboard.
+        acc.addEventListener("click", () => {
+            navigate("/dashboard");
+        });
+        // Aller à la page d'accueil.
+        login.addEventListener("click", () => {
+            navigate("/");
+        });
+        // Aller à la page d'inscription.
+        sign.addEventListener("click", () => {
+            navigate("/appropos");
+        });
+
+
+        // ==================================================
+        // 7. GERER PRECEDENT ET SUIVANT DU NAVIGATEUR
+        // ==================================================
+        window.addEventListener("popstate", view);
+
+
+        // ==================================================
+        // 8. AFFICHAGE INITIAL
+        // ==================================================
+        view();
 
     </script>
 
