@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<p style="font-size: 40px;">Si vous voulez commandez cliquer sur le boutton commander</p>
+<p id="p1"></p>
+
+<button>Commander</button>
+
+<script>
+const p = document.querySelector("p");
+const p1 = document.querySelector("#p1");
+const btn = document.querySelector("button");
+
+function pause(ms){
+    return new Promise(resolve => setTimeout(resolve,ms));
+}
+
+async function etape() {
+    p.innerHTML = "Machine activée";
+    setInterval(()=>{
+
+    },1000)
+    await pause(4000);
+    p.innerHTML = "Merci de patienté un court instant"  
+    await pause(2000);
+    p.innerHTML = "Commande terminer passer a la caise"
+}
+
+btn.addEventListener("click",()=>{
+    etape();
+})
+
+</script>
+
+</body>
+</html>
+
+<!-- 
+const btn = document.querySelector("button");
+
+function pause(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function test() {
+    document.getElementById("text").textContent = "Chargement...";
+
+    await pause(2000);
+
+    document.getElementById("text").textContent = "Étape 2...";
+
+    await pause(2000);
+
+    document.getElementById("text").textContent = "Terminé ✔";
+}
+
+btn.addEventListener("click",()=>{
+    test();
+}) -->
