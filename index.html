@@ -517,7 +517,7 @@
 
 
 
-
+<!-- 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -643,6 +643,635 @@
         view();
 
     </script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des produits</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f1f1;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .inputs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        input, select {
+            padding: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            min-width: 0;
+        }
+
+        .inputs input {
+            flex: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: #393d5c;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            cursor: pointer;
+        }
+
+        th:last-child {
+            cursor: default;
+        }
+
+        tbody tr:hover {
+            background: #e9e9e9;
+        }
+
+        button {
+            padding: 9px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 3px;
+        }
+
+        .btn-add {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #393d5c;
+            color: white;
+        }
+
+        .btn-cancel {
+            background: #777;
+            color: white;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+        }
+
+        .summary {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .summary div {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px #ccc;
+            font-weight: bold;
+        }
+
+        small {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .delete-animation {
+            background: #ffcccc;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.5s ease;
+        }
+
+        @media(max-width: 750px) {
+            .inputs, .summary {
+                flex-direction: column;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Gestion des produits</h1>
+    <!-- RECHERCHE ET FILTRES -->
+    <div class="inputs">
+        <input type="text" id="search" placeholder="Rechercher un produit...">
+        <input type="number" id="mini" placeholder="Prix minimum" min="0">
+        <input type="number" id="maxi" placeholder="Prix maximum" min="0">
+    </div>
+    <small id="resultat"></small>
+    <!-- TABLEAU -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th data-sort="nom">NOM ↕</th>
+                <th data-sort="categorie">CATÉGORIE ↕</th>
+                <th data-sort="prix">PRIX ↕</th>
+                <th data-sort="stock">STOCK ↕</th>
+                <th data-sort="disponible">DISPONIBILITÉ ↕</th>
+                <th>MONTANT STOCK</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <!-- TOTAUX -->
+    <div class="summary">
+        <div class="totalStock"></div>
+        <div class="montantTotal"></div>
+        <div class="nombreProduits"></div>
+    </div>
+</div>
+
+<script>
+// ==================================================
+// 1. DONNÉES : TABLEAU D'OBJETS
+// ==================================================
+const produits = [
+    {
+        id: 1,
+        nom: "Riz",
+        categorie: "Alimentaire",
+        prix: 15000,
+        stock: 10,
+        disponible: true
+    },
+    {
+        id: 2,
+        nom: "Huile",
+        categorie: "Alimentaire",
+        prix: 1200,
+        stock: 0,
+        disponible: false
+    },
+    {
+        id: 3,
+        nom: "Savon",
+        categorie: "Hygiène",
+        prix: 500,
+        stock: 25,
+        disponible: true
+    },
+    {
+        id: 4,
+        nom: "Lait",
+        categorie: "Alimentaire",
+        prix: 1000,
+        stock: 8,
+        disponible: true
+    },
+    {
+        id: 5,
+        nom: "Shampoing",
+        categorie: "Hygiène",
+        prix: 2500,
+        stock: 5,
+        disponible: true
+    }
+];
+
+
+// ==================================================
+// 2. SÉLECTION DES ÉLÉMENTS HTML
+// ==================================================
+const tbody = document.querySelector("tbody");
+const search = document.querySelector("#search");
+const mini = document.querySelector("#mini");
+const maxi = document.querySelector("#maxi");
+const resultat = document.querySelector("#resultat");
+const totalStock = document.querySelector(".totalStock");
+const montantTotal = document.querySelector(".montantTotal");
+const nombreProduits = document.querySelector(".nombreProduits");
+
+
+// ==================================================
+// 3. VARIABLES DE CONFIGURATION
+// ==================================================
+let ordreCroissant = true;
+let ajoutEnCours = false;
+
+
+// ==================================================
+// 4. AFFICHER LES PRODUITS
+// ==================================================
+function afficherProduits(liste) {
+    tbody.innerHTML = "";
+    if (liste.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8">Aucun produit trouvé</td>
+            </tr>
+        `;
+        return;
+    }
+    liste.forEach(produit => {
+        const ligne = document.createElement("tr");
+        ligne.dataset.id = produit.id;
+        ligne.innerHTML = `
+            <td>${produit.id}</td>
+            <td>${produit.nom}</td>
+            <td>${produit.categorie}</td>
+            <td>${produit.prix} FCFA</td>
+            <td>${produit.stock}</td>
+            <td>
+                ${produit.disponible ? "Disponible" : "Non disponible"}
+            </td>
+            <td>${produit.prix * produit.stock} FCFA</td>
+            <td>
+                <div class="actions">
+                    <button class="btn-edit" data-action="modifier">
+                        Modifier
+                    </button>
+                    <button class="btn-delete" data-action="supprimer">
+                        Supprimer
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.append(ligne);
+    });
+}
+
+
+// ==================================================
+// 5. CALCULER LES TOTAUX AVEC REDUCE()
+// ==================================================
+function calculerTotaux(liste) {
+    // Additionner toutes les quantités en stock.
+    const sommeStock = liste.reduce((total, produit) => {
+        return total + produit.stock;
+    }, 0);
+    // Calculer la valeur totale du stock.
+    const sommeMontant = liste.reduce((total, produit) => {
+        return total + (produit.prix * produit.stock);
+    }, 0);
+    totalStock.textContent = `Total stock : ${sommeStock} produits`;
+    montantTotal.textContent = `Valeur du stock : ${sommeMontant} FCFA`;
+    nombreProduits.textContent = `Nombre de références : ${liste.length}`;
+}
+
+
+// ==================================================
+// 6. AFFICHAGE GÉNÉRAL
+// ==================================================
+function actualiser(liste = produits) {
+    afficherProduits(liste);
+    calculerTotaux(liste);
+    resultat.textContent =
+        `Nombre de produits trouvés : ${liste.length}`;
+}
+
+
+// ==================================================
+// 7. RECHERCHE ET FILTRAGE
+// ==================================================
+
+function filtrerProduits() {
+    const recherche = search.value.trim().toLowerCase();
+    const prixMini = mini.value === "" ? null : Number(mini.value);
+    const prixMaxi = maxi.value === "" ? null : Number(maxi.value);
+    const resultatFiltre = produits.filter(produit => {
+        // Recherche sur plusieurs propriétés.
+        const correspondRecherche =
+            produit.id.toString().includes(recherche) ||
+            produit.nom.toLowerCase().includes(recherche) ||
+            produit.categorie.toLowerCase().includes(recherche) ||
+            produit.prix.toString().includes(recherche) ||
+            produit.stock.toString().includes(recherche) ||
+            (produit.disponible ? "disponible" : "non disponible").includes(recherche);
+        // Filtre par prix minimum.
+        const correspondMini =
+            prixMini === null || produit.prix >= prixMini;
+        // Filtre par prix maximum.
+        const correspondMaxi =
+            prixMaxi === null || produit.prix <= prixMaxi;
+        return correspondRecherche && correspondMini && correspondMaxi;
+    });
+    actualiser(resultatFiltre);
+}
+// Écouter les trois champs.
+search.addEventListener("input", filtrerProduits);
+mini.addEventListener("input", filtrerProduits);
+maxi.addEventListener("input", filtrerProduits);
+
+
+// ==================================================
+// 8. TRIER LES PRODUITS
+// ==================================================
+function trier(propriete) {
+    produits.sort((a, b) => {
+        let resultat;
+        if (propriete === "nom" || propriete === "categorie") {
+            resultat = a[propriete].localeCompare(b[propriete]);
+        }
+        else if (propriete === "disponible") {
+            resultat = Number(a.disponible) - Number(b.disponible);
+        }
+        else {
+            resultat = a[propriete] - b[propriete];
+        }
+        return ordreCroissant ? resultat : -resultat;
+    });
+    ordreCroissant = !ordreCroissant;
+    filtrerProduits();
+}
+// Récupérer tous les titres du tableau.
+const titres = document.querySelectorAll("th[data-sort]");
+titres.forEach(titre => {
+    titre.addEventListener("click", () => {
+        trier(titre.dataset.sort);
+    });
+});
+
+
+// ==================================================
+// 9. AJOUTER UN PRODUIT
+// ==================================================
+const btnAdd = document.createElement("button");
+btnAdd.textContent = "+ Ajouter un produit";
+btnAdd.className = "btn-add";
+document.querySelector("thead tr th:last-child").append(btnAdd);
+btnAdd.addEventListener("click", () => {
+    // Empêcher plusieurs formulaires simultanés.
+    if (ajoutEnCours) return;
+    ajoutEnCours = true;
+    const ligne = document.createElement("tr");
+    ligne.innerHTML = `
+        <td>Auto</td>
+        <td>
+            <input type="text" class="form-input nom" placeholder="Nom">
+        </td>
+        <td>
+            <input type="text" class="form-input categorie" placeholder="Catégorie">
+        </td>
+        <td>
+            <input type="number" class="form-input prix" placeholder="Prix" min="0">
+        </td>
+        <td>
+            <input type="number" class="form-input stock" placeholder="Stock" min="0">
+        </td>
+        <td>
+            <select class="form-input disponible">
+                <option value="true">Disponible</option>
+                <option value="false">Non disponible</option>
+            </select>
+        </td>
+        <td>--</td>
+        <td>
+            <button class="btn-add" data-action="valider">Ajouter</button>
+
+            <button class="btn-cancel" data-action="annuler">Annuler</button>
+        </td>
+    `;
+    tbody.prepend(ligne);
+});
+
+
+// ==================================================
+// 10. GESTION DES ACTIONS DU TABLEAU
+// ==================================================
+// Délégation d'événements : un seul écouteur pour les boutons
+// Ajouter, Annuler, Modifier et Supprimer.
+tbody.addEventListener("click", (event) => {
+    const bouton = event.target.closest("button");
+    if (!bouton) return;
+    const action = bouton.dataset.action;
+    const ligne = bouton.closest("tr");
+    // ----------------------------------------------
+    // ANNULER L'AJOUT
+    // ----------------------------------------------
+    if (action === "annuler") {
+        ligne.remove();
+        ajoutEnCours = false;
+        return;
+    }
+    // ----------------------------------------------
+    // VALIDER L'AJOUT
+    // ----------------------------------------------
+    if (action === "valider") {
+        const nom = ligne.querySelector(".nom").value.trim();
+        const categorie = ligne.querySelector(".categorie").value.trim();
+        const prix = ligne.querySelector(".prix").value;
+        const stock = ligne.querySelector(".stock").value;
+        const disponible = ligne.querySelector(".disponible").value;
+        // Validation des champs.
+        if (!nom || !categorie || prix === "" || stock === "") {
+            alert("Tous les champs sont obligatoires.");
+            return;
+        }
+        // Vérifier les valeurs numériques.
+        if (!Number.isFinite(Number(prix)) ||
+            !Number.isFinite(Number(stock)) ||
+            Number(prix) < 0 ||
+            Number(stock) < 0) {
+            alert("Les valeurs doivent être positives.");
+            return;
+        }
+        // Générer un nouvel identifiant.
+        const nouvelId = Math.max(0, ...produits.map(p => p.id)) + 1;
+        // Construire le nouvel objet.
+        const nouveauProduit = {
+            id: nouvelId,
+            nom: nom,
+            categorie: categorie,
+            prix: Number(prix),
+            stock: Number(stock),
+            disponible: stock === "0" ? false : disponible === "true"
+        };
+        // Ajouter au début du tableau.
+        produits.unshift(nouveauProduit);
+        ajoutEnCours = false;
+        filtrerProduits();
+        return;
+    }
+    // ----------------------------------------------
+    // SUPPRIMER UN PRODUIT
+    // ----------------------------------------------
+    if (action === "supprimer") {
+        const id = Number(ligne.dataset.id);
+        if (!confirm("Voulez-vous vraiment supprimer ce produit ?")) {
+            return;
+        }
+        // Animation de suppression.
+        ligne.classList.add("delete-animation");
+        ligne.addEventListener("transitionend", () => {
+            // Trouver la position du produit.
+            const index = produits.findIndex(produit => produit.id === id);
+            // Supprimer du tableau.
+            if (index !== -1) {
+                produits.splice(index, 1);
+            }
+            filtrerProduits();
+        }, { once: true });
+        return;
+    }
+    // ----------------------------------------------
+    // MODIFIER UN PRODUIT
+    // ----------------------------------------------
+    if (action === "modifier") {
+        const id = Number(ligne.dataset.id);
+        const produit = produits.find(p => p.id === id);
+        if (!produit) return;
+        // Transformer les cellules en champs.
+        ligne.innerHTML = `
+            <td>${produit.id}</td>
+            <td>
+                <input class="form-input nom" value="${produit.nom}">
+            </td>
+            <td>
+                <input class="form-input categorie" value="${produit.categorie}">
+            </td>
+            <td>
+                <input type="number" class="form-input prix" value="${produit.prix}" min="0">
+            </td>
+            <td>
+                <input type="number" class="form-input stock" value="${produit.stock}" min="0">
+            </td>
+            <td>
+                <select class="form-input disponible">
+                    <option value="true" ${produit.disponible ? "selected" : ""}>
+                        Disponible
+                    </option>
+                    <option value="false" ${!produit.disponible ? "selected" : ""}>
+                        Non disponible
+                    </option>
+                </select>
+            </td>
+            <td>--</td>
+            <td>
+                <button class="btn-add" data-action="enregistrer">
+                    Enregistrer
+                </button>
+                <button class="btn-cancel" data-action="annuler-modification">
+                    Annuler
+                </button>
+            </td>
+        `;
+        // Conserver les valeurs originales pour annuler.
+        ligne.dataset.modification = JSON.stringify(produit);
+        return;
+    }
+    // ----------------------------------------------
+    // ANNULER LA MODIFICATION
+    // ----------------------------------------------
+    if (action === "annuler-modification") {
+        const original = JSON.parse(ligne.dataset.modification);
+        Object.assign(
+            produits.find(p => p.id === original.id),
+            original
+        );
+        filtrerProduits();
+        return;
+    }
+    // ----------------------------------------------
+    // ENREGISTRER LA MODIFICATION
+    // ----------------------------------------------
+    if (action === "enregistrer") {
+        const id = Number(ligne.dataset.id);
+        const produit = produits.find(p => p.id === id);
+        if (!produit) return;
+        const nom = ligne.querySelector(".nom").value.trim();
+        const categorie = ligne.querySelector(".categorie").value.trim();
+        const prix = ligne.querySelector(".prix").value;
+        const stock = ligne.querySelector(".stock").value;
+        const disponible = ligne.querySelector(".disponible").value;
+        if (!nom || !categorie || prix === "" || stock === "") {
+            alert("Tous les champs sont obligatoires.");
+            return;
+        }
+        if (!Number.isFinite(Number(prix)) ||
+            !Number.isFinite(Number(stock)) ||
+            Number(prix) < 0 ||
+            Number(stock) < 0) {
+            alert("Les valeurs doivent être positives.");
+            return;
+        }
+        // Modifier les propriétés de l'objet existant.
+        produit.nom = nom;
+        produit.categorie = categorie;
+        produit.prix = Number(prix);
+        produit.stock = Number(stock);
+        produit.disponible =
+            stock === "0" ? false : disponible === "true";
+        filtrerProduits();
+    }
+});
+
+
+// ==================================================
+// 11. AFFICHAGE INITIAL
+// ==================================================
+actualiser(produits);
+</script>
 
 </body>
 </html>
