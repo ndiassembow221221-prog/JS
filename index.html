@@ -2058,7 +2058,7 @@ chargerNiveau(0);
 
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -2569,6 +2569,377 @@ ActualiserBoutons();
 
 ActualiserBoutons();
 </script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+
+        .titreeee {
+            font-size: 40px;
+            margin-bottom: 46px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 70%;
+            height: 80vh;
+            display: flex;
+            gap: 15px;
+        }
+
+        .tri {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 1%;
+            border-radius: 15px;
+            overflow-y: auto;
+            box-shadow: 0 0 5px gray;
+        }
+
+        .taches {
+            border-top: 1px solid rgb(9, 9, 153);
+            border-left: 2px solid rgb(9, 9, 153);
+            box-shadow: 0 0 5px rgb(9, 9, 153);
+        }
+
+        .cours {
+            border-bottom: 1px solid rgb(243, 131, 2);
+            border-left: 2px solid rgb(243, 131, 2);
+            box-shadow: 0 0 5px rgb(243, 131, 2);
+        }
+
+        .termine {
+            border-top: 1px solid rgba(2, 143, 49, 0.74);
+            border-right: 2px solid rgba(2, 143, 49, 0.74);
+            box-shadow: 0 0 5px rgba(2, 143, 49, 0.74);
+        }
+
+        h2 {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: rgb(9, 9, 153);
+            text-align: center;
+        }
+
+        .cours h2 {
+            color: rgb(243, 131, 2);
+        }
+
+        .termine h2 {
+            color: rgba(2, 143, 49, 0.74);
+        }
+
+        h3 {
+            padding: 2% 10%;
+            text-align: center;
+        }
+
+        .description {
+            padding: 5%;
+            text-align: justify;
+        }
+
+        .tache {
+            flex: none;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 0 5px gray;
+        }
+
+        .etat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5%;
+            padding-top: 16px;
+        }
+
+        .btnFlecheDroite,
+        .btnFlecheGauche {
+            cursor: pointer;
+            padding: 5px 25px;
+            border: none;
+            border-radius: 10px;
+            background-color: rgb(248, 248, 248);
+            box-shadow: 0 0 5px gray;
+        }
+
+        .btnFlecheGauche {
+            display: none;
+        }
+
+        .termine .btnFlecheDroite {
+            display: none;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 5px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        @media(max-width: 800px) {
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+            }
+
+            .tri {
+                min-height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="titreeee">TODO LIST</div>
+    <div class="container">
+        <div class="taches tri">
+            <h2>
+                <i class="fa-solid fa-arrow-down-wide-short"></i>
+                <span>
+                    <i class="fa-solid fa-list-ul"></i>
+                    A Faire
+                </span>
+                <i class="fa-solid fa-arrow-down-short-wide"></i>
+            </h2>
+            <div class="tache">
+                <h3 class="titre">Ma première tâche</h3>
+                <div class="description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+                <div class="etat">
+                    <button class="btnFlecheGauche"><i class="fa-solid fa-angles-left"></i></button>
+                    <button class="btnFlecheDroite"><i class="fa-solid fa-angles-right"></i></button>
+                </div>
+            </div>
+            <div class="tache">
+                <h3 class="titre">Ma deuxième tâche</h3>
+                <div class="description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+                <div class="etat">
+                    <button class="btnFlecheGauche"><i class="fa-solid fa-angles-left"></i></button>
+                    <button class="btnFlecheDroite"><i class="fa-solid fa-angles-right"></i></button>
+                </div>
+            </div>
+            <div class="tache">
+                <h3 class="titre">Ma troisième tâche</h3>
+                <div class="description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+                <div class="etat">
+                    <button class="btnFlecheGauche"><i class="fa-solid fa-angles-left"></i></button>
+                    <button class="btnFlecheDroite"><i class="fa-solid fa-angles-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="cours tri">
+            <h2>
+                <i class="fa-solid fa-arrow-down-wide-short"></i>
+                <span>
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    En Cours
+                </span>
+                <i class="fa-solid fa-arrow-down-short-wide"></i>
+            </h2>
+            <div class="tache">
+                <h3 class="titre">Ma quatrième tâche</h3>
+                <div class="description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+                <div class="etat">
+                    <button class="btnFlecheGauche"><i class="fa-solid fa-angles-left"></i></button>
+                    <button class="btnFlecheDroite"><i class="fa-solid fa-angles-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="termine tri">
+            <h2>
+                <i class="fa-solid fa-arrow-down-wide-short"></i>
+                <span>
+                    <i class="fa-solid fa-check-double"></i>
+                    Terminé
+                </span>
+                <i class="fa-solid fa-arrow-down-short-wide"></i>
+            </h2>
+            <div class="tache">
+                <h3 class="titre">Ma cinquième tâche</h3>
+                <div class="description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+                <div class="etat">
+                    <button class="btnFlecheGauche"><i class="fa-solid fa-angles-left"></i></button>
+                    <button class="btnFlecheDroite"><i class="fa-solid fa-angles-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const $ = element => document.querySelector(element);
+        const $$ = element => document.querySelectorAll(element);
+
+        const container = $(".container");
+        const taches = $(".taches");
+        const cours = $(".cours");
+        const termine = $(".termine");
+
+        function updateButtons(tache) {
+            const gauche = tache.querySelector(".btnFlecheGauche");
+            const droite = tache.querySelector(".btnFlecheDroite");
+            gauche.style.display = tache.parentElement === taches ? "none" : "inline-block";
+            droite.style.display = tache.parentElement === termine ? "none" : "inline-block";
+        }
+
+        $$(".tache").forEach(updateButtons);
+        container.addEventListener("click", event => {
+            const bouton = event.target.closest("button");
+            if (!bouton) return;
+            const tache = bouton.closest(".tache");
+            if (!tache) return;
+            const colonne = tache.parentElement;
+            if (bouton.classList.contains("btnFlecheDroite")) {
+                if (colonne === taches) {
+                    cours.append(tache);
+                } else if (colonne === cours) {
+                    termine.append(tache);
+                }
+            }
+            if (bouton.classList.contains("btnFlecheGauche")) {
+                if (colonne === termine) {
+                    cours.append(tache);
+                } else if (colonne === cours) {
+                    taches.append(tache);
+                }
+            }
+            updateButtons(tache);
+        });
+        function modifierTexte(element, type) {
+            if (element.querySelector("input, textarea")) return;
+            const champ = document.createElement(type);
+            champ.value = element.textContent.trim();
+            element.textContent = "";
+            element.append(champ);
+            champ.focus();
+            champ.addEventListener("blur", () => {
+                element.textContent = champ.value;
+            });
+            if (type === "input") {
+                champ.addEventListener("keydown", event => {
+                    if (event.key === "Enter") {
+                        champ.blur();
+                    }
+                });
+            }
+        }
+        container.addEventListener("dblclick", event => {
+            if (event.target.classList.contains("titre")) {
+                modifierTexte(event.target, "input");
+            }
+            if (event.target.classList.contains("description")) {
+                modifierTexte(event.target, "textarea");
+            }
+        });
+        /*
+        ==========================================================
+        COMMENT SÉPARER CE FICHIER EN TROIS FICHIERS ?
+        ==========================================================
+        ACTUELLEMENT :
+        Tout le code est dans index.html.
+        1. index.html
+           Contient uniquement la structure HTML.
+           On conserve les liens vers les fichiers CSS et JS :
+           <link rel="stylesheet" href="style.css">
+           <achapscript src="script.js" defer></achapscript>
+        2. style.css
+           On déplace tout le contenu situé entre :
+           <style>
+               ...
+           </style>
+           On copie uniquement les règles CSS, sans les balises
+           <style>.
+        3. script.js
+           On déplace tout le contenu situé entre :
+           <script>
+               ...
+           </>
+           On copie uniquement le JavaScript, sans les balises
+           <script>.
+        POURQUOI SÉPARER ?
+        - HTML : structure et contenu de la page.
+        - CSS : présentation et mise en forme.
+        - JavaScript : comportement et interactions.
+        AVANTAGE :
+        Chaque fichier a une responsabilité précise.
+        Le code est plus facile à maintenir, tester et faire évoluer.
+        IMPORTANT :
+        Les trois fichiers doivent être dans le même dossier
+        si les chemins utilisés sont simplement style.css et script.js.
+        ==========================================================
+        */
+    </script>
 
 </body>
 </html>
