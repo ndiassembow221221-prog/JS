@@ -1,0 +1,167 @@
+{
+  "passagers": [
+    {
+      "id": "1",
+      "nom": "Amadou Diallo",
+      "email": "amadou@gmail.com",
+      "telephone": "771234567",
+      "motDePasse": "1234",
+      "ville": "Dakar"
+    },
+    {
+      "id": "2",
+      "nom": "Fatou Ndiaye",
+      "email": "fatou@gmail.com",
+      "telephone": "781112233",
+      "motDePasse": "abcd",
+      "ville": "Thiès"
+    },
+    {
+      "id": "3",
+      "nom": "Me221",
+      "email": "Me221@gmail.com",
+      "telephone": "770886756",
+      "motDePasse": "1es2e3s4",
+      "ville": "Kaolack"
+    },
+    {
+      "id": "4",
+      "nom": "Ndiasse MBOW",
+      "email": "ndiassembow@gmail.com",
+      "telephone": "779070987",
+      "motDePasse": "A221A221A221",
+      "ville": "Dakar"
+    }
+  ],
+  "conducteurs": [
+    {
+      "id": "1",
+      "nom": "Amadou",
+      "email": "amadou@gmail.com",
+      "telephone": "779876756",
+      "motDePasse": "Amadou221",
+      "ancienete": 8,
+      "lieu": "Dakar, SN",
+      "localisation": true
+    },
+    {
+      "id": "2",
+      "nom": "Modou",
+      "email": "modou@gmail.com",
+      "telephone": "769836706",
+      "motDePasse": "Modou221",
+      "ancienete": 4,
+      "lieu": "Dakar, SN",
+      "localisation": false
+    }
+  ],
+  "vehicules": [
+    {
+      "id": "1",
+      "idVehicule": "1",
+      "name": "Bus",
+      "capacite": 35,
+      "matricule": "DK-7893",
+      "idConducteur": "2"
+    },
+    {
+      "id": "2",
+      "idVehicule": "2",
+      "name": "Bus",
+      "capacite": 45,
+      "matricule": "DK12343",
+      "idConducteur": "1"
+    },
+    {
+      "id": "3",
+      "idVehicule": "3",
+      "name": "Peugeot 508",
+      "capacite": 4,
+      "matricule": "DK-1204-A",
+      "idConducteur": "1"
+    }
+  ],
+  "trajets": [
+    {
+      "id": "1",
+      "idConducteur": "1",
+      "depart": "Dakar",
+      "arrivee": "Saint-Louis",
+      "date": "2026-12-05T14:30",
+      "prix": 3500,
+      "places": 4,
+      "statut": "programme"
+    },
+    {
+      "id": "2",
+      "idConducteur": "1",
+      "depart": "Thiès",
+      "arrivee": "Touba",
+      "date": "2026-12-06T08:00",
+      "prix": 2500,
+      "places": 3,
+      "statut": "programme"
+    },
+    {
+      "id": "3",
+      "idConducteur": "2",
+      "depart": "Dakar",
+      "arrivee": "Mbour",
+      "date": "2026-12-05T17:00",
+      "prix": 2000,
+      "places": 5,
+      "statut": "programme"
+    },
+    {
+      "id": "4",
+      "idConducteur": "1",
+      "depart": "Dakar",
+      "arrivee": "Mbour",
+      "date": "2026-05-12T09:00",
+      "prix": 24500,
+      "places": 4,
+      "statut": "termine"
+    }
+  ],
+  "reservations": [
+    {
+      "id": "1",
+      "idTrajet": "1",
+      "idPassager": "2",
+      "places": 2,
+      "statut": "en attente"
+    },
+    {
+      "id": "2",
+      "idTrajet": "2",
+      "idPassager": "3",
+      "places": 1,
+      "statut": "en attente"
+    },
+    {
+      "id": "3",
+      "idTrajet": "4",
+      "idPassager": "1",
+      "places": 1,
+      "statut": "terminee"
+    }
+  ],
+  "avis": [
+    {
+      "id": "1",
+      "idConducteur": "1",
+      "idPassager": "1",
+      "note": 5,
+      "texte": "Conduite très souple et chauffeur très ponctuel."
+    }
+  ],
+  "admins": [
+    {
+      "id": "1",
+      "nom": "Ndiasse MBOW",
+      "email": "admin@nudem.sn",
+      "motDePasse": "admin",
+      "ville": "Dakar"
+    }
+  ]
+}

@@ -1,0 +1,966 @@
+
+// const data = await rep.json();
+// console.log("Inscription réussie:", data);
+
+// class Conducteur {
+//   constructor(id, nom, tel, email, ancienete, lieu, localisation = false) {
+//     this.id = id;
+//     this.nom = nom;
+//     this.tel = tel;
+//     this.email = email;
+//     this.ancienete = parseInt(ancienete) || 0; 
+//     this.lieu = lieu;
+//     this.localisation = localisation;
+//   }
+//   estPremium() {
+//     return this.ancienete >= 5;
+//   }
+//   genererMessageAlerte() {
+//     return `Alerte : Le conducteur ${this.nom} (${this.tel}) est disponible à ${this.lieu}.`;
+//   }
+// }
+
+// class Vehicule {
+//   constructor(idVehicule, capacite, mat, idConducteurs) {
+//     this.idVehicule = idVehicule;
+//     this.capacite = capacite;
+//     this.mat = mat;
+//     this.idConducteurs = idConducteurs;
+//   }
+//   estAutobus() {
+//     return this.capacite > 30; 
+//   }
+// }
+
+// const donneeApi = { 
+//   id: 1, 
+//   nom: "Amadou", 
+//   tel: "779876756", 
+//   email: "amadou@gmail.com", 
+//   ancienete: "8 ans", 
+//   lieu: "Dakar, SN", 
+//   localisation: true 
+// };
+
+// const conducteur1 = new Conducteur(
+//   donneeApi.id,
+//   donneeApi.nom,
+//   donneeApi.tel,
+//   donneeApi.email,
+//   donneeApi.ancienete,
+//   donneeApi.lieu,
+//   donneeApi.localisation
+// );
+// console.log(conducteur1.estPremium()); 
+// console.log(conducteur1.genererMessageAlerte()); 
+
+// class Conducteur {
+//   constructor(id, nom, tel, email, ancienete, lieu, localisation = false) {
+//     this.id = id;
+//     this.nom = nom;
+//     this.tel = tel;
+//     this.email = email;
+//     this.ancienete = parseInt(ancienete) || 0;
+//     this.lieu = lieu;
+//     this.localisation = localisation;
+//   }
+//   static fromJSON(json) {
+//     return new Conducteur(json.id, json.nom, json.tel, json.email, json.ancienete, json.lieu, json.localisation);
+//   }
+//   presenter() {
+//     return `Conducteur: ${this.nom}`;
+//   }
+// }
+
+// class Vehicule {
+//   constructor(idVehicule, capacite, mat, idConducteurs) {
+//     this.idVehicule = idVehicule;
+//     this.capacite = capacite;
+//     this.mat = mat;
+//     this.idConducteurs = idConducteurs;
+//   }
+//   static fromJSON(json) {
+//     return new Vehicule(json.idVehicule, json.capacite, json.mat, json.idConducteurs);
+//   }
+// }
+
+// async function chargerEtManipulerDonnees() {
+//   const reponseConducteurs = await fetch("http://localhost:3000/conducteurs");
+//   const listeBrute = await reponseConducteurs.json();
+//   const conducteursActifs = listeBrute.map(item => Conducteur.fromJSON(item));
+//   console.log("Liste des conducteurs premiums");
+//   conducteursActifs.forEach(conducteur => {
+//     if (conducteur.estPremium()) {
+//       console.log(`${conducteur.nom} est premium (${conducteur.ancienete} ans d'expérience)`);
+//     }
+//   });
+// }
+// chargerEtManipulerDonnees();
+
+// const service = new ConducteurService();
+
+// async function executerDemo() {
+//   console.log("1. Affichage de départ");
+//   const listeDepart = await service.obtenirTous();
+//   console.log(listeDepart);
+
+//   console.log("\n2. Ajout d'un conducteur");
+//   const nouveau = {
+//     nom: "Fatou",
+//     tel: "701234567",
+//     email: "fatou@gmail.com",
+//     ancienete: "1 an",
+//     lieu: "Thies, SN"
+//   };
+//   const conducteurAjoute = await service.ajouter(nouveau);
+//   console.log("Ajouté :", conducteurAjoute);
+
+//   console.log("\n3. Modification du conducteur (id: 2)");
+//   const modifications = { lieu: "Saint-Louis, SN", localisation: true };
+//   const conducteurModifie = await service.modifier("2", modifications);
+//   console.log("Modifié :", conducteurModifie);
+
+//   console.log("\n4. Suppression du conducteur (id: 1)");
+//   const resultatSuppression = await service.supprimer("1");
+//   console.log(resultatSuppression.message);
+
+//   console.log("\n5. Affichage final");
+//   const listeFinale = await service.obtenirTous();
+//   console.log(listeFinale);
+// }
+
+// executerDemo();
+
+// class ConducteurService {
+//   constructor() {
+//     this.apiUrl = "http://localhost:3000/conducteurs";
+//   }
+//   async obtenirTous() {
+//     try {
+//       const reponse = await fetch(this.apiUrl);
+//       if (!reponse.ok) throw new Error("Erreur de récupération");
+//       return await reponse.ok ? reponse.json() : [];
+//     } catch (erreur) {
+//       console.error("Erreur:", erreur);
+//     }
+//   }
+
+//   async ajouter(nouveauConducteur) {
+//     try {
+//       const reponse = await fetch(this.apiUrl, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(nouveauConducteur)
+//       });
+//       return await reponse.json();
+//     } catch (erreur) {
+//       console.error("Erreur d'ajout:", erreur);
+//     }
+//   }
+
+//   async modifier(id, donneesModifiees) {
+//     try {
+//       const reponse = await fetch(`${this.apiUrl}/${id}`, {
+//         method: "PATCH", // PATCH modifie uniquement les champs envoyés
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(donneesModifiees)
+//       });
+//       return await reponse.json();
+//     } catch (erreur) {
+//       console.error("Erreur de modification:", erreur);
+//     }
+//   }
+
+//   async supprimer(id) {
+//     try {
+//       const reponse = await fetch(`${this.apiUrl}/${id}`, {
+//         method: "DELETE"
+//       });
+//       if (!reponse.ok) throw new Error("Impossible de supprimer");
+//       return { message: `Conducteur ${id} supprimé avec succès` };
+//     } catch (erreur) {
+//       console.error("Erreur de suppression:", erreur);
+//     }
+//   }
+// }
+
+
+
+
+/* 
+Documentation des animations — conducteur.css
+
+Vue d'ensemble
+
+Le fichier conducteur.css centralise 19 effets d'animation répartis en trois catégories :
+@keyframes (animations déclenchées au chargement ou en boucle), transition (effets au survol / interaction), et animations JS (suppression de lignes de tableau).
+
+Tous les timings partagent trois variables globales :
+
+VariableValeurUtilisation--t-fast150msMicro-interactions (hover, focus)--t-base250msEntrées de composants, transitions d'état--t-slow400msEntrées de blocs entiers (sidebar, corps)--ease-outcubic-bezier(0.16, 1, 0.3, 1)Courbe "spring" pour les sorties rapides
+
+
+Animations de chargement de page (entrées orchestrées)
+
+Les animations d'entrée forment une séquence en cascade : la sidebar arrive en premier, puis les blocs du corps apparaissent avec des délais croissants (animation-delay), donnant l'impression d'un chargement progressif et fluide.
+
+
+ANIM-1 — Glissement de la sidebar depuis la gauche
+
+css#sidBar {
+  animation: slideInLeft var(--t-slow) var(--ease-out) both;
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+Déclencheur : Chargement de la page (Conducteur1 ou Conducteur2).
+
+Durée : 400 ms.
+
+Effet : La barre latérale entre en glissant depuis le bord gauche de l'écran, accompagnée d'un fondu.
+
+Rôle UX : Ancre visuellement la navigation avant que le contenu principal n'apparaisse.
+
+
+ANIM-2 — Fondu décalé du profil utilisateur (sidebar)
+
+css.profilUser {
+  animation: fadeUp var(--t-base) var(--ease-out) 200ms both;
+}
+
+Déclencheur : Chargement, avec un délai de 200 ms après la sidebar.
+
+Durée : 250 ms.
+
+Effet : Le bloc "Conducteur / Nu Dem" monte légèrement depuis le bas en apparaissant.
+
+Rôle UX : Crée une lecture ordonnée de haut en bas dans la sidebar.
+
+
+ANIM-3 — Fondu du bloc voyageur (sidebar)
+
+css.voy {
+  animation: fadeUp var(--t-base) var(--ease-out) 280ms both;
+}
+
+Déclencheur : Chargement, délai 280 ms.
+
+Durée : 250 ms.
+
+Keyframes utilisés : fadeUp (translateY -10 → 0 + opacity 0 → 1).
+
+Rôle UX : Troisième étape de la cascade sidebar.
+
+
+ANIM-4 — Jiggle de l'icône Déconnexion au hover
+
+css#dec:hover i {
+  animation: jiggle 0.4s ease;
+}
+@keyframes jiggle {
+  0%,100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-12deg); }
+  75%      { transform: rotate(10deg); }
+}
+
+Déclencheur : Survol du bouton Déconnexion.
+
+Durée : 400 ms, joué une seule fois.
+
+Effet : L'icône flèche "tremble" légèrement comme pour confirmer l'intention.
+
+Rôle UX : Feedback joueur sur une action irréversible, attire l'attention sans alarmer.
+
+
+ANIM-5 — Fondu d'entrée du corps principal
+
+css#corps {
+  animation: fadeIn var(--t-slow) var(--ease-out) 120ms both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+Déclencheur : Chargement, délai 120 ms.
+
+Durée : 400 ms.
+
+Effet : Simple fondu, sans déplacement, pour ne pas perturber la grille.
+
+Rôle UX : Fait apparaître tout le contenu droit de manière douce.
+
+
+ANIM-6 — Rotation du logo au chargement
+
+css#log {
+  animation: spinIn 0.6s var(--ease-out) 400ms both;
+}
+@keyframes spinIn {
+  from { transform: rotate(-180deg) scale(0.5); opacity: 0; }
+  to   { transform: rotate(0deg)    scale(1);   opacity: 1; }
+}
+
+Déclencheur : Chargement, délai 400 ms (arrive en dernier dans la séquence).
+
+Durée : 600 ms.
+
+Effet : Le logo tourne de -180° à 0° en s'agrandissant depuis la moitié de sa taille.
+
+Rôle UX : Signature visuelle mémorable ; attire l'œil vers l'identité de l'application.
+
+
+ANIM-7 — Zoom d'entrée de l'avatar conducteur (Conducteur2)
+
+css.avatar-lg {
+  animation: popIn 0.4s var(--ease-out) 460ms both;
+}
+@keyframes popIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+Déclencheur : Chargement de Conducteur2, délai 460 ms.
+
+Durée : 400 ms.
+
+Effet : Le grand avatar "jaillit" depuis 60% de sa taille.
+
+Rôle UX : Met en valeur l'identité du conducteur dès l'ouverture du profil.
+
+
+Animations en boucle (états persistants)
+
+
+ANIM-9 — Pulsation du point "En ligne"
+
+css.dot-online {
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0   rgba(34,197,94,.5); }
+  50%      { box-shadow: 0 0 0 6px rgba(34,197,94,0);  }
+}
+
+Déclencheur : Toujours actif quand le conducteur est en ligne.
+
+Durée : 2 s, boucle infinie.
+
+Effet : Un halo vert s'étend et se dissout autour du point de statut.
+
+Rôle UX : Signal "vivant" qui indique une connexion active sans être intrusif.
+
+
+ANIM-18 — Flottement du badge GPS
+
+css.gps-badge {
+  animation: floatBadge 3s ease-in-out infinite;
+}
+@keyframes floatBadge {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+Déclencheur : Toujours actif sur la carte GPS (Conducteur1).
+
+Durée : 3 s, boucle infinie.
+
+Effet : Le badge "Suivi GPS Actif" flotte de 4 px vers le haut et revient.
+
+Rôle UX : Donne vie à la carte, attire l'attention sur le statut GPS sans masquer le fond.
+
+
+Transitions d'interaction (hover / focus / état)
+
+
+ANIM-3 (transition) — Navigation sidebar au survol
+
+css.reservation, .profil {
+  transition:
+    background    var(--t-fast) ease,
+    color         var(--t-fast) ease,
+    border-color  var(--t-fast) ease;
+}
+.reservation:hover {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+Déclencheur : Survol d'un item de navigation.
+
+Durée : 150 ms.
+
+Effet : Le fond passe au vert clair, le texte et l'icône passent au vert.
+
+Rôle UX : Affordance claire sans clignotement brutal.
+
+
+ANIM-10 & 11 — Toggle switch (fond + pastille)
+
+css.slider {
+  transition: background var(--t-base) ease;        /* ANIM-10 
+}
+.slider::before {
+  transition: transform var(--t-base) var(--ease-out); /* ANIM-11 
+}
+.toggle input:checked + .slider { background: var(--green); }
+.toggle input:checked + .slider::before { transform: translateX(20px); }
+
+Déclencheur : Clic sur le toggle "Partage de localisation".
+
+Durée : 250 ms.
+
+Effet : Le fond passe de gris à vert (ANIM-10) et la pastille glisse vers la droite avec un rebond léger grâce à ease-out (ANIM-11).
+
+Rôle UX : Communique clairement l'état ON/OFF avec un mouvement physique intuitif.
+
+
+ANIM-12 — Micro-interaction bouton "Ajouter un véhicule"
+
+css.add-btn {
+  transition: opacity var(--t-fast) ease, transform var(--t-fast) ease;
+}
+.add-btn:hover  { opacity: .75; transform: scale(1.05); }
+.add-btn:active { transform: scale(0.97); }
+
+Déclencheur : Survol puis clic.
+
+Durée : 150 ms.
+
+Effet : Légère réduction d'opacité + zoom au survol ; compression à l'appui.
+
+Rôle UX : Retour haptique visuel qui confirme la cliquabilité.
+
+
+ANIM-13 — Lift des cartes véhicule au survol
+
+css.vehicle-item {
+  transition:
+    box-shadow   var(--t-fast) ease,
+    transform    var(--t-fast) ease,
+    border-color var(--t-fast) ease;
+}
+.vehicle-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  border-color: var(--green);
+}
+
+Déclencheur : Survol d'un véhicule dans la liste.
+
+Durée : 150 ms.
+
+Effet : La carte se soulève de 2 px, une ombre apparaît, la bordure vire au vert.
+
+Rôle UX : Indique que l'élément est interactif et sélectionnable.
+
+
+ANIM-14 — Bouton CTA "Publier un trajet"
+
+css.btn-primary {
+  transition:
+    background var(--t-fast) ease,
+    transform  var(--t-fast) ease,
+    box-shadow var(--t-fast) ease;
+}
+.btn-primary:hover {
+  background: var(--green-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45,122,79,.35);
+}
+.btn-primary:active { transform: translateY(0); box-shadow: none; }
+
+Déclencheur : Survol puis appui.
+
+Durée : 150 ms.
+
+Effet : Monte de 1 px + ombre verte au survol ; descend à la position d'origine à l'appui.
+
+Rôle UX : Donne un sentiment de "pression physique" au bouton le plus important.
+
+
+ANIM-15 — Survol des lignes du tableau trajets
+
+css.trajets-table tbody tr {
+  transition: background var(--t-fast) ease;
+}
+.trajets-table tbody tr:hover { background: var(--gray-bg); }
+
+Déclencheur : Survol d'une ligne de trajet.
+
+Durée : 150 ms.
+
+Effet : Le fond de la ligne passe au gris très clair.
+
+Rôle UX : Aide à lire les tableaux denses en soulignant la ligne active.
+
+
+ANIM-16 — Icônes d'action (modifier / supprimer)
+
+css.action-btn {
+  transition: background var(--t-fast) ease, color var(--t-fast) ease, transform var(--t-fast) ease;
+}
+.action-btn:hover     { background: var(--gray-bg); color: var(--green); transform: scale(1.15); }
+.action-btn.del:hover { color: var(--red); background: var(--red-light); }
+
+Déclencheur : Survol des boutons icônes dans le tableau.
+
+Durée : 150 ms.
+
+Effet : Zoom + changement de couleur (vert pour édition, rouge pour suppression).
+
+Rôle UX : Différencie les actions destructives des actions neutres par la couleur.
+
+
+ANIM-17 — Hover sur les items d'historique
+
+css.history-item {
+  transition: background var(--t-fast) ease;
+}
+.history-item:hover { background: var(--gray-bg); padding-left: 6px; border-radius: 6px; }
+
+Déclencheur : Survol d'un trajet passé.
+
+Durée : 150 ms.
+
+Effet : Fond gris clair + léger décalage gauche qui suggère un "slide in".
+
+Rôle UX : Rend lisible une liste sans tableau formel.
+
+
+ANIM-19 — Disparition des lignes de demande (JS)
+
+js// Dans Conducteur1.afterRender()
+row.style.transition = 'opacity 300ms ease';
+row.style.opacity = '0';
+setTimeout(() => row.remove(), 310);
+
+Déclencheur : Clic sur "Accepter" (fondu simple) ou "Refuser" (fondu rouge).
+
+Durée : 300 ms, puis suppression du DOM après 310 ms.
+
+Effet accepter : La ligne disparaît en opacité.
+
+Effet refuser : La ligne vire au fond rouge (#fdecea) puis disparaît.
+
+Rôle UX : Confirme l'action sans rechargement de page et prévient toute ambiguïté.
+
+
+Accessibilité — prefers-reduced-motion
+
+css@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1     !important;
+    transition-duration:      0.01ms !important;
+  }
+}
+
+Quand l'utilisateur active la préférence système "Réduire les animations" (macOS, iOS, Android, Windows), toutes les animations et transitions sont désactivées instantanément. L'interface reste entièrement fonctionnelle ; seuls les mouvements sont supprimés.
+
+Cette règle respecte les directives WCAG 2.1 — critère 2.3.3 (Animation due à des interactions).
+
+
+Récapitulatif rapide
+
+IDÉlémentTypeDuréeDéclencheurANIM-1Sidebar@keyframes entrée400 msChargementANIM-2.profilUser@keyframes entrée250 ms + 200 ms délaiChargementANIM-3Items nav sidebartransition hover150 msSurvolANIM-4Icône déconnexion@keyframes hover400 msSurvolANIM-5Corps principal@keyframes entrée400 ms + 120 ms délaiChargementANIM-6Logo #log@keyframes rotation600 ms + 400 ms délaiChargementANIM-7Avatar .avatar-lg@keyframes zoom400 ms + 460 ms délaiChargement (C2)ANIM-8.card génériques@keyframes fadeUp250 msChargementANIM-9Point en ligne@keyframes infini2 s ∞PermanentANIM-10Fond toggletransition état250 msClic checkboxANIM-11Pastille toggletransition état250 msClic checkboxANIM-12Btn ajouter véhiculetransition hover+active150 msSurvol / ClicANIM-13Item véhiculetransition hover150 msSurvolANIM-14Btn CTA primairetransition hover+active150 msSurvol / ClicANIM-15Lignes tableau trajetstransition hover150 msSurvolANIM-16Icônes action tableautransition hover150 msSurvolANIM-17Items historiquetransition hover150 msSurvolANIM-18Badge GPS@keyframes infini3 s ∞Permanent (C1)ANIM-19Lignes demandesJS inline style300 msClic bouton */
+
+/* ╔══════════════════════════════════════════════════════════════════════╗
+//    ║          DOCUMENTATION CSS TRANSFORM – COMPLÈTE (2D & 3D)           ║
+//    ╚══════════════════════════════════════════════════════════════════════╝
+
+//   La propriété CSS `transform` modifie l'apparence visuelle d'un élément
+//   dans l'espace (2D ou 3D) SANS perturber le flux du document.
+//   Les autres éléments ne "voient" pas le déplacement : aucun reflow.
+
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   A. SYNTAXE DE BASE
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+//     .element {
+//       transform: fonction1(...) fonction2(...);
+//     }
+
+//   Plusieurs fonctions sont chaînées séparées par un espace.
+//   Elles s'appliquent DE DROITE À GAUCHE (ordre mathématique des matrices).
+
+//   Exemple :
+//     transform: rotate(45deg) translateX(100px);
+//     → d'abord translateX(100px), ENSUITE rotate(45deg)
+//     (l'élément se déplace à 100px dans son propre axe X avant d'être pivoté)
+
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   B. TRANSFORMS 2D
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+//   1. translate(x, y) / translateX(x) / translateY(y)
+//      ─────────────────────────────────────────────────
+//      Déplace l'élément sur les axes X et/ou Y.
+//      Unités : px, %, em, rem, vw, vh…
+//      Le % est relatif à la TAILLE DE L'ÉLÉMENT LUI-MÊME (pas du parent).
+
+//      transform: translate(50px, -20px);     /* droite 50, haut 20 *
+//      transform: translateX(50%);            /* 50% de sa propre largeur *
+//      transform: translateY(-100%);          /* monte de sa propre hauteur *
+
+//      Usage classique : centrage absolu
+//        position: absolute; top: 50%; left: 50%;
+//        transform: translate(-50%, -50%);    /* recule de sa propre moitié 
+
+//   2. scale(x, y) / scaleX(x) / scaleY(y)
+//      ─────────────────────────────────────
+//      Redimensionne l'élément. Valeur sans unité.
+//        1   = taille originale
+//        2   = double
+//        0.5 = moitié
+//       -1   = miroir (flip)
+
+//      transform: scale(1.5);            /* uniforme : 1.5× dans les 2 axes 
+//      transform: scale(2, 0.5);         /* large × 2, hauteur ÷ 2 *
+//      transform: scaleX(-1);            /* miroir horizontal *
+//      transform: scaleY(-1);            /* miroir vertical *
+
+//   3. rotate(angle)
+//      ──────────────
+//      Rotation dans le plan (autour de l'axe Z, vers l'observateur).
+//      Unités d'angle : deg | rad | turn | grad
+//        1turn  = 360deg  = 2π rad = 400grad
+
+//      transform: rotate(45deg);          /* 1/8 de tour horaire *
+//      transform: rotate(-90deg);         /* quart de tour antihoraire *
+//      transform: rotate(0.25turn);       /* quart de tour horaire *
+//      transform: rotate(1.5708rad);      /* ≈ 90° *
+
+//   4. skew(x, y) / skewX(x) / skewY(y)
+//      ────────────────────────────────────
+//      Inclinaison / cisaillement (distorsion en parallelogramme).
+//      Unités : deg, rad, turn, grad
+
+//      transform: skew(20deg, 10deg);     /* incline sur les 2 axes *
+//      transform: skewX(-15deg);          /* incline les colonnes *
+//      transform: skewY(10deg);           /* incline les lignes *
+
+//   5. matrix(a, b, c, d, e, f)
+//      ──────────────────────────
+//      Transformation affine 2D complète via une matrice 3×3 :
+//        [ a  c  e ]
+//        [ b  d  f ]
+//        [ 0  0  1 ]
+
+//      a, d → scale  |  b, c → skew  |  e, f → translate
+
+//      transform: matrix(1, 0.2, -0.2, 1, 50, 10);
+//      Rarement écrit à la main ; utilisé par les moteurs d'animation (GSAP, etc.)
+
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   C. TRANSFORMS 3D
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+//   ⚠  Pour voir la profondeur 3D, le PARENT doit avoir :
+//        .parent { perspective: 800px; }
+//      Ou utiliser perspective() localement dans transform (voir §6).
+
+//   6. translate3d(x, y, z) / translateZ(z)
+//      ──────────────────────────────────────
+//      Déplacement dans les 3 axes.
+//      Z positif = rapproche l'élément (effet zoom)
+//      Z négatif = éloigne l'élément
+
+//      transform: translate3d(50px, 20px, -100px);
+//      transform: translateZ(50px);    /* rapproche *
+
+//   7. scale3d(x, y, z) / scaleZ(z)
+//      ────────────────────────────────
+//      Mise à l'échelle sur 3 axes.
+//      scaleZ n'est visible qu'en combinaison avec rotateX ou rotateY.
+
+//      transform: scale3d(1.5, 1, 2);
+
+//   8. rotateX(angle)  → bascule avant / arrière (axe horizontal)
+//      rotateY(angle)  → retournement gauche / droite (axe vertical)
+//      rotateZ(angle)  → rotation plane (= rotate() 2D)
+//      rotate3d(x, y, z, angle) → rotation autour d'un axe personnalisé
+//      ────────────────────────────────────────────────────────────────
+//      x, y, z sont les composantes d'un vecteur directeur (normalisé).
+
+//      transform: rotateX(45deg);              /* bascule vers l'arrière *
+//      transform: rotateY(180deg);             /* retournement carte *
+//      transform: rotateZ(30deg);              /* identique à rotate(30deg) *
+//      transform: rotate3d(1, 1, 0, 45deg);    /* axe diagonal X+Y *
+//      transform: rotate3d(0, 1, 0, -30deg);   /* = rotateY(-30deg) *
+
+//   9. perspective(valeur)   (utilisé localement dans transform)
+//      ────────────────────────────────────────────────────────────
+//      Définit la distance entre l'observateur et le plan Z=0.
+//      Doit être la PREMIÈRE fonction de la chaîne.
+
+//      transform: perspective(600px) rotateY(45deg);
+
+//      Différence avec la propriété perspective sur le parent :
+//      - perspective sur le parent → point de fuite partagé entre enfants (cohérence 3D)
+//      - perspective() dans transform → point de fuite local à chaque élément
+
+//   10. matrix3d(16 valeurs)
+//       ─────────────────────
+//       Matrice 4×4 homogène (usage avancé, moteurs 3D, WebGL-like).
+//       Colonne par colonne :
+//         [m1  m5  m9  m13]
+//         [m2  m6  m10 m14]
+//         [m3  m7  m11 m15]
+//         [m4  m8  m12 m16]
+
+//       transform: matrix3d(1,0,0,0, 0,1,0,0, 0,0,1,0, 50,20,0,1);
+//       (= translate3d(50, 20, 0))
+
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   D. PROPRIÉTÉS ASSOCIÉES
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+//   transform-origin
+//   ────────────────
+//   Point de pivot de la transformation. Défaut : 50% 50% 0 (centre).
+//   Syntaxe : transform-origin: x y z;
+//   Mots-clés : top | bottom | left | right | center
+
+//     transform-origin: 0 0;              /* coin haut-gauche *
+//     transform-origin: top right;        /* coin haut-droit *
+//     transform-origin: 100% 50%;         /* bord droit, milieu vertical *
+//     transform-origin: center bottom 20px; /* 3D *
+
+//   Impact concret sur rotate :
+//     /* Tourne comme une aiguille de montre ancrée en bas au centre *
+//     transform-origin: 50% 100%;
+//     transform: rotate(30deg);
+
+//   perspective
+//   ───────────
+//   Propriété du PARENT qui donne une profondeur commune à tous ses enfants 3D.
+//   Petite valeur = effet dramatique (fish-eye)
+//   Grande valeur = effet subtil
+
+//     .parent {
+//       perspective: 800px;       /* recommandé : 400px – 1200px *
+//     }
+
+//   perspective-origin
+//   ──────────────────
+//   Point de fuite de la perspective (position de l'observateur).
+//   Défaut : 50% 50% (centre)
+
+//     .parent {
+//       perspective: 800px;
+//       perspective-origin: left top;      /* observateur en haut-gauche *
+//     }
+
+//   transform-style
+//   ───────────────
+//   Indique si les enfants participent à l'espace 3D du parent.
+
+//     transform-style: flat;          /* défaut : enfants aplatis sur le plan *
+//     transform-style: preserve-3d;   /* enfants gardent leur position 3D *
+
+//   ⚠ Indispensable pour les effets flip card, cube 3D, etc.
+
+//   backface-visibility
+//   ───────────────────
+//   Contrôle si le verso d'un élément retourné est visible.
+
+//     backface-visibility: visible;   /* défaut : le dos est affiché *
+//     backface-visibility: hidden;    /* cache le dos → essentiel pour flip card *
+
+//   will-change
+//   ───────────
+//   Indique au navigateur qu'une propriété va être animée → prépare une couche GPU.
+
+//     will-change: transform;
+//     will-change: transform, opacity;
+
+//   À utiliser avec modération : chaque élément avec will-change crée une couche
+//   composite en mémoire GPU. Trop d'éléments = mémoire saturée.
+
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   E. ANIMATION DES TRANSFORMS
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+//   ── Avec transition ──────────────────────────────────────────────────
+
+//     .btn {
+//       transform: scale(1);
+//       transition: transform 0.3s ease;
+//     }
+//     .btn:hover {
+//       transform: scale(1.05) translateY(-2px);
+//     }
+
+//   Fonctions de timing disponibles :
+//     ease | linear | ease-in | ease-out | ease-in-out
+//     cubic-bezier(x1, y1, x2, y2)
+//     steps(n, start|end)
+
+//   ── Avec @keyframes ───────────────────────────────────────────────────
+
+//     @keyframes spin {
+//       from { transform: rotate(0deg); }
+//       to   { transform: rotate(360deg); }
+//     }
+//     .loader {
+//       animation: spin 1s linear infinite;
+//     }
+
+//     @keyframes pulse {
+//       0%, 100% { transform: scale(1); }
+//       50%       { transform: scale(1.08); }
+//     }
+
+//     @keyframes slideIn {
+//       from { transform: translateX(-100%); opacity: 0; }
+//       to   { transform: translateX(0);     opacity: 1; }
+//     }
+
+//   ── Flip card 3D avec @keyframes ──────────────────────────────────────
+
+//     @keyframes flip {
+//       0%   { transform: perspective(600px) rotateY(0deg); }
+//       100% { transform: perspective(600px) rotateY(180deg); }
+//     }
+
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   F. PATTERNS COMPLETS
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+//   ── F1. Flip Card (carte qui se retourne) ─────────────────────────────
+
+//     .scene {
+//       perspective: 800px;
+//       width: 200px; height: 200px;
+//     }
+//     .card-3d {
+//       width: 100%; height: 100%;
+//       position: relative;
+//       transform-style: preserve-3d;
+//       transition: transform 0.6s ease;
+//     }
+//     .scene:hover .card-3d {
+//       transform: rotateY(180deg);
+//     }
+//     .face, .dos {
+//       position: absolute; inset: 0;
+//       backface-visibility: hidden;
+//     }
+//     .dos {
+//       transform: rotateY(180deg);       /* pré-retourné, invisible au départ *
+//     }
+
+//   ── F2. Cube 3D ───────────────────────────────────────────────────────
+
+//     .cube {
+//       width: 100px; height: 100px;
+//       transform-style: preserve-3d;
+//       animation: rotateCube 4s linear infinite;
+//     }
+//     .cube .face { position: absolute; width: 100px; height: 100px; }
+//     .face.front  { transform: translateZ(50px); }
+//     .face.back   { transform: rotateY(180deg) translateZ(50px); }
+//     .face.left   { transform: rotateY(-90deg) translateZ(50px); }
+//     .face.right  { transform: rotateY(90deg)  translateZ(50px); }
+//     .face.top    { transform: rotateX(90deg)  translateZ(50px); }
+//     .face.bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+//     @keyframes rotateCube {
+//       from { transform: rotateX(0deg)   rotateY(0deg); }
+//       to   { transform: rotateX(360deg) rotateY(360deg); }
+//     }
+
+//   ── F3. Centrage absolu (2D) ───────────────────────────────────────────
+
+//     .centered {
+//       position: absolute;
+//       top: 50%; left: 50%;
+//       transform: translate(-50%, -50%);
+//     }
+
+//   ── F4. Entrée glissante (scroll reveal) ──────────────────────────────
+
+//     .hidden {
+//       opacity: 0;
+//       transform: translateY(30px);
+//       transition: opacity 0.5s ease, transform 0.5s ease;
+//     }
+//     .visible {
+//       opacity: 1;
+//       transform: translateY(0);
+//     }
+//     /* JS : observer.observe(el) + el.classList.add('visible') *
+
+//   ── F5. Zoom sur hover (carte véhicule) ──────────────────────────────
+
+//     .vehicle-item {
+//       transition: transform 0.2s ease, box-shadow 0.2s ease;
+//     }
+//     .vehicle-item:hover {
+//       transform: translateY(-2px) scale(1.01);
+//       box-shadow: 0 4px 16px rgba(0,0,0,.1);
+//     }
+
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   G. PERFORMANCES & BONNES PRATIQUES
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+//   ✅  Animer UNIQUEMENT transform et opacity → traitement GPU, sans reflow
+//   ✅  Éviter d'animer width, height, top, left, margin, padding → reflow coûteux
+//   ✅  Ajouter will-change: transform; sur les éléments animés en continu
+//   ✅  Respecter prefers-reduced-motion :
+
+//         @media (prefers-reduced-motion: reduce) {
+//           *, *::before, *::after {
+//             animation-duration: 0.01ms !important;
+//             transition-duration: 0.01ms !important;
+//           }
+//         }
+
+//   ✅  Utiliser transform-style: preserve-3d; uniquement quand nécessaire
+//   ❌  Ne pas abuser de will-change (couches GPU en mémoire = risque de lenteur)
+//   ❌  Ne pas chaîner 10+ transforms (lisibilité + maintenance difficile)
+//   ❌  Ne pas mélanger perspective sur parent ET perspective() local sans raison
+
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//   H. TABLEAU RÉCAPITULATIF COMPLET
+//   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+//   Fonction                 | Dim | Ce qu'elle fait
+//   ─────────────────────────|─────|──────────────────────────────────────
+//   translate(x, y)          |  2D | Déplace sur X et Y
+//   translateX(v)            |  2D | Déplace sur X uniquement
+//   translateY(v)            |  2D | Déplace sur Y uniquement
+//   translate3d(x, y, z)     |  3D | Déplace dans le volume
+//   translateZ(v)            |  3D | Profondeur (rapproche / éloigne)
+//   scale(x, y)              |  2D | Agrandit / réduit
+//   scaleX(v)                |  2D | Mise à l'échelle horizontale
+//   scaleY(v)                |  2D | Mise à l'échelle verticale
+//   scale3d(x, y, z)         |  3D | Mise à l'échelle volume
+//   scaleZ(v)                |  3D | Étirement en profondeur
+//   rotate(a)                |  2D | Rotation plane (= rotateZ)
+//   rotateX(a)               |  3D | Bascule avant / arrière
+//   rotateY(a)               |  3D | Retournement gauche / droite
+//   rotateZ(a)               |  3D | Rotation plane
+//   rotate3d(x, y, z, a)     |  3D | Rotation axe quelconque
+//   skew(x, y)               |  2D | Cisaillement sur 2 axes
+//   skewX(v)                 |  2D | Cisaillement horizontal
+//   skewY(v)                 |  2D | Cisaillement vertical
+//   perspective(v)           |  3D | Distance observateur (local)
+//   matrix(a,b,c,d,e,f)      |  2D | Matrice affine complète 3×3
+//   matrix3d(16 val.)        |  3D | Matrice homogène complète 4×4
+//   ─────────────────────────|─────|──────────────────────────────────────
+
+//   Propriété                | Rôle
+//   ─────────────────────────|──────────────────────────────────────────
+//   transform-origin         | Point de pivot de la transformation
+//   perspective              | Profondeur 3D (sur le parent)
+//   perspective-origin       | Position de l'observateur
+//   transform-style          | flat vs preserve-3d pour les enfants
+//   backface-visibility      | Cache / montre le verso d'un élément 3D
+//   will-change              | Optimisation GPU anticipée
+//   ─────────────────────────|──────────────────────────────────────────
+// */

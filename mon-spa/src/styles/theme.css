@@ -1,0 +1,95 @@
+/* =============================================================================
+   theme.css : TOUTES les couleurs et tailles du thème, sous forme de variables.
+   Pour changer le look de l'application, c'est (presque) ici que ça se passe.
+   Le thème sombre redéfinit les mêmes variables : <html data-theme="dark">.
+   ========================================================================== */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #FFF8F5;
+  --bg-alt: #FFF0EA;
+  --surface: #FFFFFF;
+  --surface-2: #FFF9F6;
+  --glass: rgba(255, 248, 245, .78);
+
+  /* Texte */
+  --ink: #4A2B3A;
+  --ink-soft: #6B4E5D;
+  --muted: #7D5F6D;
+  --line: #F1E0DB;
+
+  /* Marque */
+  --brand: #D6456C;
+  --brand-strong: #B0305A;
+  --brand-soft: #FDEBF0;
+  --sun: #F4A261;
+  --sun-soft: #FEEFE0;
+  --btn-from: #CB3C64;
+  --btn-to: #AE2F57;
+  --btn-ink: #FFFFFF;
+
+  /* États */
+  --ok: #2E7D5B;     --ok-soft: #E4F4EB;
+  --danger: #C62F3E; --danger-soft: #FDECEE;
+
+  /* Effets */
+  --ring: rgba(214, 69, 108, .35);
+  --blob-1: rgba(214, 69, 108, .16);
+  --blob-2: rgba(244, 162, 97, .22);
+  --shadow-sm: 0 1px 2px rgba(74, 43, 58, .06);
+  --shadow: 0 1px 2px rgba(74, 43, 58, .04), 0 16px 36px -20px rgba(214, 69, 108, .28);
+  --shadow-lg: 0 30px 60px -30px rgba(74, 43, 58, .38);
+  --code-bg: #2B1A24;
+  --code-ink: #FBE9EF;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #150E18;
+  --bg-alt: #1C1220;
+  --surface: #221829;
+  --surface-2: #1B1320;
+  --glass: rgba(21, 14, 24, .72);
+
+  --ink: #F7EAF0;
+  --ink-soft: #DCC5D0;
+  --muted: #B398A6;
+  --line: #3A2A42;
+
+  --brand: #FF7C9E;
+  --brand-strong: #FF9DB6;
+  --brand-soft: rgba(255, 124, 158, .14);
+  --sun: #F4A261;
+  --sun-soft: rgba(244, 162, 97, .14);
+  --btn-from: #FF8FAB;
+  --btn-to: #F2678F;
+  --btn-ink: #2A1020;
+
+  --ok: #5FD3A0;     --ok-soft: rgba(95, 211, 160, .14);
+  --danger: #FF7A87; --danger-soft: rgba(255, 122, 135, .14);
+
+  --ring: rgba(255, 124, 158, .4);
+  --blob-1: rgba(255, 124, 158, .13);
+  --blob-2: rgba(244, 162, 97, .09);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 20px 40px -24px rgba(0, 0, 0, .75);
+  --shadow-lg: 0 30px 60px -30px rgba(0, 0, 0, .8);
+  --code-bg: #0E0911;
+  --code-ink: #F7EAF0;
+}
+
+/* Variables communes aux deux thèmes */
+:root {
+  --font-display: 'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --r: 12px;          /* petits éléments : champs, blocs */
+  --R: 22px;          /* grands éléments : cartes */
+  --container: 1120px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}

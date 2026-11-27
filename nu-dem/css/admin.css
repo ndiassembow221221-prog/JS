@@ -1,0 +1,20 @@
+/* Admin1 — d'après la maquette docs/maquettes/A1.png */
+#Admin1{display:flex;min-height:100vh;background:#f5f6f8;color:#1a1a2e;font-family:'Segoe UI',system-ui,sans-serif}
+#Admin1 #corps{margin-left:176px;flex:1;padding:28px 32px}
+#Admin1 h2{margin-bottom:4px}
+.stats-admin{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:18px 0}
+.stat-card{background:#fff;border:1px solid #e0e3e8;border-radius:12px;padding:16px;animation:fadeUp .25s ease both}
+.stat-card span{display:block;color:#6b7280;font-size:.8rem}
+.stat-card strong{font-size:1.6rem}
+.stat-card.ca{background:#15803d;color:#fff;border:0}.stat-card.ca span{color:#d1fae5}
+.onglets{display:flex;gap:6px;margin:10px 0}
+.onglets button{padding:8px 16px;border:0;border-radius:8px;background:#fff;cursor:pointer;font-weight:600}
+.onglets button.actif{background:#e6f4ec;color:#2d7a4f}
+.table-admin{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}
+.table-admin th,.table-admin td{padding:10px 14px;text-align:left;border-bottom:1px solid #e0e3e8}
+.table-admin tbody tr{transition:background .15s}.table-admin tbody tr:hover{background:#f5f6f8}
+.table-wrap{overflow-x:auto}
+.btn-export{margin-top:14px;padding:8px 14px;border:1px solid #2d7a4f;background:#fff;color:#2d7a4f;border-radius:8px;cursor:pointer;font-weight:600}
+.avis-note{font-size:2.4rem;font-weight:700;color:#15803d}
+.badge-premium{background:#fef3c7;color:#b45309;padding:2px 10px;border-radius:99px;font-size:.75rem;font-weight:700}
+@keyframes fadeUp{from{transform:translateY(-10px);opacity:0}to{transform:none;opacity:1}}

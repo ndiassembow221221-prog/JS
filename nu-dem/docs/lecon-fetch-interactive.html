@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dossier 07 — fetch() & les requêtes HTTP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #2b2118;
+    --bg-soft: #352819;
+    --paper: #f1e7d3;
+    --paper-shadow: #c9b899;
+    --ink: #2b2118;
+    --ink-soft: #5a4a36;
+    --saffron: #e8a33d;
+    --teal: #3e7c7b;
+    --rust: #b5483a;
+    --cream: #f1e7d3;
+    --muted: #c9b899;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--cream);
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+
+  a{ color: var(--saffron); }
+  ::selection{ background: var(--saffron); color: var(--ink); }
+  :focus-visible{ outline: 3px solid var(--saffron); outline-offset: 3px; }
+
+  /* ---------- NAV (onglets de classeur) ---------- */
+  .tabs{
+    position: fixed; top: 0; left: 0; height: 100vh; width: 88px;
+    background: var(--bg-soft); border-right: 1px solid #4a3a26;
+    display: flex; flex-direction: column; align-items: stretch;
+    z-index: 50; padding-top: 24px;
+  }
+  .tabs__item{
+    display: flex; align-items: center; justify-content: center;
+    writing-mode: vertical-rl; text-orientation: mixed;
+    text-decoration: none; color: var(--muted);
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 14px 0;
+    border-left: 3px solid transparent;
+    transition: color .2s, border-color .2s, background .2s;
+  }
+  .tabs__item:hover{ color: var(--cream); background: rgba(232,163,61,0.08); }
+  .tabs__item.is-active{ color: var(--saffron); border-left-color: var(--saffron); background: rgba(232,163,61,0.1); }
+
+  main{ margin-left: 88px; }
+
+  @media (max-width: 760px){
+    .tabs{ position: fixed; top: 0; left: 0; right: 0; height: 56px; width: auto;
+      flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid #4a3a26; padding-top: 0; }
+    .tabs__item{ writing-mode: horizontal-tb; flex: 0 0 auto; border-left: none; border-bottom: 3px solid transparent; padding: 0 14px; }
+    .tabs__item.is-active{ border-left-color: transparent; border-bottom-color: var(--saffron); }
+    main{ margin-left: 0; margin-top: 56px; }
+  }
+
+  /* ---------- LAYOUT GÉNÉRAL ---------- */
+  section{ padding: 96px 8vw; max-width: 1000px; margin: 0 auto; }
+  .section--last{ padding-bottom: 140px; }
+  .eyebrow{ font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--saffron); margin-bottom: 14px; }
+  h2{ font-family: var(--font-display); font-weight: 600; font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin: 0 0 22px; color: var(--cream); }
+  h3{ font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; color: var(--saffron); margin: 38px 0 12px; }
+  h3:first-of-type{ margin-top: 28px; }
+  p{ color: var(--muted); max-width: 660px; }
+  p.lead{ font-size: 1.08rem; color: var(--cream); }
+  code, .code-block{ font-family: var(--font-mono); }
+
+  .code-block{
+    background: #1d1610; border: 1px solid #4a3a26; border-radius: 8px;
+    padding: 18px 20px; font-size: 0.86rem; color: #e8dcc4;
+    overflow-x: auto; white-space: pre; margin: 18px 0;
+  }
+  .code-block .tok-key{ color: var(--teal); }
+  .code-block .tok-str{ color: var(--saffron); }
+  .code-block .tok-com{ color: #8a7a60; }
+
+  .stamp{
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 6px 14px; border: 2px solid currentColor;
+    border-radius: 999px; transform: rotate(-2deg); white-space: nowrap;
+  }
+  .stamp--saffron{ color: var(--saffron); }
+  .stamp--teal{ color: var(--teal); }
+  .stamp--rust{ color: var(--rust); }
+
+  /* ---------- CALLOUTS ---------- */
+  .callout{
+    border-left: 3px solid var(--teal); background: rgba(62,124,123,0.1);
+    padding: 14px 20px; border-radius: 4px; max-width: 660px; margin: 22px 0;
+    font-size: 0.92rem; color: var(--cream);
+  }
+  .callout strong{ color: var(--saffron); }
+  .callout--warning{ border-left-color: var(--rust); background: rgba(181,72,58,0.12); }
+  .callout--warning strong{ color: var(--rust); }
+
+  /* ---------- DEFINITIONS (lexique / méthodes) ---------- */
+  .def-grid{ display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr)); gap: 14px; margin: 22px 0 8px; max-width: 900px; }
+  .def-card{ background: var(--bg-soft); border: 1px solid #4a3a26; border-radius: 8px; padding: 16px 18px; }
+  .def-card dt{ font-family: var(--font-mono); color: var(--saffron); font-size: 0.82rem; margin-bottom: 6px; letter-spacing: .03em; }
+  .def-card dd{ margin: 0; color: var(--muted); font-size: 0.86rem; line-height:1.5; }
+
+  /* ---------- URL anatomie ---------- */
+  .url-breakdown{ font-family: var(--font-mono); font-size: 1.15rem; margin: 24px 0 10px; word-break: break-all; }
+  .url-part--protocol{ color: var(--teal); }
+  .url-part--host{ color: var(--saffron); }
+  .url-part--path{ color: var(--rust); }
+  .url-legend{ display: flex; flex-direction: column; gap: 8px; font-size: 0.86rem; color: var(--muted); margin-bottom: 24px; }
+  .dot{ width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+  .dot--protocol{ background: var(--teal); }
+  .dot--host{ background: var(--saffron); }
+  .dot--path{ background: var(--rust); }
+
+  /* ---------- HERO ---------- */
+  .hero{ min-height: 88vh; display: flex; flex-direction: column; justify-content: center; position: relative; }
+  .hero__badge{ margin-bottom: 26px; opacity: 0; animation: rise .6s ease forwards .1s; }
+  .hero h1{ font-family: var(--font-display); font-weight: 700; font-size: clamp(3rem, 9vw, 6.4rem); margin: 0 0 18px; color: var(--cream); opacity: 0; animation: rise .7s ease forwards .25s; }
+  .hero h1 span{ color: var(--saffron); }
+  .hero p.lead{ max-width: 580px; font-size: 1.2rem; opacity: 0; animation: rise .7s ease forwards .4s; }
+  .hero__meta{ margin-top: 44px; display: flex; gap: 28px; flex-wrap: wrap; opacity: 0; animation: rise .7s ease forwards .55s; }
+  .hero__meta div{ font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
+  .hero__meta strong{ display:block; color: var(--cream); font-size: 1rem; }
+  @keyframes rise{ from{ opacity: 0; transform: translateY(16px); } to{ opacity: 1; transform: translateY(0); } }
+
+  /* ---------- TICKET DE CAFÉ ---------- */
+  .cafe-demo{ display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; margin-top: 24px; }
+  .btn{ font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.04em; background: var(--saffron); color: var(--ink); border: none; border-radius: 6px; padding: 12px 20px; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+  .btn:hover{ transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,.25); }
+  .btn:disabled{ opacity: .5; cursor: not-allowed; transform: none; }
+  .btn--ghost{ background: transparent; color: var(--cream); border: 1.5px solid var(--muted); }
+  .btn--ghost:hover{ border-color: var(--saffron); color: var(--saffron); }
+  .btn--ghost.is-active{ border-color: var(--saffron); color: var(--saffron); }
+  .btn--small{ padding: 8px 14px; font-size: 0.76rem; }
+
+  .ticket{ background: var(--paper); color: var(--ink); border-radius: 4px; padding: 18px 22px; min-width: 240px; box-shadow: 0 8px 0 -4px var(--paper-shadow), 0 10px 18px rgba(0,0,0,.3); font-family: var(--font-mono); display: flex; flex-direction: column; gap: 10px; transform: rotate(1deg); transition: opacity .2s; }
+  .ticket:empty{ display:none; }
+  .ticket__num{ font-size: 0.78rem; color: var(--ink-soft); letter-spacing: .08em; }
+  .ticket__status{ font-size: 0.95rem; font-weight: 600; }
+  .ticket--pending .ticket__status{ color: var(--ink-soft); }
+
+  .legend-inline{ display:flex; gap:20px; flex-wrap:wrap; margin-top:18px; font-family: var(--font-mono); font-size:0.78rem; color: var(--muted); }
+  .legend-inline span{ display:flex; align-items:center; gap:6px; }
+
+  .code-toggle{ display: flex; gap: 10px; margin: 28px 0 0; }
+  .code-panel{ display: none; }
+  .code-panel.is-visible{ display: block; }
+
+  /* ---------- ENVELOPPE ---------- */
+  .envelope-wrap{ display:flex; gap: 40px; flex-wrap: wrap; align-items: center; margin-top: 24px; }
+  .envelope{ width: 240px; height: 160px; background: var(--paper); border-radius: 6px; position: relative; cursor: pointer; box-shadow: 0 12px 24px rgba(0,0,0,.3); overflow: hidden; user-select: none; flex-shrink:0; }
+  .envelope__flap{ position: absolute; top: 0; left: 0; right: 0; height: 80px; background: var(--paper-shadow); clip-path: polygon(0 0, 100% 0, 50% 100%); transition: transform .4s ease; transform-origin: top center; }
+  .envelope--open .envelope__flap{ transform: rotateX(180deg) translateY(-4px); }
+  .envelope__stamp{ position: absolute; top: 14px; right: 14px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-soft); border: 1.5px dashed var(--ink-soft); border-radius: 4px; padding: 4px 8px; opacity: 0; transition: opacity .3s; }
+  .envelope__stamp.is-visible{ opacity: 1; }
+  .envelope__letter{ position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; color: var(--ink); font-family: var(--font-mono); font-size: 0.76rem; text-align: left; opacity: 0; transition: opacity .3s; }
+  .envelope--open .envelope__letter{ opacity: 1; }
+  .envelope__hint{ font-family: var(--font-mono); font-size: 0.82rem; color: var(--saffron); margin-top: 14px; }
+
+  table{ width: 100%; border-collapse: collapse; margin: 22px 0; font-size: 0.88rem; max-width: 700px; }
+  th, td{ text-align: left; padding: 9px 14px; border-bottom: 1px solid #4a3a26; }
+  th{ font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: .07em; text-transform: uppercase; color: var(--saffron); }
+  td{ color: var(--muted); }
+  td:first-child{ color: var(--cream); font-family: var(--font-mono); }
+
+  /* ---------- FICHE ACTEUR ---------- */
+  .methodes-wrap{ display: flex; gap: 48px; flex-wrap: wrap; align-items: flex-start; margin-top: 14px; }
+  .card-zone{ position: relative; min-height: 260px; display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+  .card{ background: var(--paper); color: var(--ink); width: 250px; border-radius: 4px; padding: 22px 22px 18px; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,.3); transform: rotate(-1deg); transition: opacity .4s, transform .4s; }
+  .card::before, .card::after{ content: ''; position: absolute; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); top: 12px; }
+  .card::before{ left: 12px; }
+  .card::after{ right: 12px; }
+  .card--deleted{ opacity: 0; transform: scale(.85) rotate(6deg); pointer-events: none; }
+  .card--new{ border: 1.5px dashed var(--teal); }
+  .card__id{ font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-soft); letter-spacing: .08em; margin-bottom: 10px; }
+  .card__row{ font-family: var(--font-mono); font-size: 0.84rem; padding: 4px 0; border-bottom: 1px dotted var(--paper-shadow); display: flex; justify-content: space-between; gap: 10px; }
+  .card__row:last-child{ border-bottom: none; }
+  .card__row span:first-child{ color: var(--ink-soft); }
+  .card__row--flash{ background: rgba(62,124,123,0.18); }
+  .card__row--removed{ color: var(--rust); text-decoration: line-through; }
+  .card__row--changed{ background: rgba(232,163,61,0.22); }
+
+  .methodes-buttons{ display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 6px; }
+  .methodes-note{ font-family: var(--font-mono); font-size: 0.84rem; color: var(--saffron); min-height: 22px; margin-top: 18px; }
+
+  /* ---------- PIÈGE try/catch ---------- */
+  .piege-wrap{ margin-top: 14px; display: flex; gap: 48px; flex-wrap: wrap; }
+  .flow{ display: flex; flex-direction: column; gap: 10px; min-width: 240px; }
+  .flow__box{ font-family: var(--font-mono); font-size: 0.82rem; padding: 12px 16px; border-radius: 6px; border: 1.5px solid var(--muted); color: var(--muted); transition: border-color .3s, color .3s, background .3s; }
+  .flow__box.is-active-ok{ border-color: var(--teal); color: var(--cream); background: rgba(62,124,123,0.15); }
+  .flow__box.is-active-error{ border-color: var(--rust); color: var(--cream); background: rgba(181,72,58,0.18); }
+  .console{ background: #1d1610; border: 1px solid #4a3a26; border-radius: 8px; padding: 16px 18px; font-family: var(--font-mono); font-size: 0.82rem; min-width: 260px; min-height: 100px; color: #e8dcc4; }
+  .console__line{ opacity: 0; animation: rise .3s ease forwards; }
+  .console__line--ok{ color: var(--teal); }
+  .console__line--error{ color: var(--rust); }
+
+  .reflexes{ display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 18px; margin-top: 24px; }
+  .reflexe{ background: var(--bg-soft); border: 1px solid #4a3a26; border-radius: 8px; padding: 20px; }
+  .reflexe__num{ font-family: var(--font-display); font-size: 1.8rem; color: var(--saffron); display:block; margin-bottom: 8px; }
+  .reflexe p{ color: var(--cream); margin: 0; font-size: 0.92rem; }
+
+  footer{ text-align: center; padding: 40px 8vw 60px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<nav class="tabs" aria-label="Sommaire du dossier">
+  <a href="#intro" class="tabs__item" data-section="intro">Intro</a>
+  <a href="#bases" class="tabs__item" data-section="bases">Bases</a>
+  <a href="#promise" class="tabs__item" data-section="promise">Promise</a>
+  <a href="#reponse" class="tabs__item" data-section="reponse">Réponse</a>
+  <a href="#methodes" class="tabs__item" data-section="methodes">Méthodes</a>
+  <a href="#piege" class="tabs__item" data-section="piege">Piège</a>
+  <a href="#resume" class="tabs__item" data-section="resume">Résumé</a>
+</nav>
+
+<main>
+
+  <section id="intro" class="hero">
+    <div class="hero__badge"><span class="stamp stamp--saffron">Dossier N°07 · Asynchrone</span></div>
+    <h1>fetch<span>()</span></h1>
+    <p class="lead">Comment JavaScript va chercher de l'information à une autre adresse, sans jamais recharger la page — et sans bloquer le reste du programme en attendant la réponse.</p>
+    <div class="hero__meta">
+      <div><strong>Avant</strong>XMLHttpRequest, lourd à écrire</div>
+      <div><strong>Maintenant</strong>fetch, basé sur les Promises</div>
+      <div><strong>Retour</strong>toujours une Promise, jamais une valeur directe</div>
+    </div>
+  </section>
+
+  <section id="bases">
+    <div class="eyebrow">Avant de commencer</div>
+    <h2>Les briques de base, une par une</h2>
+    <p class="lead">Si tu n'as jamais fait de requête HTTP en JavaScript, commence ici. Le reste du dossier ira plus vite si ces quelques notions sont claires.</p>
+
+    <h3>fetch(), en une phrase</h3>
+    <p><code>fetch()</code> est une fonction qui existe déjà dans ton navigateur — tu n'as rien à installer. Elle prend une adresse en paramètre, envoie une requête vers cette adresse, et te prévient plus tard quand la réponse arrive. « Plus tard » est le mot important : entre l'envoi et la réponse, ton programme continue de tourner, il n'attend pas bras croisés.</p>
+
+    <h3>Une URL, c'est une adresse postale</h3>
+    <p>Avant d'appeler <code>fetch()</code>, il faut savoir où on l'envoie. Une URL se découpe en plusieurs morceaux, comme une adresse postale se découpe en rue, ville, code postal.</p>
+    <div class="url-breakdown"><span class="url-part--protocol">http://</span><span class="url-part--host">localhost:3000</span><span class="url-part--path">/acteurIndiens</span></div>
+    <div class="url-legend">
+      <span><span class="dot dot--protocol"></span>Le protocole — la « langue » utilisée pour discuter avec le serveur (ici http)</span>
+      <span><span class="dot dot--host"></span>L'hôte et le port — quelle machine contacter, et par quelle porte d'entrée (ici, ta propre machine, port 3000)</span>
+      <span><span class="dot dot--path"></span>Le chemin — quelle ressource précise on demande (ici, la liste des acteurs indiens)</span>
+    </div>
+    <p>Dans tous les exemples de ce dossier, le serveur tourne en local — c'est pour ça que l'adresse commence par <code>localhost</code>. Dans un vrai projet, ce serait un nom de domaine comme <code>https://api.monsite.com</code>.</p>
+
+    <h3>Pourquoi pas XMLHttpRequest ?</h3>
+    <p>Avant <code>fetch</code>, la seule façon de faire des requêtes en JavaScript était <code>XMLHttpRequest</code>. Ça fonctionnait, mais il fallait écrire beaucoup de code pour des choses simples, avec une syntaxe basée sur des callbacks imbriqués, peu lisible. <code>fetch</code> a été conçu pour remplacer ça avec une API plus courte, basée sur les Promises — la notion qu'on découvre dans la section suivante.</p>
+
+    <h3>GET, le réglage par défaut</h3>
+    <p>Quand on écrit <code>fetch(url)</code> sans rien préciser d'autre, on envoie automatiquement une requête de type <strong style="color:var(--cream)">GET</strong>. GET veut dire « donne-moi ce qui se trouve à cette adresse, je veux juste regarder, je ne modifie rien sur le serveur ». C'est la méthode la plus courante, donc celle qui ne demande aucune option supplémentaire.</p>
+    <div class="code-block">fetch(<span class="tok-str">"http://localhost:3000/acteurIndiens"</span>);
+<span class="tok-com">// équivalent à :</span>
+fetch(<span class="tok-str">"http://localhost:3000/acteurIndiens"</span>, { method: <span class="tok-str">"GET"</span> });</div>
+    <p>Pour faire autre chose qu'un GET — créer, modifier, supprimer — il faudra ajouter un deuxième argument à <code>fetch</code> : un objet d'options. On verra ça en détail dans la section « Méthodes ».</p>
+  </section>
+
+  <section id="promise">
+    <div class="eyebrow">Pièce 1</div>
+    <h2>Une Promise, c'est un ticket de commande</h2>
+    <p class="lead">fetch() ne te donne jamais directement les données. Il te donne une Promise — un objet qui représente « un résultat qui n'est pas encore là, mais qui arrivera ».</p>
+
+    <h3>Les trois états d'une Promise</h3>
+    <p>Une Promise existe toujours dans un de ces trois états : <strong style="color:var(--cream)">en attente</strong> (pending) — la réponse n'est pas encore arrivée ; <strong style="color:var(--teal)">résolue</strong> (fulfilled) — tout s'est bien passé, le résultat est disponible ; <strong style="color:var(--rust)">rejetée</strong> (rejected) — quelque chose a empêché d'obtenir le résultat.</p>
+    <p>Imagine que tu commandes un café. Le serveur ne te le donne pas tout de suite : il te tend un ticket numéroté et te dit « je t'appelle quand c'est prêt ». Ce ticket, c'est ta Promise. Pendant que tu attends, tu peux faire autre chose — c'est exactement ce que fait ton code JavaScript pendant qu'il attend la réponse du serveur. Clique sur le bouton pour commander, et regarde le ticket changer d'état.</p>
+
+    <div class="cafe-demo">
+      <button class="btn" id="cafeBtn">Commander un café ☕</button>
+      <div class="ticket" id="ticket"></div>
+    </div>
+    <div class="legend-inline">
+      <span><span class="dot" style="background:var(--ink-soft)"></span>en attente = pending</span>
+      <span><span class="dot dot--protocol"></span>résolue = fulfilled</span>
+      <span><span class="dot dot--path"></span>rejetée = rejected</span>
+    </div>
+
+    <h3>Deux façons d'attendre le résultat</h3>
+    <p>Une fois qu'on a une Promise entre les mains, il existe deux écritures différentes pour réagir quand elle se termine. Elles font exactement la même chose en coulisses — ce n'est qu'une question de lisibilité.</p>
+    <div class="code-toggle">
+      <button class="btn btn--ghost btn--small is-active" id="btnThen">.then() / .catch()</button>
+      <button class="btn btn--ghost btn--small" id="btnAsync">async / await</button>
+    </div>
+
+    <div class="code-panel is-visible" id="panelThen">
+      <p style="margin-top:18px;">On dit au serveur « appelle-moi quand c'est prêt ». Chaque <code>.then()</code> reçoit le résultat de l'étape précédente et le transmet à la suite — comme une chaîne d'instructions.</p>
+      <div class="code-block">fetch(<span class="tok-str">"http://localhost:3000/acteurIndiens"</span>)
+  .then(reponse => reponse.json())   <span class="tok-com">// étape 1 : on ouvre l'enveloppe</span>
+  .then(donnees => {                 <span class="tok-com">// étape 2 : on utilise les données</span>
+    console.log(donnees);
+  })
+  .catch(erreur => {                 <span class="tok-com">// si une étape échoue techniquement</span>
+    console.log(erreur);
+  })
+  .finally(() => {                   <span class="tok-com">// dans tous les cas, à la fin</span>
+    console.log(<span class="tok-str">"Terminé, quoi qu'il arrive"</span>);
+  });</div>
+    </div>
+    <div class="code-panel" id="panelAsync">
+      <p style="margin-top:18px;">C'est comme rester debout au comptoir à attendre ton café avant de continuer. Le mot-clé <code>await</code> met en pause la fonction — sans bloquer le reste de la page — jusqu'à ce que la Promise se termine, puis te donne directement la valeur, sans callback imbriqué.</p>
+      <div class="code-block"><span class="tok-key">async function</span> recupererDonnees() {     <span class="tok-com">// "async" autorise le mot await à l'intérieur</span>
+  <span class="tok-key">try</span> {
+    <span class="tok-key">const</span> reponse = <span class="tok-key">await</span> fetch(<span class="tok-str">"http://localhost:3000/acteurIndiens"</span>);
+    <span class="tok-key">const</span> donnees = <span class="tok-key">await</span> reponse.json();
+    console.log(donnees);
+  } <span class="tok-key">catch</span> (erreur) {                       <span class="tok-com">// si une étape échoue techniquement</span>
+    console.log(erreur);
+  }
+}
+recupererDonnees();  <span class="tok-com">// on doit appeler la fonction pour la lancer</span></div>
+    </div>
+    <div class="callout"><strong>À retenir —</strong> les deux écritures sont interchangeables. <code>async/await</code> est en réalité réécrit par le moteur JavaScript en quelque chose d'équivalent à des <code>.then()</code> enchaînés ; c'est juste plus agréable à lire une fois qu'on a plusieurs étapes à la suite.</div>
+  </section>
+
+  <section id="reponse">
+    <div class="eyebrow">Pièce 2</div>
+    <h2>La réponse arrive en deux temps, comme une lettre</h2>
+    <p class="lead">Quand la Promise se résout, elle ne donne pas directement les données — elle donne un objet <code>Response</code>, qui représente toute la réponse HTTP : le statut, les en-têtes, et un corps qu'il faut encore lire.</p>
+
+    <h3>L'enveloppe, puis la lettre</h3>
+    <p><code>reponse</code> est l'enveloppe : on peut déjà voir le statut (200, 404, 500…) et les en-têtes écrits dessus, mais le contenu à l'intérieur n'a pas encore été lu. <code>reponse.json()</code>, c'est le moment où on ouvre l'enveloppe pour lire ce qu'elle contient et le transformer en objet JavaScript utilisable. Cette étape est elle aussi asynchrone — donc avec un second <code>await</code> — car parser le texte brut envoyé par le serveur prend un peu de temps, surtout si la réponse est volumineuse.</p>
+
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope" tabindex="0" role="button" aria-label="Cliquer pour ouvrir l'enveloppe">
+        <div class="envelope__flap"></div>
+        <div class="envelope__stamp" id="envelopeStamp">200 OK</div>
+        <div class="envelope__letter" id="envelopeLetter">[{ id: "1", nom: "..." }, { id: "2", nom: "..." }]</div>
+      </div>
+      <div>
+        <p id="envelopeHint" class="envelope__hint">Étape 1 — clique sur l'enveloppe pour voir le statut</p>
+        <div class="code-block" style="max-width:340px;"><span class="tok-key">const</span> reponse = <span class="tok-key">await</span> fetch(url);
+console.log(reponse.status); <span class="tok-com">// l'enveloppe</span>
+<span class="tok-key">const</span> donnees = <span class="tok-key">await</span> reponse.json(); <span class="tok-com">// on l'ouvre</span></div>
+      </div>
+    </div>
+
+    <h3>Que peut-on lire dans l'enveloppe ?</h3>
+    <p>L'objet <code>reponse</code> contient plusieurs informations utiles, accessibles avant même d'ouvrir le contenu :</p>
+    <table>
+      <thead><tr><th>Propriété</th><th>À quoi ça sert</th></tr></thead>
+      <tbody>
+        <tr><td>reponse.status</td><td>Le code HTTP exact (200, 404, 500…)</td></tr>
+        <tr><td>reponse.ok</td><td>true si le statut est entre 200 et 299</td></tr>
+        <tr><td>reponse.statusText</td><td>Le libellé du statut ("OK", "Not Found"…)</td></tr>
+        <tr><td>reponse.headers</td><td>Les en-têtes envoyés par le serveur</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Plusieurs façons d'ouvrir l'enveloppe</h3>
+    <p>Selon ce que le serveur envoie, on ne lit pas toujours le contenu de la même façon :</p>
+    <div class="def-grid">
+      <div class="def-card"><dt>reponse.json()</dt><dd>Pour transformer du texte JSON en objet ou tableau JavaScript — le cas le plus fréquent.</dd></div>
+      <div class="def-card"><dt>reponse.text()</dt><dd>Pour récupérer du texte brut, par exemple du HTML.</dd></div>
+      <div class="def-card"><dt>reponse.blob()</dt><dd>Pour des fichiers binaires : image, vidéo, PDF.</dd></div>
+      <div class="def-card"><dt>reponse.formData()</dt><dd>Pour des données envoyées au format formulaire.</dd></div>
+    </div>
+    <div class="callout"><strong>Piège à connaître —</strong> on ne peut lire le contenu d'une réponse qu'une seule fois. Si tu appelles <code>reponse.json()</code> deux fois sur le même objet, la deuxième tentative échoue.</div>
+  </section>
+
+  <section id="methodes">
+    <div class="eyebrow">Pièce 3</div>
+    <h2>Chaque méthode HTTP touche la fiche différemment</h2>
+    <p class="lead">Imagine une fiche d'acteur dans un classeur. Chaque méthode HTTP correspond à une action différente sur cette fiche : regarder, ajouter, remplacer, corriger, ou arracher.</p>
+
+    <div class="def-grid">
+      <div class="def-card"><dt>GET</dt><dd>Lire une fiche. Ne change rien. Aucune option à ajouter, c'est le réglage par défaut.</dd></div>
+      <div class="def-card"><dt>POST</dt><dd>Ajouter une nouvelle fiche au classeur. On envoie la fiche complète dans le body.</dd></div>
+      <div class="def-card"><dt>PUT</dt><dd>Remplacer entièrement une fiche existante. Tout champ absent du nouvel objet disparaît.</dd></div>
+      <div class="def-card"><dt>PATCH</dt><dd>Corriger juste une ou plusieurs lignes, sans toucher au reste de la fiche.</dd></div>
+      <div class="def-card"><dt>DELETE</dt><dd>Arracher la fiche du classeur. Pas besoin d'envoyer de données, l'adresse suffit.</dd></div>
+    </div>
+
+    <p style="margin-top:28px;">Essaie chaque bouton sur la fiche ci-dessous pour voir l'effet exact de chaque méthode, et regarde le code correspondant à droite.</p>
+
+    <div class="methodes-wrap">
+      <div style="flex:1; min-width:280px;">
+        <div class="methodes-buttons">
+          <button class="btn btn--small" data-method="GET">GET</button>
+          <button class="btn btn--small" data-method="POST">POST</button>
+          <button class="btn btn--small" data-method="PUT">PUT</button>
+          <button class="btn btn--small" data-method="PATCH">PATCH</button>
+          <button class="btn btn--small" data-method="DELETE">DELETE</button>
+          <button class="btn btn--ghost btn--small" id="resetCard">Réinitialiser</button>
+        </div>
+        <div class="card-zone" id="cardZone"></div>
+        <p class="methodes-note" id="methodesNote">Choisis une méthode pour voir son effet sur la fiche.</p>
+      </div>
+      <div class="code-block" id="methodesCode" style="flex:1; min-width:260px; align-self:flex-start;">GET <span class="tok-com">→ pas d'options nécessaires</span></div>
+    </div>
+
+    <h3>Pourquoi headers et JSON.stringify ?</h3>
+    <p>Pour POST, PUT et PATCH, deux éléments reviennent systématiquement dans le code, et il faut comprendre pourquoi ils sont là.</p>
+    <div class="def-grid">
+      <div class="def-card"><dt>headers: { "Content-Type": "application/json" }</dt><dd>C'est une étiquette qu'on colle sur l'enveloppe avant de l'envoyer, pour dire au serveur « ce que je t'envoie est écrit en JSON », afin qu'il sache comment le lire.</dd></div>
+      <div class="def-card"><dt>JSON.stringify(objet)</dt><dd>HTTP ne sait transporter que du texte, jamais un objet JavaScript directement. Cette fonction convertit l'objet en une chaîne de texte au format JSON avant l'envoi.</dd></div>
+    </div>
+
+    <h3>PUT contre PATCH : la nuance qui piège tout le monde</h3>
+    <p>C'est la confusion la plus fréquente. Avec <strong style="color:var(--cream)">PUT</strong>, on envoie une fiche complète qui remplace entièrement l'ancienne — si on oublie un champ dans le nouvel objet, ce champ disparaît purement et simplement, comme tu as pu le voir en testant le bouton PUT plus haut. Avec <strong style="color:var(--cream)">PATCH</strong>, on n'envoie que les champs qu'on veut modifier ; tous les autres champs de la fiche restent intacts, intouchés.</p>
+  </section>
+
+  <section id="piege">
+    <div class="eyebrow">Pièce 4</div>
+    <h2>try/catch n'attrape pas tout</h2>
+    <p class="lead">C'est sans doute le piège le plus fréquent chez les débutants : on imagine que try/catch attrape toute erreur, y compris les erreurs HTTP comme 404 ou 500. C'est faux.</p>
+
+    <h3>Deux familles d'échecs très différentes</h3>
+    <p><code>fetch()</code> ne rejette sa Promise — donc ne déclenche le <code>catch</code> — que si la requête échoue <strong style="color:var(--cream)">techniquement</strong> : pas de réseau, serveur introuvable, requête bloquée par CORS. Mais si le serveur répond bien, même avec un code d'erreur comme 404 (« ressource introuvable »), <code>fetch</code> considère que la communication a réussi : aucune exception n'est levée, le <code>catch</code> reste silencieux. Compare les deux scénarios ci-dessous.</p>
+
+    <div class="piege-wrap">
+      <div>
+        <div class="methodes-buttons" style="margin-bottom:24px;">
+          <button class="btn btn--small" id="btnDomaine">Domaine introuvable</button>
+          <button class="btn btn--small" id="btn404">Acteur n°999 (404)</button>
+        </div>
+        <div class="flow">
+          <div class="flow__box" id="flowTry">try { await fetch(url) }</div>
+          <div class="flow__box" id="flowCatch">catch (erreur) → TypeError</div>
+          <div class="flow__box" id="flowStatus">reponse.status → à vérifier soi-même</div>
+        </div>
+      </div>
+      <div class="console" id="console"></div>
+    </div>
+
+    <h3>La bonne pratique à retenir</h3>
+    <p>Puisque <code>catch</code> ne couvre pas les erreurs HTTP, il faut vérifier soi-même <code>reponse.ok</code> (ou <code>reponse.status</code>) juste après le <code>fetch</code>, et déclencher une erreur manuellement si besoin :</p>
+    <div class="code-block"><span class="tok-key">try</span> {
+  <span class="tok-key">const</span> reponse = <span class="tok-key">await</span> fetch(<span class="tok-str">"http://localhost:3000/acteurIndiens/999"</span>);
+
+  <span class="tok-key">if</span> (!reponse.ok) {
+    <span class="tok-key">throw new</span> Error(<span class="tok-str">`Erreur HTTP : ${reponse.status}`</span>);  <span class="tok-com">// on force le passage par catch</span>
+  }
+
+  <span class="tok-key">const</span> donnees = <span class="tok-key">await</span> reponse.json();
+  console.log(donnees);
+
+} <span class="tok-key">catch</span> (erreur) {
+  console.log(<span class="tok-str">"Quelque chose s'est mal passé :"</span>, erreur.message);
+}</div>
+  </section>
+
+  <section id="resume" class="section--last">
+    <div class="eyebrow">Pièce 5</div>
+    <h2>Récapitulatif du dossier</h2>
+
+    <table>
+      <thead>
+        <tr><th>Méthode</th><th>Action</th><th>Body envoyé ?</th><th>Remplace tout ?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>GET</td><td>Lire une ressource</td><td>Non</td><td>—</td></tr>
+        <tr><td>POST</td><td>Créer une ressource</td><td>Oui (complète)</td><td>—</td></tr>
+        <tr><td>PUT</td><td>Remplacer une ressource</td><td>Oui (complète)</td><td>Oui</td></tr>
+        <tr><td>PATCH</td><td>Modifier partiellement</td><td>Oui (champs changés)</td><td>Non</td></tr>
+        <tr><td>DELETE</td><td>Supprimer une ressource</td><td>Non</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <div class="reflexes">
+      <div class="reflexe"><span class="reflexe__num">1</span><p>fetch renvoie une Promise → toujours await ou .then().</p></div>
+      <div class="reflexe"><span class="reflexe__num">2</span><p>Le corps de la réponse se lit en deux temps : fetch() puis .json().</p></div>
+      <div class="reflexe"><span class="reflexe__num">3</span><p>try/catch n'attrape pas les erreurs HTTP → toujours vérifier reponse.status.</p></div>
+    </div>
+
+    <h3>Petit lexique, pour relire plus tard</h3>
+    <div class="def-grid">
+      <div class="def-card"><dt>Promise</dt><dd>Un objet qui représente un résultat pas encore disponible, mais qui arrivera (ou échouera) plus tard.</dd></div>
+      <div class="def-card"><dt>async</dt><dd>Mot-clé placé devant une fonction pour autoriser l'utilisation d'await à l'intérieur.</dd></div>
+      <div class="def-card"><dt>await</dt><dd>Met en pause une fonction async jusqu'à ce qu'une Promise se termine, sans bloquer le reste du programme.</dd></div>
+      <div class="def-card"><dt>JSON</dt><dd>Un format de texte standard pour représenter des données structurées, lisible à la fois par les humains et les programmes.</dd></div>
+      <div class="def-card"><dt>Header (en-tête)</dt><dd>Une métadonnée jointe à une requête ou une réponse HTTP, par exemple le type de contenu envoyé.</dd></div>
+      <div class="def-card"><dt>Statut HTTP</dt><dd>Un code à trois chiffres qui résume le résultat d'une requête : 200 (succès), 404 (introuvable), 500 (erreur serveur)...</dd></div>
+      <div class="def-card"><dt>Body</dt><dd>Le contenu transporté par une requête ou une réponse — les données elles-mêmes, au-delà des en-têtes.</dd></div>
+      <div class="def-card"><dt>Endpoint</dt><dd>Une adresse précise exposée par une API, correspondant à une ressource ou une action (ex : /acteurIndiens/3).</dd></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Dossier 07 — fetch(), async/await et les requêtes HTTP</footer>
+
+<script>
+  // ---- Navigation active ----
+  const sections = document.querySelectorAll('main section');
+  const tabs = document.querySelectorAll('.tabs__item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        tabs.forEach(t => t.classList.toggle('is-active', t.dataset.section === entry.target.id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // ---- Café / Promise demo ----
+  const cafeBtn = document.getElementById('cafeBtn');
+  const ticket = document.getElementById('ticket');
+  let ticketNum = 41;
+  cafeBtn.addEventListener('click', () => {
+    ticketNum++;
+    cafeBtn.disabled = true;
+    ticket.className = 'ticket ticket--pending';
+    ticket.innerHTML = `<span class="ticket__num">Ticket n° ${ticketNum}</span><span class="ticket__status">En préparation… (pending)</span>`;
+    setTimeout(() => {
+      const success = Math.random() > 0.35;
+      if(success){
+        ticket.className = 'ticket ticket--resolved';
+        ticket.innerHTML = `<span class="ticket__num">Ticket n° ${ticketNum}</span><span class="ticket__status stamp stamp--teal">Résolue — café servi</span>`;
+      } else {
+        ticket.className = 'ticket ticket--rejected';
+        ticket.innerHTML = `<span class="ticket__num">Ticket n° ${ticketNum}</span><span class="ticket__status stamp stamp--rust">Rejetée — plus de lait</span>`;
+      }
+      cafeBtn.disabled = false;
+    }, 1300);
+  });
+
+  const btnThen = document.getElementById('btnThen');
+  const btnAsync = document.getElementById('btnAsync');
+  const panelThen = document.getElementById('panelThen');
+  const panelAsync = document.getElementById('panelAsync');
+  btnThen.addEventListener('click', () => {
+    btnThen.classList.add('is-active'); btnAsync.classList.remove('is-active');
+    panelThen.classList.add('is-visible'); panelAsync.classList.remove('is-visible');
+  });
+  btnAsync.addEventListener('click', () => {
+    btnAsync.classList.add('is-active'); btnThen.classList.remove('is-active');
+    panelAsync.classList.add('is-visible'); panelThen.classList.remove('is-visible');
+  });
+
+  // ---- Enveloppe demo ----
+  const envelope = document.getElementById('envelope');
+  const envelopeStamp = document.getElementById('envelopeStamp');
+  const envelopeHint = document.getElementById('envelopeHint');
+  let envelopeStep = 0;
+  function envelopeClick(){
+    envelopeStep++;
+    if(envelopeStep === 1){
+      envelopeStamp.classList.add('is-visible');
+      envelopeHint.textContent = "Étape 2 — clique encore pour lire la lettre";
+    } else if(envelopeStep === 2){
+      envelope.classList.add('envelope--open');
+      envelopeHint.textContent = "Lettre lue : voici les données (.json())";
+    } else {
+      envelope.classList.remove('envelope--open');
+      envelopeStamp.classList.remove('is-visible');
+      envelopeHint.textContent = "Étape 1 — clique sur l'enveloppe pour voir le statut";
+      envelopeStep = 0;
+    }
+  }
+  envelope.addEventListener('click', envelopeClick);
+  envelope.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); envelopeClick(); } });
+
+  // ---- Fiche acteur / méthodes HTTP ----
+  const cardZone = document.getElementById('cardZone');
+  const methodesNote = document.getElementById('methodesNote');
+  const methodesCode = document.getElementById('methodesCode');
+  const baseActor = { id: '07', nom: 'Rohan K.', age: 34, ville: 'Mumbai', films: '12 films' };
+  let actor = { ...baseActor };
+  let filmsRemoved = false;
+  let nomChanged = false;
+  let deleted = false;
+  let extraCardVisible = false;
+
+  function renderCard(){
+    cardZone.innerHTML = '';
+    if(!deleted){
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.id = 'mainCard';
+      let rows = `
+        <div class="card__id">Fiche n° ${actor.id}</div>
+        <div class="card__row ${nomChanged ? 'card__row--changed' : ''}"><span>nom</span><span>${actor.nom}</span></div>
+        <div class="card__row"><span>age</span><span>${actor.age}</span></div>
+        <div class="card__row"><span>ville</span><span>${actor.ville}</span></div>
+      `;
+      if(filmsRemoved){
+        rows += `<div class="card__row card__row--removed"><span>films</span><span>absent ⇒ supprimé</span></div>`;
+      } else {
+        rows += `<div class="card__row"><span>films</span><span>${actor.films}</span></div>`;
+      }
+      card.innerHTML = rows;
+      cardZone.appendChild(card);
+    }
+    if(extraCardVisible){
+      const newCard = document.createElement('div');
+      newCard.className = 'card card--new';
+      newCard.innerHTML = `
+        <div class="card__id">Fiche n° 08 — nouvelle</div>
+        <div class="card__row"><span>nom</span><span>Meera S.</span></div>
+        <div class="card__row"><span>age</span><span>27</span></div>
+        <div class="card__row"><span>ville</span><span>Goa</span></div>
+        <div class="card__row"><span>films</span><span>3 films</span></div>
+      `;
+      cardZone.appendChild(newCard);
+    }
+    if(deleted && !extraCardVisible){
+      cardZone.innerHTML = `<p style="color:var(--muted); font-family:var(--font-mono); font-size:0.85rem;">— emplacement vide dans le classeur —</p>`;
+    }
+  }
+
+  const codeSnippets = {
+    GET: `<span class="tok-key">const</span> reponse = <span class="tok-key">await</span> fetch(url);\n<span class="tok-com">// aucune option nécessaire</span>`,
+    POST: `fetch(url, {\n  method: <span class="tok-str">"POST"</span>,\n  headers: { <span class="tok-str">"Content-Type"</span>: <span class="tok-str">"application/json"</span> },\n  body: JSON.stringify(nouvelActeur)\n});`,
+    PUT: `fetch(url + <span class="tok-str">"/3"</span>, {\n  method: <span class="tok-str">"PUT"</span>,\n  headers: { <span class="tok-str">"Content-Type"</span>: <span class="tok-str">"application/json"</span> },\n  body: JSON.stringify(ficheComplete) <span class="tok-com">// films absent → supprimé</span>\n});`,
+    PATCH: `fetch(url + <span class="tok-str">"/4"</span>, {\n  method: <span class="tok-str">"PATCH"</span>,\n  headers: { <span class="tok-str">"Content-Type"</span>: <span class="tok-str">"application/json"</span> },\n  body: JSON.stringify({ nom: <span class="tok-str">"Rohan K. (révisé)"</span> })\n});`,
+    DELETE: `fetch(url + <span class="tok-str">"/5"</span>, {\n  method: <span class="tok-str">"DELETE"</span>\n});`
+  };
+
+  document.querySelectorAll('[data-method]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const method = btn.dataset.method;
+      methodesCode.innerHTML = codeSnippets[method];
+
+      if(deleted && method !== 'GET'){
+        deleted = false;
+      }
+
+      if(method === 'GET'){
+        methodesNote.textContent = "GET → on regarde la fiche, rien ne change.";
+        renderCard();
+        const row = cardZone.querySelector('.card__row');
+        if(row){ row.classList.add('card__row--flash'); setTimeout(() => row.classList.remove('card__row--flash'), 700); }
+      }
+      if(method === 'POST'){
+        extraCardVisible = true;
+        methodesNote.textContent = "POST → une nouvelle fiche (n°08) est ajoutée au classeur.";
+        renderCard();
+      }
+      if(method === 'PUT'){
+        actor = { id: '07', nom: 'Rohan K. (refait)', age: 30, ville: 'Mumbai' };
+        actor.films = undefined;
+        filmsRemoved = true;
+        nomChanged = false;
+        methodesNote.textContent = "PUT → toute la fiche est remplacée. Le champ films, absent du nouvel objet, disparaît.";
+        renderCard();
+      }
+      if(method === 'PATCH'){
+        actor.nom = 'Rohan K. (révisé)';
+        nomChanged = true;
+        methodesNote.textContent = "PATCH → seul le champ nom change, le reste de la fiche reste intact.";
+        renderCard();
+        setTimeout(() => { nomChanged = false; }, 1200);
+      }
+      if(method === 'DELETE'){
+        deleted = true;
+        methodesNote.textContent = "DELETE → la fiche est retirée du classeur.";
+        renderCard();
+      }
+    });
+  });
+
+  document.getElementById('resetCard').addEventListener('click', () => {
+    actor = { ...baseActor };
+    filmsRemoved = false;
+    nomChanged = false;
+    deleted = false;
+    extraCardVisible = false;
+    methodesNote.textContent = "Choisis une méthode pour voir son effet sur la fiche.";
+    methodesCode.innerHTML = 'GET <span class="tok-com">→ pas d\'options nécessaires</span>';
+    renderCard();
+  });
+
+  renderCard();
+
+  // ---- Piège try/catch ----
+  const flowCatch = document.getElementById('flowCatch');
+  const flowStatus = document.getElementById('flowStatus');
+  const consoleEl = document.getElementById('console');
+
+  function logLine(text, kind){
+    const line = document.createElement('div');
+    line.className = 'console__line' + (kind ? ' console__line--' + kind : '');
+    line.textContent = text;
+    consoleEl.appendChild(line);
+  }
+
+  function runScenario(kind){
+    consoleEl.innerHTML = '';
+    flowCatch.classList.remove('is-active-error');
+    flowStatus.classList.remove('is-active-ok');
+    logLine('> fetch(url) envoyé…');
+    setTimeout(() => {
+      if(kind === 'domaine'){
+        flowCatch.classList.add('is-active-error');
+        logLine('TypeError: failed to fetch', 'error');
+        logLine('→ catch() déclenché : le réseau a échoué.', 'error');
+      } else {
+        flowStatus.classList.add('is-active-ok');
+        logLine('reponse.status → 404', 'ok');
+        logLine('→ catch() PAS déclenché : le serveur a bien répondu.', 'ok');
+      }
+    }, 500);
+  }
+
+  document.getElementById('btnDomaine').addEventListener('click', () => runScenario('domaine'));
+  document.getElementById('btn404').addEventListener('click', () => runScenario('404'));
+</script>
+
+</body>
+</html>

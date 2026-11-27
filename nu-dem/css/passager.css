@@ -1,0 +1,1005 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary:        #2d7a4f;
+  --primary-light:  #e6f4ec;
+  --primary-dark:   #1b5e3a;
+  --accent:         #f59e0b;
+  --bg:             #f5f6f8;
+  --surface:        #ffffff;
+  --border:         #e5e7eb;
+  --border-light:   #f0f0f0;
+  --text:           #1a1a2e;
+  --text-secondary: #6b7280;
+  --text-muted:     #9ca3af;
+  --danger:         #e53935;
+  --danger-light:   #fdecea;
+  --success:        #22c55e;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:      0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:      0 8px 32px rgba(0,0,0,.10);
+  --radius-sm:      8px;
+  --radius-md:      12px;
+  --radius-lg:      16px;
+  --sidebar-w:      240px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* ============================================================
+   LAYOUT — Sidebar + Corps
+   ============================================================ */
+
+#Passager1,
+#Passager2 {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+}
+
+#sidBar {
+  width: var(--sidebar-w);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+}
+
+#haut {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profilUser {
+  padding: 0 8px 16px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 8px;
+}
+
+.profilUser div:first-child {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 4px;
+}
+
+.profilUser div:last-child {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.voy,
+.reservation,
+.profil {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all .2s ease;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.voy i,
+.reservation i,
+.profil i,
+#dec i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.voy:hover,
+.reservation:hover,
+.profil:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.reservation {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+  border-left: 3px solid var(--primary);
+}
+
+.profil {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+#bas {
+  border-top: 1px solid var(--border-light);
+  padding-top: 12px;
+}
+
+#bas hr { display: none; }
+
+#dec {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+#dec:hover {
+  background: var(--danger-light);
+}
+
+
+/* ============================================================
+   PASSAGER 1 — Recherche & Réservation
+   ============================================================ */
+
+#corps {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 32px 40px;
+  max-width: calc(100% - var(--sidebar-w));
+}
+
+/* Ligne 1 : Titre + Logo */
+#ligne1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+#ligne1 h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+#log {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+}
+
+/* Ligne 2 : Formulaire de recherche */
+#ligne2 {
+  background: var(--surface);
+  padding: 24px 28px;
+  border-radius: var(--radius-md);
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  margin-bottom: 28px;
+}
+
+#ligne2 div {
+  flex: 1;
+  min-width: 0;
+}
+
+#ligne2 label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#ligne2 input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  transition: all .2s ease;
+  outline: none;
+}
+
+#ligne2 input:focus {
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+#ligne2 input::placeholder {
+  color: var(--text-muted);
+}
+
+#ligne2 button {
+  background: var(--primary);
+  color: var(--surface);
+  border: none;
+  padding: 12px 32px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(45,122,79,.3);
+}
+
+#ligne2 button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(45,122,79,.4);
+}
+
+#ligne2 button:active {
+  transform: translateY(0);
+}
+
+/* Ligne 3 : Carte + Cards */
+#ligne3 {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+#carte {
+  flex: 2;
+  height: 520px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+}
+
+#cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+#cards::-webkit-scrollbar {
+  width: 4px;
+}
+#cards::-webkit-scrollbar-track {
+  background: transparent;
+}
+#cards::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+/* Card individuelle */
+#cards > div[id="card"],
+#cards > div:not([id]) {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  transition: all .2s ease;
+}
+
+#cards > div[id="card"]:hover,
+#cards > div:not([id]):hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Header de la card */
+#cards .carte-trajet > div:first-child,
+#cards > div:not([id]) > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+#cards .carte-trajet > div:first-child > div:first-child,
+#cards > div:not([id]) > div:first-child > div:first-child {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+#cards .carte-trajet > div:first-child > div:last-child,
+#cards > div:not([id]) > div:first-child > div:last-child {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* Info ligne (places + arrivée) */
+#cards .carte-trajet > div:nth-child(2),
+#cards > div:not([id]) > div:nth-child(2) {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+#cards .carte-trajet > div:nth-child(2) > div:first-child,
+#cards > div:not([id]) > div:nth-child(2) > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#cards .carte-trajet > div:nth-child(2) > div:first-child::before,
+#cards > div:not([id]) > div:nth-child(2) > div:first-child::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  display: inline-block;
+}
+
+/* Input places */
+#cards > div:not([id]) > label,
+#cards > div:not([id]) > input {
+  display: block;
+  width: 100%;
+}
+
+#cards > div:not([id]) > label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+#cards > div:not([id]) > input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  margin-bottom: 14px;
+  transition: all .2s ease;
+  outline: none;
+}
+
+#cards > div:not([id]) > input[type="text"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Bouton réserver */
+#cards > button {
+  width: 100%;
+  background: var(--primary);
+  color: var(--surface);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(45,122,79,.25);
+}
+
+#cards > button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45,122,79,.35);
+}
+
+#cards > button:last-of-type {
+  margin-bottom: 0;
+}
+
+
+/* ============================================================
+   PASSAGER 2 — Profil & Réservations
+   ============================================================ */
+
+#corpsP2 {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 32px 40px;
+  display: flex;
+  gap: 24px;
+  max-width: calc(100% - var(--sidebar-w));
+}
+
+/* Colonne gauche — Profil */
+#gauche {
+  width: 320px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  height: fit-content;
+  position: sticky;
+  top: 32px;
+}
+
+#photoProfil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 20px;
+  display: block;
+  border: 4px solid var(--primary-light);
+  box-shadow: var(--shadow-sm);
+}
+
+#gauche .info {
+  margin-top: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#gauche .info strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all .2s ease;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--surface);
+  box-shadow: 0 2px 8px rgba(45,122,79,.25);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45,122,79,.35);
+}
+
+.btn-danger {
+  background: var(--surface);
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+}
+
+.btn-danger:hover {
+  background: var(--danger-light);
+  transform: translateY(-1px);
+}
+
+/* Colonne droite — Réservations */
+#droite {
+  flex: 1;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+}
+
+#droite > h3,
+#droite > .section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.reservation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  transition: all .2s ease;
+  background: var(--surface);
+}
+
+.reservation-item:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateX(4px);
+}
+
+.reservation-item > div:first-child {
+  flex: 1;
+}
+
+.reservation-item .route-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.reservation-item .route-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.details,
+.note,
+.annuler {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.details {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.details:hover {
+  background: var(--primary);
+  color: var(--surface);
+}
+
+.note {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.note:hover {
+  background: #f59e0b;
+  color: var(--surface);
+}
+
+.annuler {
+  background: var(--danger-light);
+  color: var(--danger);
+}
+
+.annuler:hover {
+  background: var(--danger);
+  color: var(--surface);
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1200px) {
+  #ligne3 {
+    flex-direction: column;
+  }
+  #carte {
+    width: 100%;
+    height: 300px;
+  }
+  #cards {
+    max-height: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  #cards > div[id="card"],
+  #cards > div:not([id]) {
+    flex: 1 1 280px;
+  }
+}
+
+@media (max-width: 1024px) {
+  #corps,
+  #corpsP2 {
+    padding: 24px;
+  }
+  #ligne2 {
+    flex-wrap: wrap;
+  }
+  #ligne2 div {
+    flex: 1 1 200px;
+  }
+  #corpsP2 {
+    flex-direction: column;
+  }
+  #gauche {
+    width: 100%;
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  #sidBar {
+    width: 100%;
+    position: relative;
+    flex-direction: row;
+    padding: 16px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  #Passager1,
+  #Passager2 {
+    flex-direction: column;
+  }
+  #corps,
+  #corpsP2 {
+    margin-left: 0;
+    max-width: 100%;
+    padding: 20px;
+  }
+  #haut {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .profilUser {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding: 0;
+  }
+  #bas {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+
+
+
+
+/* ============================================================
+   AJOUTS CSS — Passager2 (même menu, nouvelles classes)
+   ============================================================ */
+
+/* ---------- Sidebar : état actif corrigé ---------- */
+.profil.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+  border-left: 3px solid var(--primary);
+}
+
+/* ---------- Icônes FontAwesome : couleur unifiée ---------- */
+#sidBar i {
+  color: var(--primary) !important;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  transition: color .2s ease;
+}
+
+.voy:hover i,
+.reservation:hover i,
+.profil:hover i,
+.profil.active i {
+  color: var(--primary) !important;
+}
+
+/* ---------- Photo de profil (nouvelle classe) ---------- */
+.photoBloc {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.photoProfil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--primary-light);
+  box-shadow: var(--shadow-sm);
+  display: block;
+  margin: 0 auto;
+}
+
+/* ---------- Info profil (nouvelle structure) ---------- */
+#gauche h3 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+#gauche > p {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.infoProfil {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.infoProfil span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.infoProfil strong {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ---------- Boutons (nouvelles classes .bleu, .rouge, .vert) ---------- */
+.btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all .2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn.bleu {
+  background: var(--primary);
+  color: var(--surface);
+  box-shadow: 0 2px 8px rgba(45,122,79,.25);
+}
+
+.btn.bleu:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45,122,79,.35);
+}
+
+.btn.rouge {
+  background: var(--surface);
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+}
+
+.btn.rouge:hover {
+  background: var(--danger-light);
+  transform: translateY(-1px);
+}
+
+.btn.vert {
+  background: var(--success);
+  color: var(--surface);
+  box-shadow: 0 2px 8px rgba(34,197,94,.25);
+}
+
+.btn.vert:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34,197,94,.35);
+}
+
+/* ---------- Dernier trajet favori ---------- */
+.trajetFavori {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+}
+
+.trajetFavori h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.trajetFavori p {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+/* ---------- Onglets (tabs) ---------- */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 12px;
+}
+
+.tab {
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all .2s ease;
+  background: transparent;
+  border: none;
+}
+
+.tab:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.tab.active {
+  background: var(--primary);
+  color: var(--surface);
+  box-shadow: 0 2px 8px rgba(45,122,79,.25);
+}
+
+/* ---------- Cards réservations (nouvelle structure) ---------- */
+.reservations {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reservationCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  transition: all .2s ease;
+}
+
+.reservationCard:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateX(4px);
+}
+
+.reservationIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reservationIcon i {
+  font-size: 20px;
+  color: var(--primary) !important;
+}
+
+.reservationInfos {
+  flex: 1;
+  min-width: 0;
+}
+
+.reservationInfos h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.reservationInfos p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.reservationActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.reservationActions span {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.reservationActions a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  transition: all .2s ease;
+  background: var(--primary-light);
+}
+
+.reservationActions a:hover {
+  background: var(--primary);
+  color: var(--surface);
+}
+
+.reservationActions a.annuler {
+  color: var(--danger);
+  background: var(--danger-light);
+}
+
+.reservationActions a.annuler:hover {
+  background: var(--danger);
+  color: var(--surface);
+}

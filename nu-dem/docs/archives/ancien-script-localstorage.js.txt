@@ -1,0 +1,100 @@
+// const recupCon  = document.querySelector('.ALLConn');
+// const recupInsc = document.querySelector('.AllInsc');
+// const recupAcc  = document.querySelector('#Accueil');
+
+// recupCon.classList.add('hidden');
+// recupInsc.classList.add('hidden');
+// recupAcc.classList.remove('hidden');
+
+// let users = JSON.parse(localStorage.getItem("utilisateurs")) || [
+//     {
+//         nom: "Amadou Diallo",
+//         email: "amadou@gmail.com",
+//         telephone: "771234567",
+//         motDePasse: "1234",
+//         ville: "Dakar"
+//     },
+//     {
+//         nom: "Fatou Ndiaye",
+//         email: "fatou@gmail.com",
+//         telephone: "781112233",
+//         motDePasse: "abcd",
+//         ville: "Thiès"
+//     }
+// ];
+
+
+
+// document.querySelector('.btnS').addEventListener('click', () => {
+//     recupAcc.classList.add('hidden');
+//     recupCon.classList.remove('hidden');
+// });
+
+// document.querySelector('.versInsc').addEventListener('click', () => {
+//     recupCon.classList.add('hidden');
+//     recupInsc.classList.remove('hidden');
+// });
+
+// document.querySelector('.versConn').addEventListener('click', () => {
+//     recupInsc.classList.add('hidden');
+//     recupCon.classList.remove('hidden');
+// });
+
+// document.querySelector('.btnInsc').addEventListener('click', (e) => {
+//     e.preventDefault();
+
+//     const nom = document.querySelector('#nom').value.trim();
+//     const email = document.querySelector('#loginInsc').value.trim();
+//     const telephone = document.querySelector('#tel').value.trim();
+//     const mdp = document.querySelector('#mdp2').value;
+//     const mdpConf = document.querySelector('#mdp3').value;
+//     const ville = document.querySelector('#ville').value.trim();
+
+//     if (!nom || !email || !mdp || !mdpConf || !ville) return alert('champs vides');
+//     if (mdp !== mdpConf) return alert('mdp different');
+//     if (mdp.length < 4) return alert('mdp court');
+
+//     const existe = users.find(u => u.email === email);
+//     if (existe) return alert('email existe');
+
+//     users.push({ nom, email, telephone, motDePasse: mdp, ville });
+
+//     localStorage.setItem("utilisateurs", JSON.stringify(users));
+
+//     recupInsc.classList.add('hidden');
+//     recupCon.classList.remove('hidden');
+
+//     document.querySelector('#login').value = email;
+// });
+
+// document.querySelector('.btnCon').addEventListener('click', (e) => {
+//     e.preventDefault();
+
+//     const email = document.querySelector('#login').value.trim();
+//     const mdp = document.querySelector('#mdp').value;
+
+//     if (!email || !mdp) return alert('champs vides');
+
+//     const user = users.find(u => u.email === email && u.motDePasse === mdp);
+
+//     if (user) {
+//         recupCon.classList.add('hidden');
+//         recupAcc.classList.remove('hidden');
+//     } else {
+//         alert('incorrect');
+//     }
+// });
+
+// function exporterJSON() {
+//     const data = { utilisateurs: users };
+
+//     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+//     const url = URL.createObjectURL(blob);
+
+//     const a = document.createElement("a");
+//     a.href = url;
+//     a.download = "js.json";
+//     a.click();
+// }
+
+// // fetch

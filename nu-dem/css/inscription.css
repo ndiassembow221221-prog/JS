@@ -1,0 +1,191 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f5efef;
+}
+
+.AllInsc {
+  margin: 10px auto;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 2px;
+}
+.AllInsc #infos {
+  flex: 1;
+  background-image: url("public/images/voiture.svg");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 5px;
+}
+.AllInsc #log {
+  width: 200px;
+  height: 100px;
+}
+.AllInsc .bienvenue {
+  display: flex;
+}
+.AllInsc .text {
+  text-align: center;
+}
+.AllInsc .acteur {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}
+.AllInsc .admin > div, .AllInsc .conducteur > div, .AllInsc .passager > div {
+  margin: 5px;
+}
+.AllInsc .admin, .AllInsc .conducteur, .AllInsc .passager {
+  flex: 1;
+  padding: 20px;
+  margin: 15px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  opacity: 0.7;
+  font-size: 10px;
+}
+.titre {
+  font-size: 15px;
+  font-weight: bold;
+}
+.AllInsc form {
+  flex: 1;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #fffefe;
+}
+.AllInsc form h2 {
+  margin-bottom: 30px;
+}
+.AllInsc .login, .AllInsc .mdp {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.AllInsc input, .btnInsc {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  outline: none;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fafafa;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.AllInsc input:focus {
+  border-color: #0d9c4c;
+  box-shadow: 0 0 0 3px rgba(13, 156, 76, 0.12);
+  background: #fff;
+}
+
+.AllInsc .btnCon {
+  height: 50px;
+  width: 100%;
+  background-color: #0d9c4c;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.AllInsc .btnCon:hover {
+  background-color: #0b8a42;
+}
+.AllInsc .btnCon:active {
+  transform: scale(0.98);
+}
+
+.inp1 {
+  height: 44px;
+}
+.AllInsc .sec {
+  margin: 30px;
+  margin-top: 10px;
+  margin-top: 30px;
+}
+.AllInsc .mdpM {
+  text-align: right;
+  color: blue;
+}
+.versInsc {
+  text-align: center;
+  cursor: pointer;
+}
+.versConn {
+  cursor: pointer;
+}
+.versInsc
+span {
+  color: blue;
+}
+hr {
+  width: 50%;
+  margin: auto;
+  margin-top: 25px;
+  height: 3px;
+}
+.un {
+  background-color: #0d9c4c;
+}
+.deux {
+  background-color: blue;
+}
+.trois {
+  background-color: pink;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+h5 {
+  margin-top: -35px;
+}
+.AllInsc .btnInsc {
+    height: 50px;
+    width: 100%;
+    background-color: #0d9c4c;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btnInsc:hover {
+    background-color: #0b8a42;
+}
+
+.btnInsc:active {
+    transform: scale(0.98);
+}

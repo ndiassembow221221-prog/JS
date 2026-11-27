@@ -1,0 +1,20 @@
+/* Messages, chargement, erreurs, états actifs — partagés par toutes les pages */
+.toasts{position:fixed;right:1rem;bottom:1rem;display:grid;gap:.5rem;z-index:50}
+.toast{padding:.7rem 1rem;border-radius:10px;color:#fff;background:#16a34a;box-shadow:0 6px 18px rgba(0,0,0,.18);animation:fadeUp .25s ease both}
+.toast.err{background:#dc2626}
+.chargement{text-align:center;padding:3rem;color:#6b7280}
+.erreur-tech{max-width:440px;margin:80px auto;text-align:center;padding:2rem;background:#fff;border-radius:12px;box-shadow:0 0 10px pink}
+.erreur-tech .aide{color:#6b7280;font-size:.9rem;margin:.5rem 0 1rem}
+.erreur-tech button,.nf button{padding:.6rem 1.2rem;border:0;border-radius:8px;background:#0d9c4c;color:#fff;font-weight:600;cursor:pointer}
+.nf{text-align:center;margin-top:50px}
+#sidBar .actif{background:#e6f4ec;color:#2d7a4f}
+.vide{padding:1rem;color:#6b7280;text-align:center}
+.avatar-ini{display:grid;place-items:center;background:#1eb152;color:#fff;font:700 2.4rem/1 sans-serif}
+.form-publier{display:flex;flex-wrap:wrap;gap:.6rem;align-items:end;margin-top:12px}
+.form-publier label{display:grid;gap:3px;font-size:.8rem;color:#6b7280}
+.form-publier input{padding:8px 10px;border:1px solid #e0e3e8;border-radius:8px}
+.form-publier .btn-primary{width:auto;margin:0;padding:10px 16px}
+.err-champ{color:#dc2626;font-size:.8rem}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.reservationActions a,.tab,[data-nav],#dec{cursor:pointer}
+.reservationActions span.statut{font-size:.75rem;color:#6b7280}

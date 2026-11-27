@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Application SPA complète en JavaScript pur : routeur par hash, pages chargées à la demande, thème clair et sombre." />
+  <meta name="theme-color" content="#D6456C" />
+  <title>Mon SPA</title>
+  <link rel="icon" type="image/svg+xml" href="./public/images/favicon.svg" />
+
+  <!-- Le thème (clair/sombre) est posé AVANT l'affichage : pas de flash blanc en mode sombre. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('spa.theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Polices Google Fonts (si hors-ligne : polices système de secours). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Feuilles de style : variables du thème → base → composants → pages. -->
+  <link rel="stylesheet" href="./src/styles/theme.css" />
+  <link rel="stylesheet" href="./src/styles/base.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
+  <link rel="stylesheet" href="./src/styles/pages.css" />
+</head>
+<body>
+  <a class="skip-link" href="#app">Aller au contenu</a>
+
+  <!-- Barre de navigation : persistante, construite par components/navbar.js -->
+  <header id="navbar" class="site-header"></header>
+
+  <!-- Zone où le routeur affiche la page courante -->
+  <main id="app" tabindex="-1">
+    <p class="boot">Chargement...</p>
+  </main>
+
+  <footer id="footer" class="site-footer"></footer>
+
+  <!-- Messages courts (remplacent alert()) -->
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <noscript><p class="boot">Cette application nécessite JavaScript.</p></noscript>
+
+  <!-- Piège classique : les modules ES sont bloqués si on ouvre le fichier en file:// -->
+  <script>
+    if (location.protocol === 'file:') {
+      document.getElementById('app').innerHTML =
+        '<div class="page error-box"><h1>Lancez un petit serveur local</h1>' +
+        '<p>Les modules JavaScript ne fonctionnent pas quand on ouvre <code>index.html</code> directement.</p>' +
+        '<p>Dans le dossier du projet : <code>python3 -m http.server 5173</code> puis ouvrez <code>http://localhost:5173</code>.</p></div>';
+    }
+  </script>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
