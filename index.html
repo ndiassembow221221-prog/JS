@@ -2597,7 +2597,7 @@ ActualiserBoutons();
 
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -2751,7 +2751,6 @@ ActualiserBoutons();
         }
     </style>
 </head>
-
 <body>
     <div class="titreeee">TODO LIST</div>
     <div class="container">
@@ -2840,19 +2839,16 @@ ActualiserBoutons();
     <script>
         const $ = element => document.querySelector(element);
         const $$ = element => document.querySelectorAll(element);
-
         const container = $(".container");
         const taches = $(".taches");
         const cours = $(".cours");
         const termine = $(".termine");
-
         function updateButtons(tache) {
             const gauche = tache.querySelector(".btnFlecheGauche");
             const droite = tache.querySelector(".btnFlecheDroite");
             gauche.style.display = tache.parentElement === taches ? "none" : "inline-block";
             droite.style.display = tache.parentElement === termine ? "none" : "inline-block";
         }
-
         $$(".tache").forEach(updateButtons);
         container.addEventListener("click", event => {
             const bouton = event.target.closest("button");
@@ -2939,6 +2935,186 @@ ActualiserBoutons();
         si les chemins utilisés sont simplement style.css et script.js.
         ==========================================================
         */
+    </script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Art</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        .container {
+            width: 500px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgb(243, 119, 119);
+        }
+
+        /* La zone de dessin occupe tout l'espace disponible. */
+        .main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(90, 1fr);
+            grid-template-rows: repeat(90, 1fr);
+            background: white;
+            overflow: hidden;
+        }
+
+        .pixel {
+            border: 0.2px solid #222;
+            background: black;
+        }
+
+        .nav {
+            display: flex;
+            gap: 3px;
+            min-height: 45px;
+            background: white;
+        }
+
+        .btn {
+            flex: 1;
+            border: none;
+            border-radius: 5px;
+            margin: 1px;
+            padding: 8px 3px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn1 { background: #ececec; color: black; border: 1px solid; }
+        .btn2 { background: red; }
+        .btn3 { background: green; }
+        .btn4 { background: linear-gradient(to right, green, blue, orange, red, gray); }
+        .btn6 { background: #555; }
+
+        .btn:hover {
+            filter: brightness(0.8);
+        }
+
+        @media (max-width: 520px) {
+            .container {
+                width: 95vw;
+                height: 95vw;
+            }
+
+            .btn {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main"></div>
+        <div class="nav">
+            <button class="btn btn1">Gomme</button>
+            <button class="btn btn2">Red</button>
+            <button class="btn btn3">Green</button>
+            <button class="btn btn4">Multi-color</button>
+            <button class="btn btn6">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Récupération de la zone de dessin.
+        const main = document.querySelector(".main");
+        // 2. Création de 8100 pixels (90 colonnes × 90 lignes).
+        for (let i = 0; i < 8100; i++) {
+            const pixel = document.createElement("div");
+            pixel.className = "pixel";
+            main.appendChild(pixel);
+        }
+        // 3. Couleur actuellement sélectionnée.
+        let couleurChoix = "white";
+        // 4. Indique si l'utilisateur est en train de dessiner.
+        let dessin = false;
+        // 5. Début du dessin lorsque le bouton de la souris est enfoncé.
+        main.addEventListener("mousedown", () => {
+            dessin = true;
+        });
+        // 6. Fin du dessin lorsque le bouton de la souris est relâché.
+        document.addEventListener("mouseup", () => {
+            dessin = false;
+        });
+        // 7. Coloration des pixels lorsque la souris passe dessus.
+        main.addEventListener("mouseover", (e) => {
+            if (dessin && e.target.classList.contains("pixel")) {
+                // Chaque pixel reçoit une couleur aléatoire en mode multicolore.
+                if (couleurChoix === "random") {
+                    e.target.style.backgroundColor =
+                        `rgb(${Math.floor(Math.random() * 256)},
+                             ${Math.floor(Math.random() * 256)},
+                             ${Math.floor(Math.random() * 256)})`;
+                } else {
+                    e.target.style.backgroundColor = couleurChoix;
+                }
+            }
+        });
+        // 8. Sélection de la gomme : le noir efface le dessin.
+        document.querySelector(".btn1").onclick = () => {
+            couleurChoix = "black";
+        };
+        // 9. Sélection de la couleur rouge.
+        document.querySelector(".btn2").onclick = () => {
+            couleurChoix = "red";
+        };
+        // 10. Sélection de la couleur verte.
+        document.querySelector(".btn3").onclick = () => {
+            couleurChoix = "green";
+        };
+        // 11. Activation du mode multicolore.
+        document.querySelector(".btn4").onclick = () => {
+            couleurChoix = "random";
+        };
+        // 12. Réinitialisation de tous les pixels.
+        document.querySelector(".btn6").onclick = () => {
+            const pixels = document.querySelectorAll(".pixel");
+
+            pixels.forEach(pixel => {
+                pixel.style.backgroundColor = "black";
+            });
+        };       
     </script>
 
 </body>
