@@ -2958,7 +2958,7 @@ ActualiserBoutons();
 
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -3118,4 +3118,1296 @@ ActualiserBoutons();
     </script>
 
 </body>
-</html>
+</html> -->
+
+
+
+
+
+
+
+
+<!-- 
+ <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+
+    //   {
+    //     "acteurIndiens": [
+    //       {
+    //         "id": "1",
+    //         "nom": "Shah Rukh Khan",
+    //         "age": 60,
+    //         "ville": "Mumbai",
+    //         "films": [
+    //           "Dilwale Dulhania Le Jayenge",
+    //           "My Name Is Khan",
+    //           "Jawan"
+    //         ]
+    //       },
+    //       {
+    //         "id": "2",
+    //         "nom": "lno221",
+    //         "age": 52,
+    //         "ville": "Mumbai",
+    //         "films": [
+    //           "Bajrangi Bhaijaan",
+    //           "Sultan",
+    //           "Tiger Zinda Hai"
+    //         ]
+    //       },
+    //       {
+    //         "id": "4",
+    //         "nom": "defeantes",
+    //         "age": 52,
+    //         "ville": "lo",
+    //         "films": [
+    //           "Krrish",
+    //           "War",
+    //           "Super 30"
+    //         ],
+    //         "nomss": "defeantes"
+    //       }
+    //     ]
+    //   }
+            // const recuperatonDonnee =  async () => {
+            //     try {
+            //         const donneRecupereR = await fetch("http://localhost:3000/acteurIndiens")
+            //         // console.log(donneRecupereR);
+            //         // console.log(donneRecupereR.status);
+            //         const donneRecupere = await donneRecupereR.json();
+            //         console.table(donneRecupere);
+            //     } catch (error) {
+            //         console.log(error);
+            //     }
+            // }
+            // recuperatonDonnee();
+
+            // const recuperatonDonnee =  async () => {
+            //        fetch("http://localhost:3000/acteurIndiens")
+            //        .then(res => res.json())
+            //        .then(donnee => {
+            //         console.log(donnee);
+            //        })
+            //        .catch(error => {
+            //         console.log(error);
+            //        })
+            // }
+            // recuperatonDonnee();
+
+            // const recup = async (id) => {
+            //     try {
+            //         const objetRespeonse = await fetch(`http:///localhost:3000/acteurIndiens/${id}`)
+            //         console.log(objetRespeonse);
+            //         const donnees = await objetRespeonse.json()
+            //         console.log(donnees)
+
+            //         // let fil = donnees.filter((d) => d.age==60)
+            //         // let fil2 = donnees.filter(function(d) {
+            //         //     return d.age == 60
+            //         // })
+            //         // console.log(fil2);
+
+            //     } catch (error) {
+            //         console.log(error.message);
+            //     }
+            // }
+            // recup(2)
+
+            // const recup = async (id) => {
+            //     try {
+            //         const objetRespeonse = await fetch("http://localhost:3000/acteurIndiens")
+            //         // console.log(objetRespeonse);
+            //         const donnees = await objetRespeonse.json()
+            //         // console.log(donnees)
+
+            //         donnees.forEach((d) => {
+            //             console.log(d);
+            //         })
+
+            //     } catch (error) {
+            //         console.log(error.message);
+            //     }
+            // }
+            // recup()
+
+            // const timeoutId = setTimeout(function() {
+            //     console.log("Bonjour");
+            // }, 5000);
+            // clearTimeout(timeoutId);
+            // const intervalId = setInterval(function() {
+            //     console.log("Bonjour");
+            // }, 1000);
+            // clearInterval(intervalId);
+
+            // setTimeout(function() {
+            //     console.log("Bonjour");
+            // }, 1000)
+            // setTimeout(() => {
+            //     console.log("Bonjour");
+            // }, 1000)
+
+            // const recuperatonDonnee =  async () => {
+            //     try {
+            //         const donneRecupereR = await fetch ("http://localhost:3000/acteurIndiens")
+            //         //console.log(donneRecupereR);
+            //         //console.log(donneRecupereR.status);
+            //         const donneRecupere =  donneRecupereR.json();
+            //         donneRecupere.then(r => {
+            //             console.log(r);
+            //        }).catch(r => {
+            //             console.log(r);
+            //        })
+            //        .finally (() => {
+            //         console.log("Bye Bye classe");
+
+            //        } );
+            //         //console.log(donneRecupere);
+            //     } catch (error) {
+            //         console.log(error);
+
+            //     }
+            // }
+            // // recuperatonDonnee();
+
+            // async function envoiDonnee () {
+            //     try {
+            //         const acteur = {
+            //             id: "13",
+            //             nom: "AWAEVA",
+            //             age: 20,
+            //             ville: "Dahra",
+            //             films: [
+            //                 "Dilwale Dulhania Le Jayenge",
+            //                 "My Name Is Khan",
+            //                 "Jawan"
+            //             ]
+            //         }
+            //         const donneRecupereR = await fetch ("http://localhost:3000/acteurIndiens",
+            //             {
+            //                 method: "POST",
+            //                 headers: {"Content-Type":"application/json"},
+            //                 body: JSON.stringify(acteur)
+            //             })
+            //     } catch (error) {
+            //         console.log(error);
+
+            //     }
+            // }
+            // // envoiDonnee();
+
+            // async function modifierActeur() {
+            //     const acteurModifie = {
+            //         id: "6S",
+            //         nom: "Awa",
+            //         age: 12,
+            //         ville: "Mumbai"
+            //     };
+            //     const response = await fetch(
+            //         "http://localhost:3000/acteurIndiens/3",
+            //         {
+            //             method: "PUT",
+            //             headers: {
+            //                 "Content-Type": "application/json"
+            //             },
+            //             body: JSON.stringify(acteurModifie)
+            //         }
+            //     );
+            //     // OK
+            //     const data = await response.json();
+            //     console.log(data);
+            // }
+            // // modifierActeur()
+
+            //  async function miseAJourActeur() {
+            //     const acteurModifie = {
+            //         id: "6S",
+            //         nom : "defeantes"
+            //     };
+            //     const response = await fetch(
+            //         "http://localhost:3000/acteurIndiens/4",
+            //         {
+            //             method: "PATCH",
+            //             headers: {
+            //                 "Content-Type": "application/json"
+            //             },
+            //             body: JSON.stringify(acteurModifie)
+            //         }
+            //     );
+            //     console.log(response.status);
+            //     const data = await response.json();
+            //     console.log(data);
+            // }
+            // // miseAJourActeur()
+
+            // async function supprimerActeur() {
+            //     const response = await fetch(
+            //         "http://localhost:3000/acteurIndiens/5",
+            //         {
+            //             method: "DELETE"
+            //         }
+            //     );
+            //     console.log("Acteur supprimé");
+            // }
+            // // supprimerActeur()
+
+            // async function getAudio(){
+            //     try {
+            //             const acteurs = await fetch("http://localhost:3000/acteurIndiens")
+            //             const mesacteurs = await acteurs.json();
+
+            //             const Acteurs =mesacteurs[0];
+            //             const cheminaudio =Acteurs.audio;
+
+            //             const audioR = await fetch(cheminaudio);
+            //             const audio = await audioR.blob();
+
+            //             const audioUrl = URL.createObjectURL(audio);
+            //                         console.log(audioUrl);
+
+            //             const lecteur = document.getElementById('lecteur');
+            //             lecteur.src = audioUrl;
+
+            //             const lecteurs = document.getElementById('lecteurs');
+            //             lecteurs.addEventListener('click', function(){
+
+            //             lecteur.play();
+            //             })
+            //             console.log(lecteur);
+
+            //     } catch (error) {
+            //         console.log('error');
+
+            //     }
+            // }
+            // getAudio();
+
+            // function fonctionVie(taille){
+            //     if(taille >= 180)
+            //         return "Basketteur";
+            //     else if(taille > 160 && taille < 170)
+            //         return "Football";
+            //     else
+            //         return "Etude";
+            // }
+
+            // function determiner(taille, callback){
+            //     console.log(callback(taille));
+            // }
+
+            // determiner(180, fonctionVie);
+
+            // const me = async () => {
+
+            //     try {
+            //         let recup = await fetch("http://localhost:3000/acteurIndiens/2",
+            //             {
+            //                 method: 'PATCH',
+            //                 headers: {'Content-Type' : 'application/json'},
+            //                 body: JSON.stringify({"nom": "lno221"})
+            //             }
+            //         )
+            //         let d = await recup.json();
+            //         console.log(d);
+
+            //     } catch (error) {
+            //         console.log(error.name);
+
+            //     }
+            // }
+            // me()
+
+            // async function deleteUser() {
+            //     try {
+            //         const response = await fetch("http://localhost:3000/acteurIndiens/5",{
+            //             method: 'DELETE',
+            //         });
+            //         console.log("user deleted");
+            //     } catch (error) {
+            //         console.log(error);
+
+            //     }
+            // }
+            // deleteUser();
+
+            //   async function getNaufrages() {
+            //     try {
+
+            //         const response = await fetch(
+            //             "https://raw.githubusercontent.com/badjiassane00-cmd/test/main/db.json"
+            //         );
+
+            //         console.log("Status :", response.status);
+
+            //         if (!response.ok) {
+
+            //             if (response.status === 404) {
+            //                 throw new Error("Fichier introuvable");
+            //             }
+
+            //             if (response.status === 500) {
+            //                 throw new Error("Erreur interne du serveur");
+            //             }
+
+            //             throw new Error(
+            //                 `Erreur HTTP : ${response.status}`
+            //             );
+            //         }
+
+            //         const data = await response.json();
+
+            //         console.log("Succès");
+            //         console.table(data.naufrages);
+
+            //     } catch (error) {
+
+            //         console.log("Name :", error.name);
+
+            //         console.log("Message :", error.message);
+
+            //         console.log("Objet erreur :", error);
+
+            //     } finally {
+
+            //         console.log("Requête terminée");
+
+            //     }
+            // }
+
+            // getNaufrages();
+
+            //   async function recupererNaufrages(
+            //     pays = "",
+            //     anneeMin = "",
+            //     lieu = "",
+            //     tri = "victimes",
+            //     ordre = "desc",
+            //     page = 1,
+            //     limite = 5,
+            //   ) {
+            //     let url =
+            //       `http://localhost:3000/naufrages?` +
+            //       `pays=${pays}` +
+            //       `&annee_gte=${anneeMin}` +
+            //       `&lieu_like=${lieu}` +
+            //       `&_sort=${tri}` +
+            //       `&_order=${ordre}` +
+            //       `&_page=${page}` +
+            //       `&_limit=${limite}`;
+
+            //     fetch(url)
+            //       .then((response) => {
+            //         console.log("Status :", response.status);
+
+            //         if (!response.ok) {
+            //           if (response.status === 404) {
+            //             throw new Error("Ressource introuvable");
+            //           }
+
+            //           if (response.status === 500) {
+            //             throw new Error("Erreur serveur");
+            //           }
+
+            //           throw new Error(`Erreur HTTP : ${response.status}`);
+            //         }
+
+            //         return response.json();
+            //       })
+            //       .then((data) => {
+            //         console.table(data);
+            //       })
+            //       .catch((error) => {
+            //         console.log("Nom :", error.name);
+            //         console.log("Message :", error.message);
+            //         console.log("Erreur :", error);
+            //       })
+            //       .finally(() => {
+            //         console.log("Fin de la requête");
+            //       });
+            //   }
+
+            //   // Exemples
+
+            //   recupererNaufrages(
+            //     "Allemagne", // pays
+            //     1900, // année minimum
+            //     "Baltique", // lieu
+            //     "victimes", // tri
+            //     "desc", // ordre
+            //     1, // page
+            //     3, // limite
+            //   );
+
+            //   function ajouterNaufrage() {
+            //     const nouveauNaufrage = {
+            //       navire: "MV Bukken",
+            //       annee: 2026,
+            //       pays: "Sénégal",
+            //       lieu: "Océan Atlantique",
+            //       victimes: 12,
+            //       survivants: 45,
+            //       cause: "Tempête",
+            //     };
+
+            //     fetch("http://localhost:3000/naufrages", {
+            //       method: "POST",
+            //       headers: {
+            //         "Content-Type": "application/json",
+            //       },
+            //       body: JSON.stringify(nouveauNaufrage),
+            //     })
+            //       .then((response) => {
+            //         console.log("Status :", response.status);
+
+            //         if (!response.ok) {
+            //           throw new Error(`Erreur HTTP : ${response.status}`);
+            //         }
+
+            //         return response.json();
+            //       })
+            //       .then((data) => {
+            //         console.log("Naufrage ajouté avec succès");
+            //         console.log(data);
+            //       })
+            //       .catch((error) => {
+            //         console.log("Nom :", error.name);
+            //         console.log("Message :", error.message);
+            //         console.log("Erreur :", error);
+            //       })
+            //       .finally(() => {
+            //         console.log("Fin de l'opération");
+            //       });
+            //   }
+
+            //   ajouterNaufrage();
+
+            //   function modifierNaufrage(
+            //     id,
+            //     navire,
+            //     annee,
+            //     pays,
+            //     lieu,
+            //     victimes,
+            //     survivants,
+            //     cause,
+            //   ) {
+            //     fetch(`http://localhost:3000/naufrages/${id}`, {
+            //       method: "PUT",
+            //       headers: {
+            //         "Content-Type": "application/json",
+            //       },
+            //       body: JSON.stringify({
+            //         id,
+            //         navire,
+            //         annee,
+            //         pays,
+            //         lieu,
+            //         victimes,
+            //         survivants,
+            //         cause,
+            //       }),
+            //     })
+            //       .then((response) => {
+            //         console.log("Status :", response.status);
+
+            //         if (!response.ok) {
+            //           if (response.status === 404) {
+            //             throw new Error("Naufrage introuvable");
+            //           }
+
+            //           throw new Error(`Erreur HTTP : ${response.status}`);
+            //         }
+
+            //         return response.json();
+            //       })
+            //       .then((data) => {
+            //         console.log("Modification réussie");
+            //         console.log(data);
+            //       })
+            //       .catch((error) => {
+            //         console.log("Nom :", error.name);
+            //         console.log("Message :", error.message);
+            //         console.log("Erreur :", error);
+            //       })
+            //       .finally(() => {
+            //         console.log("PUT terminé");
+            //       });
+            //   }
+
+            //   modifierNaufrage(
+            //     1,
+            //     "Titanic Modifié",
+            //     1912,
+            //     "Royaume-Uni",
+            //     "Atlantique Nord",
+            //     1510,
+            //     700,
+            //     "Iceberg",
+            //   );
+
+            // POST avec await
+          //   async function ajouterNaufrage() {
+          //     const nouveauNaufrage = {
+          //       navire: "MV Dakar",
+          //       annee: 2026,
+          //       pays: "Sénégal",
+          //       lieu: "Océan Atlantique",
+          //       victimes: 20,
+          //       survivants: 50,
+          //       cause: "Tempête",
+          //     };
+
+          //     try {
+          //       const response = await fetch("http://localhost:3000/naufrages", {
+          //         method: "POST",
+          //         headers: {
+          //           "Content-Type": "application/json",
+          //         },
+          //         body: JSON.stringify(nouveauNaufrage),
+          //       });
+
+          //       console.log("Status :", response.status);
+
+          //       if (!response.ok) {
+          //         if (response.status === 404) {
+          //           throw new Error("URL introuvable");
+          //         }
+
+          //         if (response.status === 500) {
+          //           throw new Error("Erreur serveur");
+          //         }
+
+          //         throw new Error(`Erreur HTTP : ${response.status}`);
+          //       }
+
+          //       const data = await response.json();
+
+          //       console.log("Ajout réussi");
+          //       console.log(data);
+          //     } catch (error) {
+          //       console.log("Nom :", error.name);
+          //       console.log("Message :", error.message);
+          //       console.log("Erreur :", error);
+          //     } finally {
+          //       console.log("POST terminé");
+          //     }
+          //   }
+
+          //   ajouterNaufrage();
+
+          //   // PUT avec await
+          //   async function modifierNaufrage(id) {
+          //     const modification = {
+          //       navire: "Titanic Modifié",
+          //       annee: 1912,
+          //       pays: "Royaume-Uni",
+          //       lieu: "Atlantique Nord",
+          //       victimes: 1500,
+          //       survivants: 700,
+          //       cause: "Iceberg",
+          //     };
+
+          //     try {
+          //       const response = await fetch(
+          //         `http://localhost:3000/naufrages/${id}`,
+          //         {
+          //           method: "PUT",
+
+          //           headers: {
+          //             "Content-Type": "application/json",
+          //           },
+
+          //           body: JSON.stringify(modification),
+          //         },
+          //       );
+
+          //       console.log("Status :", response.status);
+
+          //       if (!response.ok) {
+          //         if (response.status === 404) {
+          //           throw new Error("Naufrage introuvable");
+          //         }
+
+          //         throw new Error(`Erreur HTTP : ${response.status}`);
+          //       }
+
+          //       const data = await response.json();
+
+          //       console.log("Modification réussie");
+          //       console.log(data);
+          //     } catch (error) {
+          //       console.log("Nom :", error.name);
+          //       console.log("Message :", error.message);
+          //       console.log("Erreur :", error);
+          //     } finally {
+          //       console.log("PUT terminé");
+          //     }
+          //   }
+
+          //   modifierNaufrage(1);
+
+          //   // PATCH avec await
+          //   async function patchNaufrage(id) {
+          //     const modification = {
+          //       victimes: 1200,
+          //       cause: "Erreur corrigée",
+          //     };
+
+          //     try {
+          //       const response = await fetch(
+          //         `http://localhost:3000/naufrages/${id}`,
+          //         {
+          //           method: "PATCH",
+
+          //           headers: {
+          //             "Content-Type": "application/json",
+          //           },
+
+          //           body: JSON.stringify(modification),
+          //         },
+          //       );
+
+          //       console.log("Status :", response.status);
+
+          //       if (!response.ok) {
+          //         if (response.status === 404) {
+          //           throw new Error("Naufrage introuvable");
+          //         }
+
+          //         if (response.status === 500) {
+          //           throw new Error("Erreur serveur");
+          //         }
+
+          //         throw new Error(`Erreur HTTP : ${response.status}`);
+          //       }
+
+          //       const data = await response.json();
+
+          //       console.log("Modification partielle réussie");
+          //       console.log(data);
+          //     } catch (error) {
+          //       console.log("Nom :", error.name);
+          //       console.log("Message :", error.message);
+          //       console.log("Erreur :", error);
+          //     } finally {
+          //       console.log("PATCH terminé");
+          //     }
+          //   }
+
+          //   patchNaufrage(1);
+
+          //   // DELETE avec await
+          //   async function supprimerNaufrage(id) {
+          //     try {
+          //       const response = await fetch(
+          //         `http://localhost:3000/naufrages/${id}`,
+          //         {
+          //           method: "DELETE",
+          //         },
+          //       );
+
+          //       console.log("Status :", response.status);
+
+          //       if (!response.ok) {
+          //         if (response.status === 404) {
+          //           throw new Error("Naufrage introuvable");
+          //         }
+
+          //         if (response.status === 500) {
+          //           throw new Error("Erreur serveur");
+          //         }
+
+          //         throw new Error(`Erreur HTTP : ${response.status}`);
+          //       }
+
+          //       const data = await response.json();
+
+          //       console.log("Suppression réussie");
+          //       console.log(data);
+          //     } catch (error) {
+          //       console.log("Nom :", error.name);
+          //       console.log("Message :", error.message);
+          //       console.log("Erreur :", error);
+          //     } finally {
+          //       console.log("DELETE terminé");
+          //     }
+          //   }
+
+          //   supprimerNaufrage(1);
+    </script>
+  </body>
+</html> 
+<script>
+    async function misAJour(id){
+        try {
+            let res = await fetch(`http://localhost:3000/commandes/${id}`,
+                {
+                    method: "PATCH",
+                    headers: { "Content-Type" : "application/json" },
+                    body: JSON.stringify({ etat: "Livree" })
+                }
+            );
+            const donnees = await res.json();
+            console.table(donnees);
+            
+        } catch(error) {
+            console.log("Error : ", error, "Error Name : ", error.name, "Error message : ", error.message);
+            
+        }
+    }
+    misAJour(3)
+    fetch("http://localhost:3000/clients/1?_embed=commandes")
+    .then(r => r.json())
+    .then(donnees => console.log(donnees));
+
+    // let donnees = [
+    //     { id: 1, nom: "Assane" },
+    //     { id: 2, nom: "Awa" }
+    // ];
+    // let filterD = donnees.filter(a => a.id === 1);
+    // console.log(filterD);
+</script>
+{
+  "clients": [
+    {
+      "id": 1,
+      "nom": "Assane Badji",
+      "ville": "Dakar",
+      "telephone": "771111111"
+    },
+    {
+      "id": 2,
+      "nom": "Modou SOW",
+      "ville": "Dakar",
+      "telephone": "772222222"
+    }
+  ],
+  "commandes": [
+    {
+      "id": 1,
+      "clientId": 1,
+      "produit": "Ordinateur Portable",
+      "quantite": 1,
+      "prix": 450000,
+      "etat": "En attente"
+    },
+    {
+      "id": 2,
+      "clientId": 1,
+      "produit": "Souris",
+      "quantite": 2,
+      "prix": 10000,
+      "etat": "Expédiée"
+    },
+    {
+      "id": 3,
+      "clientId": 2,
+      "produit": "Clavier",
+      "quantite": 1,
+      "prix": 25000,
+      "etat": "En attente"
+    }
+  ]
+}
+json server -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+import axios from "axios";
+
+// URL de l'API
+const API_URL = "https://jsonplaceholder.typicode.com/users";
+
+// GET : récupérer les utilisateurs
+async function getUsers() {
+    try {
+        const response = await axios.get(API_URL);
+
+        console.log(response.data);
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+// POST : créer un utilisateur
+async function createUser() {
+    const response = await axios.post(API_URL, {
+        name: "Ali",
+        email: "ali@gmail.com"
+    });
+
+    console.log(response.data);
+}
+
+// PUT : modifier un utilisateur
+async function updateUser() {
+    const response = await axios.put(`${API_URL}/1`, {
+        name: "Ali modifié",
+        email: "nouveau@gmail.com"
+    });
+
+    console.log(response.data);
+}
+
+// DELETE : supprimer un utilisateur
+async function deleteUser() {
+    const response = await axios.delete(`${API_URL}/1`);
+
+    console.log(response.data);
+}
+
+getUsers(); -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body{
+            padding: 10px;
+        }
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+       .lab{
+        margin-bottom: 25px;
+       }
+        button{
+            color: rgb(236, 236, 236);
+            background-color: #0582f7;
+            border: none;
+            box-shadow: 0 0 5px rgb(21, 1, 136);
+        }
+        input{
+            margin-right: 11px;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 0 5px rgb(21, 1, 136);
+        }
+        td{
+            padding: 25px;
+            font-size: 20px;
+        }
+          th{
+            padding: 25px;
+            font-size: 25px;
+            color:  rgb(21, 1, 136);
+        }
+    </style>
+</head>
+<body>
+
+    <select name="" id="">
+        <option value="sn">Senegal</option>
+        <option value="fr">France</option>
+    </select>
+    <div class="lab">
+        <label for="" >
+        <input type="text" class="tiddd" placeholder="Entrer le nom du produit a rechercher" style="padding: 10px; width: 100%; font-size: 2rem; text-align: center; ">
+    </label>
+    </div>
+    <small>...</small>
+    <table border="", width="100%">
+        <thead> 
+        <tr>
+            <th>ID <i class="fa-solid fa-sort tId" style="font-size: 20px; color:  rgb(21, 1, 136);"></i></th>
+            <th>NOM <i class="fa-solid fa-sort tNom" style="font-size: 20px; color:  rgb(21, 1, 136)"></i></th>
+            <th>CATEGORIE <i class="fa-solid fa-sort tCate" style="font-size: 20px;color:  rgb(21, 1, 136)"></i></th>
+            <th>PRIX <i class="fa-solid fa-sort tPrix" style="font-size: 20px; color:  rgb(21, 1, 136)"></i></th>
+            <th>STOCK <i class="fa-solid fa-sort tStock" style="font-size: 20px; color:  rgb(21, 1, 136)"></i></th>
+            <th>DISPONIBILITÉ <i class="fa-solid fa-sort tDispo" style="font-size: 20px; color:  rgb(21, 1, 136)"></i></th>
+        </tr>
+     </thead>
+     <tbody>
+  
+       
+     </tbody>
+    </table>
+
+    <script src="script.js"></script>
+    <script>
+        const produits = [
+  {
+    id: 1,
+    nom: "Riz",
+    categorie: "Alimentaire",
+    prix: 15000,
+    stock: 10,
+    disponible: true
+  },
+  {
+    id: 2,
+    nom: "Huile",
+    categorie: "Alimentaire",
+    prix: 1200,
+    stock: 0,
+    disponible: false
+  },
+  {
+    id: 3,
+    nom: "Savon",
+    categorie: "Hygiène",
+    prix: 500,
+    stock: 25,
+    disponible: true
+  },
+  {
+    id: 4,
+    nom: "Lait",
+    categorie: "Alimentaire",
+    prix: 1000,
+    stock: 8,
+    disponible: true
+  },
+  {
+    id: 5,
+    nom: "Shampoing",
+    categorie: "Hygiène",
+    prix: 2500,
+    stock: 5,
+    disponible: true
+  }
+];
+
+let tbody = document.querySelector("tbody");
+
+function ajoutTr(tab){
+    tab.forEach(element => {   
+    tbody.innerHTML +=` <tr>
+                    <td>${element.id} </td>
+                     <td>${element.nom} </td>
+                     <td>${element.categorie} </td>
+                     <td>${element.prix} </td>
+                     <td>${element.stock} </td>
+                     <td>${element.stock  ? "Disponible":"Pas Disponible"}</td>
+                     </tr>
+                     `
+});
+}
+
+ajoutTr(produits)
+  
+const input = document.querySelector("input")
+input.addEventListener("input", ()=>{
+let valInput = input.value.toUpperCase().trim();
+if(valInput != ""){
+        let nomP = produits.filter(f => f.nom.toLowerCase().includes(valInput.toLowerCase()) || f.id.toString().includes(valInput) || f.categorie.toLowerCase().includes(valInput.toLowerCase()) || f.prix.toString().includes(valInput) || f.stock.toString().includes(valInput));
+    tbody.innerHTML = "";
+    ajoutTr(nomP)
+}
+else{
+     tbody.innerHTML = "";
+    ajoutTr(produits)
+}   
+})
+
+let tId = document.querySelector(".tId");
+console.log(tId)
+let tNom = document.querySelector(".tNom");
+let tCate = document.querySelector(".tCate");
+let tPrix = document.querySelector(".tPrix");
+let tDispo = document.querySelector(".tDispo");
+let sort = true;
+
+let small = document.querySelector("small");
+small.textContent = `Nombre de produits trouver : ${produits.length}`
+
+
+tNom.addEventListener("click", ()=>{
+     if(sort){
+        let names = produits.sort((a,b) => a.nom.localeCompare(b.nom));
+     tbody.innerHTML = "";
+      ajoutTr(names)
+      sort = false;
+     }
+     else{
+          let names = produits.sort((a,b) => b.nom.localeCompare(a.nom));
+     tbody.innerHTML = "";
+      ajoutTr(names)
+      sort = true;
+     }
+})
+
+
+
+function trie (trie){
+    trie.addEventListener("click", ()=> {
+     if(sort){
+        let names = produits.sort((a,b) => a.nom.localeCompare(b.nom));
+     tbody.innerHTML = "";
+      ajoutTr(names)
+      sort = false;
+     }
+     else{
+          let names = produits.sort((a,b) => b.nom.localeCompare(a.nom));
+     tbody.innerHTML = "";
+      ajoutTr(names)
+      sort = true;
+     }
+})
+}
+
+trie(tNom);
+
+let oui = true;
+let select = document.querySelector("select");
+let option = select.querySelectorAll("option");
+
+select.addEventListener("change", ()=>{
+  let val = select.value;
+  oui = val = "sn" ? oui = true : oui = false;
+  console.log("sa marche :"+ oui);
+     
+})    </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+<!-- 
+// ========================================
+// 1. CLASSE
+// ========================================
+
+class Personne {
+
+    // Attribut privé
+    #nom;
+
+    // Constructeur
+    constructor(nom, age) {
+        this.#nom = nom;
+        this.age = age;
+    }
+
+    // Getter
+    get nom() {
+        return this.#nom;
+    }
+
+    // Setter
+    set nom(nouveauNom) {
+        this.#nom = nouveauNom;
+    }
+
+    // Méthode
+    sePresenter() {
+        return `Je suis ${this.#nom}, j'ai ${this.age} ans.`;
+    }
+
+    // Méthode statique
+    static categorie() {
+        return "Personne";
+    }
+}
+
+// ========================================
+// 2. HÉRITAGE
+// ========================================
+
+class Etudiant extends Personne {
+
+    constructor(nom, age, formation) {
+        super(nom, age);
+        this.formation = formation;
+    }
+
+    etudier() {
+        return `${this.nom} étudie ${this.formation}.`;
+    }
+
+    // Polymorphisme : redéfinition d'une méthode héritée.
+    sePresenter() {
+        return `${super.sePresenter()} Je suis étudiant.`;
+    }
+}
+
+// ========================================
+// 3. INSTANCIATION
+// ========================================
+
+const personne = new Personne("Ali", 30);
+
+const etudiant = new Etudiant("Moussa", 20, "JavaScript");
+
+// ========================================
+// 4. UTILISATION
+// ========================================
+
+console.log(personne.sePresenter());
+
+console.log(etudiant.sePresenter());
+console.log(etudiant.etudier());
+
+// Getter
+console.log(etudiant.nom);
+
+// Setter
+etudiant.nom = "Amadou";
+
+console.log(etudiant.nom);
+
+// Méthode statique
+console.log(Personne.categorie());
+
+// Vérification des instances
+console.log(etudiant instanceof Personne); // true
+console.log(etudiant instanceof Etudiant); // true
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /* =========================================
+   1. DÉCORATEUR
+========================================= */
+
+// Un décorateur permet d'ajouter un comportement
+// à une méthode sans modifier directement son code.
+function journaliser(methode, contexte) {
+
+    return function (...args) {
+
+        console.log(`Exécution de : ${contexte.name}`);
+
+        // Exécute la méthode originale.
+        return methode.call(this, ...args);
+    };
+}
+
+/* =========================================
+   2. CLASSE PARENTE
+========================================= */
+
+class Personne {
+
+    // Attribut privé : accessible uniquement dans la classe.
+    #nom;
+
+    constructor(nom, age) {
+        this.#nom = nom;
+        this.age = age;
+    }
+
+    // Getter
+    get nom() {
+        return this.#nom;
+    }
+
+    // Setter
+    set nom(nouveauNom) {
+        this.#nom = nouveauNom;
+    }
+
+    // Méthode avec décorateur.
+    @journaliser
+    sePresenter() {
+        return `Je suis ${this.#nom}, j'ai ${this.age} ans.`;
+    }
+
+    // Méthode statique : appartient à la classe.
+    static categorie() {
+        return "Être humain";
+    }
+}
+
+/* =========================================
+   3. HÉRITAGE
+========================================= */
+
+class Etudiant extends Personne {
+
+    constructor(nom, age, formation) {
+
+        // Appelle le constructeur de Personne.
+        super(nom, age);
+
+        this.formation = formation;
+    }
+
+    etudier() {
+        return `${this.nom} étudie ${this.formation}.`;
+    }
+}
+
+/* =========================================
+   4. INSTANCIATION
+========================================= */
+
+// Création d'un objet.
+const etudiant = new Etudiant("Ali", 20, "JavaScript");
+
+// Appel des méthodes.
+console.log(etudiant.sePresenter());
+console.log(etudiant.etudier());
+
+// Utilisation du getter.
+console.log(etudiant.nom);
+
+// Utilisation du setter.
+etudiant.nom = "Moussa";
+
+console.log(etudiant.nom);
+
+// Appel de la méthode statique.
+console.log(Personne.categorie()); -->
